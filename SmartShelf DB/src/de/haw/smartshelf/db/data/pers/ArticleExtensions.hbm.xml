@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 28.10.2007 11:58:50 by Hibernate Tools 3.2.0.b11 -->
+<hibernate-mapping>
+    <class name="de.haw.smartshelf.db.data.pers.ArticleExtensions" table="ARTICLE_EXTENSIONS" catalog="smartshelf">
+        <comment></comment>
+        <composite-id name="id" class="de.haw.smartshelf.db.data.pers.ArticleExtensionsId">
+            <key-property name="rfid" type="int">
+                <column name="RFID" />
+            </key-property>
+            <key-property name="name" type="string">
+                <column name="NAME" length="200" />
+            </key-property>
+            <key-property name="value" type="string">
+                <column name="VALUE" length="65535" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="article" class="de.haw.smartshelf.db.data.pers.Article" update="false" insert="false" fetch="select">
+            <column name="RFID" not-null="true">
+                <comment></comment>
+            </column>
+        </many-to-one>
+    </class>
+</hibernate-mapping>
