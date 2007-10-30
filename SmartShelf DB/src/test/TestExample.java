@@ -22,10 +22,10 @@ public class TestExample
 		try
 		{
 //			clean();
-			createArticle();
+//			createArticle();
 			createRelation();
-			delete();
-			update();
+//			delete();
+//			update();
 			query();
 		}
 		catch (RuntimeException e)
@@ -51,7 +51,7 @@ public class TestExample
 		Transaction tx = session.beginTransaction();
 		
 		Article article = new Article();
-		article.setRfid(123676);
+		article.setRfid("123676");
 		article.setArticleType("book");
 		
 		session.save(article);
@@ -94,7 +94,7 @@ public class TestExample
 		Session session = InitSessionFactory.getInstance().getCurrentSession();
 		Transaction tx = session.beginTransaction();
 		
-		Article article = new Article(2345);
+		Article article = new Article("2345");
 		article.setArticleType("CD");
 		session.save(article);
 		ArticleExtensions extns = new ArticleExtensions(

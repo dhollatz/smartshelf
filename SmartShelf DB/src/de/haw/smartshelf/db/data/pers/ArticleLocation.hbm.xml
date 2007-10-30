@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 30.10.2007 16:56:45 by Hibernate Tools 3.2.0.b11 -->
+<hibernate-mapping>
+    <class name="de.haw.smartshelf.db.data.pers.ArticleLocation" table="article_location" catalog="smartshelf">
+        <comment></comment>
+        <composite-id name="id" class="de.haw.smartshelf.db.data.pers.ArticleLocationId">
+            <key-property name="rfid" type="string">
+                <column name="RFID" length="50" />
+            </key-property>
+            <key-property name="shelf" type="java.lang.Integer">
+                <column name="SHELF" />
+            </key-property>
+            <key-property name="cell" type="string">
+                <column name="CELL" length="50" />
+            </key-property>
+            <key-property name="position" type="string">
+                <column name="POSITION" length="50" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="article" class="de.haw.smartshelf.db.data.pers.Article" update="false" insert="false" fetch="select">
+            <column name="RFID" length="50">
+                <comment></comment>
+            </column>
+        </many-to-one>
+        <many-to-one name="shelf" class="de.haw.smartshelf.db.data.pers.Shelf" update="false" insert="false" fetch="select">
+            <column name="SHELF">
+                <comment></comment>
+            </column>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

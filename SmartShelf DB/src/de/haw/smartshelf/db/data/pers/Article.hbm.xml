@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 28.10.2007 11:58:50 by Hibernate Tools 3.2.0.b11 -->
+<!-- Generated 30.10.2007 16:56:45 by Hibernate Tools 3.2.0.b11 -->
 <hibernate-mapping>
-    <class name="de.haw.smartshelf.db.data.pers.Article" table="ARTICLE" catalog="smartshelf">
+    <class name="de.haw.smartshelf.db.data.pers.Article" table="article" catalog="smartshelf">
         <comment></comment>
-        <id name="rfid" type="int">
-            <column name="RFID" />
+        <id name="rfid" type="string">
+            <column name="RFID" length="50" />
             <generator class="assigned" />
         </id>
         <property name="articleType" type="string">
@@ -14,9 +14,17 @@
                 <comment></comment>
             </column>
         </property>
+        <set name="articleLocations" inverse="true">
+            <key>
+                <column name="RFID" length="50">
+                    <comment></comment>
+                </column>
+            </key>
+            <one-to-many class="de.haw.smartshelf.db.data.pers.ArticleLocation" />
+        </set>
         <set name="articleExtensionses" inverse="true" lazy="false">
             <key>
-                <column name="RFID" not-null="true">
+                <column name="RFID" length="50" not-null="true">
                     <comment></comment>
                 </column>
             </key>
