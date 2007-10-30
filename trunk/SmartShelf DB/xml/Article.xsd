@@ -2,12 +2,16 @@
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
             targetNamespace="http://www.smartshelf.org/Article"
             xmlns="http://www.smartshelf.org/Article"
+            xmlns:articleLocation="http://www.smartshelf.org/ArticleLocation"
             elementFormDefault="qualified">
+
+	<xsd:import namespace="http://www.smartshelf.org/ArticleLocation" schemaLocation="ArticleLocation.xsd"/>      
 
 	<xsd:element name="Article">
     	<xsd:complexType>
     		<xsd:sequence>
     			<xsd:element ref="ArticleExtension"  minOccurs="0" maxOccurs="unbounded"/>
+    			<xsd:element ref="articleLocation:ArticleLocation"  minOccurs="0" maxOccurs="1"/>
     		</xsd:sequence>
     		<xsd:attribute name="type" type="xsd:string" form="unqualified"/>
     	</xsd:complexType>
