@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://www.smartshelf.org/ArticleLocation"
+            xmlns="http://www.smartshelf.org/ArticleLocation"
+            elementFormDefault="qualified">
+
+    <xsd:element name="ArticleLocation">
+    	<xsd:complexType>
+    		<xsd:attribute name="shelf" type="xsd:string" form="unqualified" />
+    		<xsd:attribute name="cell" type="xsd:string" form="unqualified" />
+    		<xsd:attribute name="position" type="xsd:string" form="unqualified" />
+    	</xsd:complexType>
+    </xsd:element>
+
+</xsd:schema>

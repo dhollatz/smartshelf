@@ -70,7 +70,7 @@ public class DataFactory
 	 * @param extensions
 	 * @return
 	 */
-	public Article addArticle(int rfid, String type, Map<String, String> extensions)
+	public Article addArticle(String rfid, String type, Map<String, String> extensions)
 	{
 		Session session = InitSessionFactory.getInstance().getCurrentSession();
 		Transaction tx = session.beginTransaction();
@@ -101,7 +101,7 @@ public class DataFactory
 	 * @param extensions
 	 * @return
 	 */
-	public Article addArticle(int rfid, String type, String[][] extensions)
+	public Article addArticle(String rfid, String type, String[][] extensions)
 	{
 		Session session = InitSessionFactory.getInstance().getCurrentSession();
 		Transaction tx = session.beginTransaction();
@@ -124,7 +124,7 @@ public class DataFactory
 		return article;
 	}
 	
-	public Article getArticle(int rfid)
+	public Article getArticle(String rfid)
 	{
 		Session session = InitSessionFactory.getInstance().getCurrentSession();
 		Transaction tx = session.beginTransaction();
@@ -152,7 +152,7 @@ public class DataFactory
 		}
 	}
 	
-	public void removeArticle(int rfid) throws DataFactoryException
+	public void removeArticle(String rfid) throws DataFactoryException
 	{
 		removeArticle(getArticle(rfid));
 	}
@@ -160,11 +160,11 @@ public class DataFactory
 	public static void main(String[] args)
 	{
 		DataFactory df = DataFactory.getInstance();
-//		df.addArticle(54313, "CD", new String[][]{{"Title", "The Best"}, {"Interpret", "The Doors"}, {"Track1", "Riding On The Storm"}});
-		System.out.println(df.getArticle(54313).getArticleExtensionses());
+//		df.addArticle("54313", "CD", new String[][]{{"Title", "The Best"}, {"Interpret", "The Doors"}, {"Track1", "Riding On The Storm"}});
+		System.out.println(df.getArticle("54313").getArticleExtensionses());
 		try
 		{
-			df.removeArticle(2345);
+			df.removeArticle("2345");
 		}
 		catch (DataFactoryException e)
 		{

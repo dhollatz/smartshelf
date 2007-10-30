@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://www.smartshelf.org/Article"
+            xmlns="http://www.smartshelf.org/Article"
+            elementFormDefault="qualified">
+
+	<xsd:element name="Article">
+    	<xsd:complexType>
+    		<xsd:sequence>
+    			<xsd:element ref="ArticleExtension"  minOccurs="0" maxOccurs="unbounded"/>
+    		</xsd:sequence>
+    		<xsd:attribute name="type" type="xsd:string" form="unqualified"/>
+    	</xsd:complexType>
+    </xsd:element>
+    
+    <xsd:element name="ArticleExtension">
+    	<xsd:complexType>
+    		<xsd:simpleContent>
+    			<xsd:extension base="xsd:string">
+    				<xsd:attribute name="name" type="xsd:string" form="unqualified"/>
+    				<xsd:attribute name="rfid" type="xsd:string" form="unqualified"/>
+    			</xsd:extension>
+    		</xsd:simpleContent>
+    	</xsd:complexType>
+    </xsd:element>
+    
+</xsd:schema>

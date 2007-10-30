@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://www.smartshelf.org/SearchResult"
+            xmlns="http://www.smartshelf.org/SearchResult"
+            xmlns:article="http://www.smartshelf.org/Article"
+            elementFormDefault="qualified">
+    
+    <xsd:import namespace="http://www.smartshelf.org/Article" schemaLocation="Article.xsd"/>      
+            
+    <xsd:element name="SearchResult">
+    	<xsd:complexType>
+    		<xsd:sequence>
+    			<xsd:element ref="article:Article" minOccurs="0" maxOccurs="unbounded"/>
+    		</xsd:sequence>
+    	</xsd:complexType>
+    </xsd:element>
+
+</xsd:schema>
