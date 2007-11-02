@@ -3,9 +3,9 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 30.10.2007 16:56:45 by Hibernate Tools 3.2.0.b11 -->
 <hibernate-mapping>
-    <class name="de.haw.smartshelf.db.data.pers.ArticleExtensions" table="article_extensions" catalog="smartshelf">
+    <class name="de.haw.smartshelf.db.data.pers.ArticleExtension" table="article_extension" catalog="smartshelf">
         <comment></comment>
-        <composite-id name="id" class="de.haw.smartshelf.db.data.pers.ArticleExtensionsId">
+        <composite-id name="id" class="de.haw.smartshelf.db.data.pers.ArticleExtensionId">
             <key-property name="rfid" type="string">
                 <column name="RFID" length="50" />
             </key-property>

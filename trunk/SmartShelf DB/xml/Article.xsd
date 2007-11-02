@@ -14,6 +14,7 @@
     			<xsd:element ref="articleLocation:ArticleLocation"  minOccurs="0" maxOccurs="1"/>
     		</xsd:sequence>
     		<xsd:attribute name="type" type="xsd:string" form="unqualified"/>
+    		<xsd:attribute name="rfid" type="xsd:string" form="unqualified"/>
     	</xsd:complexType>
     </xsd:element>
     
@@ -21,8 +22,7 @@
     	<xsd:complexType>
     		<xsd:simpleContent>
     			<xsd:extension base="xsd:string">
-    				<xsd:attribute name="name" type="xsd:string" form="unqualified"/>
-    				<xsd:attribute name="rfid" type="xsd:string" form="unqualified"/>
+    				<xsd:attribute name="name" type="xsd:string" form="qualified"/>
     			</xsd:extension>
     		</xsd:simpleContent>
     	</xsd:complexType>

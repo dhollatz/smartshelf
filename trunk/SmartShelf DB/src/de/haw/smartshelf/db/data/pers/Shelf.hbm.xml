@@ -5,8 +5,8 @@
 <hibernate-mapping>
     <class name="de.haw.smartshelf.db.data.pers.Shelf" table="shelf" catalog="smartshelf">
         <comment></comment>
-        <id name="id" type="int">
-            <column name="ID" />
+        <id name="id" type="string">
+            <column name="ID" length="50"/>
             <generator class="assigned" />
         </id>
         <property name="name" type="string">

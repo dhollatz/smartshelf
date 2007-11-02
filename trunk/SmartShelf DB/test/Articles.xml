@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Articles>
+	<Article rfid="0123" type="CD">
+		<ArticleExtension name="Title">The Best Of The Doors</ArticleExtension>
+		<ArticleExtension name="Interpret">The Doors</ArticleExtension>
+		<ArticleExtension name="Track1">Riders on the Storm</ArticleExtension>
+		<ArticleExtension name="Track2">Light My Fire</ArticleExtension>
+		<ArticleExtension name="Track3">Love Me Two Times</ArticleExtension>
+		<ArticleExtension name="Track4">Roadhouse Blues - Live Version</ArticleExtension>
+		<ArticleExtension name="Track5">Strange Days</ArticleExtension>
+		
+		<ArticleLocation shelf="" cell="" position=""/>
+	</Article>
+
+
+</Articles>
