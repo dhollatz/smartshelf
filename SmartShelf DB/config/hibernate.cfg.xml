@@ -26,7 +26,7 @@
         
         
         <mapping resource="de/haw/smartshelf/db/data/pers/Article.hbm.xml" />
-      	<mapping resource="de/haw/smartshelf/db/data/pers/ArticleExtensions.hbm.xml"/>
+      	<mapping resource="de/haw/smartshelf/db/data/pers/ArticleExtension.hbm.xml"/>
       	<mapping resource="de/haw/smartshelf/db/data/pers/Shelf.hbm.xml"/>
       	<mapping resource="de/haw/smartshelf/db/data/pers/ArticleLocation.hbm.xml"/>
     </session-factory>

@@ -14,7 +14,7 @@
                 <comment></comment>
             </column>
         </property>
-        <set name="articleLocations" inverse="true">
+        <set name="articleLocations" inverse="true" lazy="false">
             <key>
                 <column name="RFID" length="50">
                     <comment></comment>
@@ -22,13 +22,13 @@
             </key>
             <one-to-many class="de.haw.smartshelf.db.data.pers.ArticleLocation" />
         </set>
-        <set name="articleExtensionses" inverse="true" lazy="false">
+        <set name="articleExtensions" inverse="true" lazy="false">
             <key>
                 <column name="RFID" length="50" not-null="true">
                     <comment></comment>
                 </column>
             </key>
-            <one-to-many class="de.haw.smartshelf.db.data.pers.ArticleExtensions" />
+            <one-to-many class="de.haw.smartshelf.db.data.pers.ArticleExtension" />
         </set>
     </class>
 </hibernate-mapping>

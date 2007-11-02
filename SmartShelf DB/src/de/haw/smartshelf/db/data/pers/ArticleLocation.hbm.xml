@@ -9,8 +9,8 @@
             <key-property name="rfid" type="string">
                 <column name="RFID" length="50" />
             </key-property>
-            <key-property name="shelf" type="java.lang.Integer">
-                <column name="SHELF" />
+            <key-property name="shelf" type="string">
+                <column name="SHELF" length="50" />
             </key-property>
             <key-property name="cell" type="string">
                 <column name="CELL" length="50" />

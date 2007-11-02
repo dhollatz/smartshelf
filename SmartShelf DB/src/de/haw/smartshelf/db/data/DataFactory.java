@@ -13,14 +13,17 @@ package de.haw.smartshelf.db.data;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import de.haw.smartshelf.db.data.pers.Article;
-import de.haw.smartshelf.db.data.pers.ArticleExtensions;
-import de.haw.smartshelf.db.data.pers.ArticleExtensionsId;
+import de.haw.smartshelf.db.data.pers.ArticleExtension;
+import de.haw.smartshelf.db.data.pers.ArticleExtensionId;
+import de.haw.smartshelf.db.data.pers.ArticleLocation;
 
 /**
  * This class ... Copyright (c) 2007 SmartShelf
@@ -52,7 +55,7 @@ public class DataFactory
 		Session session = InitSessionFactory.getInstance().getCurrentSession();
 		Transaction tx = session.beginTransaction();
 		
-		Query query = session.createQuery("select extension.id.rfid from " + ArticleExtensions.class.getName()
+		Query query = session.createQuery("select extension.id.rfid from " + ArticleExtension.class.getName()
 				+ " extension where lower(extension.id.name) like '%" + extensionName.toLowerCase() + "%' and lower(extension.id.value) like '%"
 				+ extensionValue.toLowerCase() + "%'");
 				
@@ -83,11 +86,11 @@ public class DataFactory
 			String key = (String) iterator.next();
 			String value = (String) extensions.get(key);
 			
-			ArticleExtensions extns = new ArticleExtensions(
-					new ArticleExtensionsId(article.getRfid(), key, value), article);
+			ArticleExtension extns = new ArticleExtension(
+					new ArticleExtensionId(article.getRfid(), key, value), article);
 			session.save(extns);
 			
-			article.getArticleExtensionses().add(extns);
+			article.getArticleExtensions().add(extns);
 		}
 		tx.commit();
 		
@@ -113,26 +116,33 @@ public class DataFactory
 		{
 			String[] extension = extensions[i];
 			
-			ArticleExtensions extns = new ArticleExtensions(
-					new ArticleExtensionsId(article.getRfid(), extension[0], extension[1]), article);
+			ArticleExtension extns = new ArticleExtension(
+					new ArticleExtensionId(article.getRfid(), extension[0], extension[1]), article);
 			session.save(extns);
 			
-			article.getArticleExtensionses().add(extns);
+			article.getArticleExtensions().add(extns);
 		}		
 		tx.commit();
 		
 		return article;
 	}
 	
-	public Article getArticle(String rfid)
+	public Article getArticle(String rfid) throws ObjectNotFoundException
 	{
 		Session session = InitSessionFactory.getInstance().getCurrentSession();
 		Transaction tx = session.beginTransaction();
 		
 		Article article = (Article) session.get(Article.class, rfid);
 		tx.commit();
-				
-		return article;
+		
+		if(article != null)
+		{		
+			return article;
+		}
+		else
+		{
+			throw new ObjectNotFoundException("Article with RFID: '" + rfid + "' could not be found");
+		}
 	}
 	
 	public void removeArticle(Article article) throws DataFactoryException
@@ -142,9 +152,41 @@ public class DataFactory
 			Session session = InitSessionFactory.getInstance().getCurrentSession();
 			Transaction tx = session.beginTransaction();
 
-			session.delete(article);
+			try
+			{
+				/* delete locations */
+				Set locations = article.getArticleLocations();
+				if((locations != null) && (!locations.isEmpty()))
+				{
+					for (Iterator iterator = locations.iterator(); iterator.hasNext();)
+					{
+						ArticleLocation artLocation = (ArticleLocation) iterator.next();
+						session.delete(artLocation);
+					}
+				}
+				
+				/* delete extensions */
+				Set extensions = article.getArticleExtensions();
+				if((extensions != null) && (!extensions.isEmpty()))
+				{
+					for (Iterator iterator = extensions.iterator(); iterator.hasNext();)
+					{
+						ArticleExtension artExtension = (ArticleExtension) iterator.next();
+						session.delete(artExtension);
+					}
+				}
+				
+				/* delete article */
+				session.delete(article);
 
-			tx.commit();
+				tx.commit();
+			}
+			catch (HibernateException e)
+			{
+				tx.rollback();
+			}
+			
+			
 		}
 		else
 		{
@@ -152,16 +194,33 @@ public class DataFactory
 		}
 	}
 	
+	private void remove(Object object) throws DataFactoryException
+	{
+		if (object != null)
+		{
+			Session session = InitSessionFactory.getInstance().getCurrentSession();
+			Transaction tx = session.beginTransaction();
+
+			session.delete(object);
+
+			tx.commit();
+		}
+		else
+		{
+			throw new DataFactoryException("Object to delete is NULL");
+		}
+	}
+		
 	public void removeArticle(String rfid) throws DataFactoryException
 	{
 		removeArticle(getArticle(rfid));
 	}
 	
-	public static void main(String[] args)
+	public static void main(String[] args) throws ObjectNotFoundException
 	{
 		DataFactory df = DataFactory.getInstance();
 //		df.addArticle("54313", "CD", new String[][]{{"Title", "The Best"}, {"Interpret", "The Doors"}, {"Track1", "Riding On The Storm"}});
-		System.out.println(df.getArticle("54313").getArticleExtensionses());
+		System.out.println(df.getArticle("2345").getArticleExtensions());
 		try
 		{
 			df.removeArticle("2345");

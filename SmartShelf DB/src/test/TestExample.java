@@ -10,8 +10,8 @@ import org.hibernate.Transaction;
 
 import de.haw.smartshelf.db.data.InitSessionFactory;
 import de.haw.smartshelf.db.data.pers.Article;
-import de.haw.smartshelf.db.data.pers.ArticleExtensions;
-import de.haw.smartshelf.db.data.pers.ArticleExtensionsId;
+import de.haw.smartshelf.db.data.pers.ArticleExtension;
+import de.haw.smartshelf.db.data.pers.ArticleExtensionId;
 
 public class TestExample
 {
@@ -83,7 +83,7 @@ public class TestExample
 		Session session = InitSessionFactory.getInstance().getCurrentSession();
 		Transaction tx = session.beginTransaction();
 		session.createQuery("delete from ARTICLE").executeUpdate();
-		session.createQuery("delete from ARTICLE_EXTENSIONS").executeUpdate();
+		session.createQuery("delete from ARTICLE_EXTENSION").executeUpdate();
 		session.flush();
 		session.clear();
 		tx.commit();
@@ -97,12 +97,12 @@ public class TestExample
 		Article article = new Article("2345");
 		article.setArticleType("CD");
 		session.save(article);
-		ArticleExtensions extns = new ArticleExtensions(
-				new ArticleExtensionsId(article.getRfid(), "Title", "The Best"), article);
+		ArticleExtension extns = new ArticleExtension(
+				new ArticleExtensionId(article.getRfid(), "Title", "The Best"), article);
 		session.save(extns);
 
 		/* Wir setzen die Beziehung auf BEIDEN Seiten */
-		article.getArticleExtensionses().add(extns);
+		article.getArticleExtensions().add(extns);
 		tx.commit();
 	}
 

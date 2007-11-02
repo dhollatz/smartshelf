@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://www.smartshelf.org/Shelf"
+            xmlns="http://www.smartshelf.org/Shelf"
+            elementFormDefault="qualified">
+
+       <xsd:element name="Shelf">
+       	 <xsd:complexType>
+       	 	<xsd:sequence>
+       	 		<xsd:element ref="Name"/>
+       	 		<xsd:element ref="Location"/>
+       	 	</xsd:sequence>
+       	 	<xsd:attribute name="id" type="xsd:string"/>
+       	 </xsd:complexType>
+       </xsd:element>
+       
+       <xsd:element name="Name" type="xsd:string"/>
+       <xsd:element name="Location" type="xsd:string"/>
+
+</xsd:schema>            
