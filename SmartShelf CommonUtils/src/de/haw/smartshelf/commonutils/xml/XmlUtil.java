@@ -16,6 +16,7 @@ import java.io.OutputStream;
 import java.io.Writer;
 
 import org.jdom.Document;
+import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
@@ -43,17 +44,31 @@ public class XmlUtil
 		return doc;
 	}
 
-	public static void writeXmlDocuments(Document doc, OutputStream out) throws IOException
+	public static void writeXmlDocument(Document doc, OutputStream out) throws IOException
 	{
 		XMLOutputter fmt = new XMLOutputter();
 		fmt.setFormat(Format.getPrettyFormat()); // only for nicer formatting
 		fmt.output(doc, out);
 	}
 	
-	public static void writeXmlDocuments(Document doc, Writer out) throws IOException
+	public static void writeXmlDocument(Document doc, Writer out) throws IOException
 	{
 		XMLOutputter fmt = new XMLOutputter();
 		fmt.setFormat(Format.getPrettyFormat()); // only for nicer formatting
 		fmt.output(doc, out);
+	}
+	
+	public static String xmlToString(Document doc)
+	{
+		XMLOutputter fmt = new XMLOutputter();
+		fmt.setFormat(Format.getPrettyFormat()); // only for nicer formatting
+		return fmt.outputString(doc);
+	}
+	
+	public static String xmlToString(Element element)
+	{
+		XMLOutputter fmt = new XMLOutputter();
+		fmt.setFormat(Format.getPrettyFormat()); // only for nicer formatting
+		return fmt.outputString(element);
 	}
 }
