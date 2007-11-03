@@ -95,12 +95,12 @@ public class DataImporter
 		if(extensionElms != null)
 		{
 			Set articleLocations = new HashSet();
-			for (Iterator iterator = extensionElms.iterator(); iterator.hasNext();)
+			for (Iterator iterator = locationElms.iterator(); iterator.hasNext();)
 			{
-				Element extensionElm = (Element) iterator.next();
+				Element locationElm = (Element) iterator.next();
 				ArticleLocation articleLocation = new ArticleLocation(new ArticleLocationId(article.getRfid(),
-						extensionElm.getAttributeValue(Constants.ATTR_SHELF), extensionElm
-								.getAttributeValue(Constants.ATTR_CELL), extensionElm
+						locationElm.getAttributeValue(Constants.ATTR_SHELF), locationElm
+								.getAttributeValue(Constants.ATTR_CELL), locationElm
 								.getAttributeValue(Constants.ATTR_POSITION)));
 				articleLocations.add(articleLocation);
 			}
