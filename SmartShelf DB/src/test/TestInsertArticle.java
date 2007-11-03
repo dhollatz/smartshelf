@@ -17,7 +17,7 @@ import org.jdom.Document;
 import org.jdom.JDOMException;
 
 import de.haw.smartshelf.commonutils.xml.XmlUtil;
-import de.haw.smartshelf.db.data.xml.ArticleImporter;
+import de.haw.smartshelf.db.data.xml.DataImporter;
 
 /**
  * This class ... Copyright (c) 2007 SmartShelf
@@ -31,7 +31,7 @@ public class TestInsertArticle
 	{
 		Document articlesDoc = XmlUtil.readXml(System.getProperty("user.dir") + File.separator + "test" + File.separator + "Articles.xml");
 		
-		ArticleImporter ai = new ArticleImporter();
+		DataImporter ai = new DataImporter();
 		ai.insertArticles(articlesDoc);
 	}
 }

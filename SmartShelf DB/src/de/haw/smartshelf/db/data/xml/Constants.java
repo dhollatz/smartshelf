@@ -20,10 +20,14 @@ public class Constants
 {
 	public static final String ELEMENT_ARTICLE = "Article";
 	public static final String ELEMENT_ARTICLE_EXTENSION = "ArticleExtension";
+	public static final String ELEMENT_ARTICLE_LOCATION = "ArticleLocation";
 	
 	public static final String ATTR_RFID = "rfid";
 	public static final String ATTR_TYPE = "type";
 	public static final String ATTR_NAME = "name";
+	public static final String ATTR_SHELF = "shelf";
+	public static final String ATTR_CELL = "cell";
+	public static final String ATTR_POSITION = "position";
 
 	
 }

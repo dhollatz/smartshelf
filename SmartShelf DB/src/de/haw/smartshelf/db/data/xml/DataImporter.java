@@ -25,11 +25,11 @@ import de.haw.smartshelf.db.data.DataFactory;
  * @version $ Date: 02.11.2007 13:44:04 $
  * @author <a href="mailto:j_urich@freenet.de">j_urich@freenet.de</a>
  */
-public class ArticleImporter
+public class DataImporter
 {
 	private DataFactory _dataFactory;
 	
-	public ArticleImporter()
+	public DataImporter()
 	{
 		_dataFactory = DataFactory.getInstance();
 	}
