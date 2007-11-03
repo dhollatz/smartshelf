@@ -71,10 +71,25 @@ public class DataFactory
 	
 	public List findArticle(Article inputArticle)
 	{
+		return findArticle(inputArticle, false);
+	}
+	
+	public List findArticle(Article inputArticle, boolean withLocationInput)
+	{
 		Session session = InitSessionFactory.getInstance().getCurrentSession();
 		Transaction tx = session.beginTransaction();
 		
-		String queryAsString = "select distinct article from " + Article.class.getName() + " as article, " + ArticleExtension.class.getName() + " as extension, " + ArticleLocation.class.getName() + " as location where extension.id.rfid like article.rfid and location.id.rfid like article.rfid";
+		String queryAsString = "select distinct article from " + Article.class.getName() + " as article, " + ArticleExtension.class.getName() + " as extension";
+		if(withLocationInput)
+		{
+			queryAsString +=  " , " + ArticleLocation.class.getName() + " as location";
+		}
+		queryAsString += " where extension.id.rfid like article.rfid"; 
+		if(withLocationInput)
+		{
+			queryAsString += " and location.id.rfid like article.rfid";
+		}
+		
 		if(!Util.isEmpty(inputArticle.getRfid()))
 		{
 			queryAsString += " and article.rfid like '" + inputArticle.getRfid() + "'";
@@ -102,38 +117,50 @@ public class DataFactory
 			queryAsString += ")";
 		}
 		
-		Set inputLocations = inputArticle.getArticleLocations();
-		if(!inputLocations.isEmpty())
+		if (withLocationInput)
 		{
-			queryAsString += " and (";
-			int index = 0;
-			for (Iterator iterator = inputLocations.iterator(); iterator.hasNext();)
+			Set inputLocations = inputArticle.getArticleLocations();
+			if (!inputLocations.isEmpty())
 			{
-				if(index > 0)
+				queryAsString += " and (";
+				int index = 0;
+				for (Iterator iterator = inputLocations.iterator(); iterator.hasNext();)
 				{
-					queryAsString += " or (";
+					if (index > 0)
+					{
+						queryAsString += " or (";
+					}
+					ArticleLocation inLocation = (ArticleLocation) iterator.next();
+					boolean shouldAddAND = false;
+					if (!Util.isEmpty(inLocation.getId().getShelf()))
+					{
+						queryAsString += "lower(location.id.shelf) like '%"
+								+ inLocation.getId().getShelf().toLowerCase() + "%'";
+						shouldAddAND = true;
+					}
+					if (!Util.isEmpty(inLocation.getId().getCell()))
+					{
+						if (shouldAddAND)
+						{
+							queryAsString += " and";
+						}
+						queryAsString += " lower(location.id.cell) like '%"
+								+ inLocation.getId().getCell().toLowerCase() + "%'";
+						shouldAddAND = true;
+					}
+
+					if (!Util.isEmpty(inLocation.getId().getPosition()))
+					{
+						if (shouldAddAND)
+						{
+							queryAsString += " and";
+						}
+						queryAsString += " lower(location.id.position) like '%"
+								+ inLocation.getId().getPosition().toLowerCase() + "%'";
+						shouldAddAND = true;
+					}
+					index++;
 				}
-				ArticleLocation inLocation = (ArticleLocation) iterator.next();
-				boolean shouldAddAND = false;
-				if(!Util.isEmpty(inLocation.getId().getShelf()))
-				{
-				  queryAsString += "lower(location.id.shelf) like '%" + inLocation.getId().getShelf().toLowerCase() + "%'";
-				  shouldAddAND = true;
-				}
-				if(!Util.isEmpty(inLocation.getId().getCell()))
-				{
-					if(shouldAddAND){queryAsString += " and";}
-					queryAsString += " lower(location.id.cell) like '%" + inLocation.getId().getCell().toLowerCase() + "%'";
-					shouldAddAND = true;
-				}
-				
-				if(!Util.isEmpty(inLocation.getId().getPosition()))
-				{
-					if(shouldAddAND){queryAsString += " and";}
-					queryAsString += " lower(location.id.position) like '%" + inLocation.getId().getPosition().toLowerCase() + "%'";
-					shouldAddAND = true;
-				}
-				index ++;
 			}
 			queryAsString += ")";
 		}
