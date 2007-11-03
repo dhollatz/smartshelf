@@ -15,11 +15,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import de.haw.smartshelf.commonutils.Util;
 import de.haw.smartshelf.db.data.pers.Article;
 import de.haw.smartshelf.db.data.pers.ArticleExtension;
 import de.haw.smartshelf.db.data.pers.ArticleExtensionId;
@@ -33,6 +35,7 @@ import de.haw.smartshelf.db.data.pers.ArticleLocation;
  */
 public class DataFactory
 {
+	private static Logger _log = Logger.getLogger("SmartShelfDb/DataFactory");
 	private static DataFactory _instance = null;
 	
 	private DataFactory()
@@ -50,7 +53,7 @@ public class DataFactory
 		return _instance;
 	}
 	
-	public List findArticle(String extensionName, String extensionValue)
+	public List findArticleRfids(String extensionName, String extensionValue)
 	{
 		Session session = InitSessionFactory.getInstance().getCurrentSession();
 		Transaction tx = session.beginTransaction();
@@ -58,6 +61,85 @@ public class DataFactory
 		Query query = session.createQuery("select extension.id.rfid from " + ArticleExtension.class.getName()
 				+ " extension where lower(extension.id.name) like '%" + extensionName.toLowerCase() + "%' and lower(extension.id.value) like '%"
 				+ extensionValue.toLowerCase() + "%'");
+				
+		List rfids = query.list();
+		
+		tx.commit();
+		
+		return rfids;
+	}
+	
+	public List findArticle(Article inputArticle)
+	{
+		Session session = InitSessionFactory.getInstance().getCurrentSession();
+		Transaction tx = session.beginTransaction();
+		
+		String queryAsString = "select distinct article from " + Article.class.getName() + " as article, " + ArticleExtension.class.getName() + " as extension, " + ArticleLocation.class.getName() + " as location where extension.id.rfid like article.rfid and location.id.rfid like article.rfid";
+		if(!Util.isEmpty(inputArticle.getRfid()))
+		{
+			queryAsString += " and article.rfid like '" + inputArticle.getRfid() + "'";
+		}
+		if(!Util.isEmpty(inputArticle.getArticleType()))
+		{
+			queryAsString += " and article.articleType like '" + inputArticle.getArticleType() + "'";
+		}		
+		Set inputExtensions = inputArticle.getArticleExtensions();
+		if(!inputExtensions.isEmpty())
+		{
+			queryAsString += " and (";
+			int index = 0;
+			for (Iterator iterator = inputExtensions.iterator(); iterator.hasNext();)
+			{
+				if(index > 0)
+				{
+					queryAsString += " or ";
+				}
+				ArticleExtension inExtension = (ArticleExtension) iterator.next();
+				queryAsString += "(lower(extension.id.name) like '%" + inExtension.getId().getName().toLowerCase() + "%'";
+				queryAsString += " and lower(extension.id.value) like '%" + inExtension.getId().getValue().toLowerCase() + "%')";
+				index ++;
+			}
+			queryAsString += ")";
+		}
+		
+		Set inputLocations = inputArticle.getArticleLocations();
+		if(!inputLocations.isEmpty())
+		{
+			queryAsString += " and (";
+			int index = 0;
+			for (Iterator iterator = inputLocations.iterator(); iterator.hasNext();)
+			{
+				if(index > 0)
+				{
+					queryAsString += " or (";
+				}
+				ArticleLocation inLocation = (ArticleLocation) iterator.next();
+				boolean shouldAddAND = false;
+				if(!Util.isEmpty(inLocation.getId().getShelf()))
+				{
+				  queryAsString += "lower(location.id.shelf) like '%" + inLocation.getId().getShelf().toLowerCase() + "%'";
+				  shouldAddAND = true;
+				}
+				if(!Util.isEmpty(inLocation.getId().getCell()))
+				{
+					if(shouldAddAND){queryAsString += " and";}
+					queryAsString += " lower(location.id.cell) like '%" + inLocation.getId().getCell().toLowerCase() + "%'";
+					shouldAddAND = true;
+				}
+				
+				if(!Util.isEmpty(inLocation.getId().getPosition()))
+				{
+					if(shouldAddAND){queryAsString += " and";}
+					queryAsString += " lower(location.id.position) like '%" + inLocation.getId().getPosition().toLowerCase() + "%'";
+					shouldAddAND = true;
+				}
+				index ++;
+			}
+			queryAsString += ")";
+		}
+		
+		_log.debug("HQL query for finding article: " + queryAsString);
+		Query query = session.createQuery(queryAsString);
 				
 		List rfids = query.list();
 		
@@ -125,6 +207,21 @@ public class DataFactory
 		tx.commit();
 		
 		return article;
+	}
+	
+	public void addArticle(Article inputArticle)
+	{
+		Session session = InitSessionFactory.getInstance().getCurrentSession();
+		Transaction tx = session.beginTransaction();
+				
+		session.save(inputArticle);
+		Set articleExtensions = inputArticle.getArticleExtensions();
+		for (Iterator iterator = articleExtensions.iterator(); iterator.hasNext();)
+		{
+			ArticleExtension extn = (ArticleExtension) iterator.next();
+			session.save(extn);
+		}		
+		tx.commit();
 	}
 	
 	public Article getArticle(String rfid) throws ObjectNotFoundException
@@ -231,7 +328,7 @@ public class DataFactory
 			e.printStackTrace();
 		}
 
-		List rfids = df.findArticle("InTer", "The");
+		List rfids = df.findArticleRfids("InTer", "The");
 		System.out.println(rfids);
 	}
 

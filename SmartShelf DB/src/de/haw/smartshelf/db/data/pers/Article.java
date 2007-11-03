@@ -59,8 +59,14 @@ public class Article  implements java.io.Serializable {
         this.articleExtensions = articleExtensions;
     }
 
+	@Override
+	public String toString()
+	{
+		return "ARTICLE RFID:" + getRfid() + " ARTICLE_TYPE:" + getArticleType();
+	}
 
 
+    
 
 }
 
