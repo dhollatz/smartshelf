@@ -10,6 +10,8 @@
  */
 package de.haw.smartshelf.commonutils;
 
+import java.util.List;
+
 /**
  * This class ... Copyright (c) 2007 SmartShelf
  * 
@@ -21,5 +23,10 @@ public class Util
 	public static boolean isEmpty(String string)
 	{
 		return string == null || string.trim().equals("");
+	}
+
+	public static boolean isEmpty(List list)
+	{
+		return list == null || list.size() < 1;
 	}
 }
