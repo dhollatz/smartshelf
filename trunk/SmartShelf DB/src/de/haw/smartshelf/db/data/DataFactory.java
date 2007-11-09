@@ -76,32 +76,64 @@ public class DataFactory
 	
 	public List findArticle(Article inputArticle, boolean withLocationInput)
 	{
+		boolean shouAddAND = false;
 		Session session = InitSessionFactory.getInstance().getCurrentSession();
 		Transaction tx = session.beginTransaction();
 		
-		String queryAsString = "select distinct article from " + Article.class.getName() + " as article, " + ArticleExtension.class.getName() + " as extension";
+		Set inputExtensions = inputArticle.getArticleExtensions();
+		
+		String queryAsString = "select distinct article from " + Article.class.getName() + " as article";
+		if(!inputExtensions.isEmpty())
+		{
+			queryAsString += ", " + ArticleExtension.class.getName() + " as extension";
+		}
+		
 		if(withLocationInput)
 		{
 			queryAsString +=  " , " + ArticleLocation.class.getName() + " as location";
 		}
-		queryAsString += " where extension.id.rfid like article.rfid"; 
+		queryAsString += " where";		
+		if(!inputExtensions.isEmpty())
+		{
+			queryAsString += " extension.id.rfid like article.rfid"; 
+			shouAddAND = true;
+		}
 		if(withLocationInput)
 		{
-			queryAsString += " and location.id.rfid like article.rfid";
+			if(shouAddAND)
+			{
+				queryAsString += " and";
+			}
+			queryAsString += " location.id.rfid like article.rfid";
+			shouAddAND = true;
 		}
 		
 		if(!Util.isEmpty(inputArticle.getRfid()))
 		{
-			queryAsString += " and article.rfid like '" + inputArticle.getRfid() + "'";
+			if(shouAddAND)
+			{
+				queryAsString += " and";
+			}
+			queryAsString += " article.rfid like '" + inputArticle.getRfid() + "'";
+			shouAddAND = true;
 		}
 		if(!Util.isEmpty(inputArticle.getArticleType()))
 		{
-			queryAsString += " and article.articleType like '" + inputArticle.getArticleType() + "'";
+			if(shouAddAND)
+			{
+				queryAsString += " and";
+			}
+			queryAsString += " lower(article.articleType) like '%" + inputArticle.getArticleType().toLowerCase() + "%'";
+			shouAddAND = true;
 		}		
-		Set inputExtensions = inputArticle.getArticleExtensions();
+		
 		if(!inputExtensions.isEmpty())
 		{
-			queryAsString += " and (";
+			if(shouAddAND)
+			{
+				queryAsString += " and";
+			}
+			queryAsString += " (";
 			int index = 0;
 			for (Iterator iterator = inputExtensions.iterator(); iterator.hasNext();)
 			{
@@ -115,6 +147,7 @@ public class DataFactory
 				index ++;
 			}
 			queryAsString += ")";
+			shouAddAND = true;
 		}
 		
 		if (withLocationInput)
@@ -122,7 +155,11 @@ public class DataFactory
 			Set inputLocations = inputArticle.getArticleLocations();
 			if (!inputLocations.isEmpty())
 			{
-				queryAsString += " and (";
+				if(shouAddAND)
+				{
+					queryAsString += " and";
+				}
+				queryAsString += " (";
 				int index = 0;
 				for (Iterator iterator = inputLocations.iterator(); iterator.hasNext();)
 				{
@@ -161,6 +198,7 @@ public class DataFactory
 					}
 					index++;
 				}
+				shouAddAND = true;
 			}
 			queryAsString += ")";
 		}
