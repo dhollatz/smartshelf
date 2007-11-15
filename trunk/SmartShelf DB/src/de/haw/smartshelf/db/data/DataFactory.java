@@ -77,6 +77,8 @@ public class DataFactory
 	public List findArticle(Article inputArticle, boolean withLocationInput)
 	{
 		boolean shouAddAND = false;
+		boolean condition = false;
+		
 		Session session = InitSessionFactory.getInstance().getCurrentSession();
 		Transaction tx = session.beginTransaction();
 		
@@ -97,6 +99,7 @@ public class DataFactory
 		{
 			queryAsString += " extension.id.rfid like article.rfid"; 
 			shouAddAND = true;
+			condition = true;
 		}
 		if(withLocationInput)
 		{
@@ -106,6 +109,7 @@ public class DataFactory
 			}
 			queryAsString += " location.id.rfid like article.rfid";
 			shouAddAND = true;
+			condition = true;
 		}
 		
 		if(!Util.isEmpty(inputArticle.getRfid()))
@@ -116,6 +120,7 @@ public class DataFactory
 			}
 			queryAsString += " article.rfid like '" + inputArticle.getRfid() + "'";
 			shouAddAND = true;
+			condition = true;
 		}
 		if(!Util.isEmpty(inputArticle.getArticleType()))
 		{
@@ -125,6 +130,7 @@ public class DataFactory
 			}
 			queryAsString += " lower(article.articleType) like '%" + inputArticle.getArticleType().toLowerCase() + "%'";
 			shouAddAND = true;
+			condition = true;
 		}		
 		
 		if(!inputExtensions.isEmpty())
@@ -137,13 +143,36 @@ public class DataFactory
 			int index = 0;
 			for (Iterator iterator = inputExtensions.iterator(); iterator.hasNext();)
 			{
+				ArticleExtension inExtension = (ArticleExtension) iterator.next();
+				String name = inExtension.getId().getName();
+				String value = inExtension.getId().getValue();
+				
+				if((Util.isEmpty(name)) && (Util.isEmpty(value)))
+				{
+					continue;
+				}
+				condition = true;
+				
 				if(index > 0)
 				{
 					queryAsString += " or ";
 				}
-				ArticleExtension inExtension = (ArticleExtension) iterator.next();
-				queryAsString += "(lower(extension.id.name) like '%" + inExtension.getId().getName().toLowerCase() + "%'";
-				queryAsString += " and lower(extension.id.value) like '%" + inExtension.getId().getValue().toLowerCase() + "%')";
+				
+				
+				if((!Util.isEmpty(name)) && (!Util.isEmpty(value)))
+				{
+					queryAsString += "(lower(extension.id.name) like '%" + name.toLowerCase() + "%'";
+					queryAsString += " and lower(extension.id.value) like '%" + value.toLowerCase() + "%')";
+				}
+				else if(!Util.isEmpty(name))
+				{
+					queryAsString += "(lower(extension.id.name) like '%" + name.toLowerCase() + "%')";
+				}
+				else if(!Util.isEmpty(value))
+				{
+					queryAsString += "(lower(extension.id.value) like '%" + value.toLowerCase() + "%')";
+				}
+				
 				index ++;
 			}
 			queryAsString += ")";
@@ -163,6 +192,7 @@ public class DataFactory
 				int index = 0;
 				for (Iterator iterator = inputLocations.iterator(); iterator.hasNext();)
 				{
+					condition = true;
 					if (index > 0)
 					{
 						queryAsString += " or (";
@@ -201,6 +231,12 @@ public class DataFactory
 				shouAddAND = true;
 			}
 			queryAsString += ")";
+		}
+		
+		if(!condition)
+		{
+			/* delete where if no condition */
+			queryAsString = queryAsString.replaceFirst("where", "");
 		}
 		
 		_log.debug("HQL query for finding article: " + queryAsString);
