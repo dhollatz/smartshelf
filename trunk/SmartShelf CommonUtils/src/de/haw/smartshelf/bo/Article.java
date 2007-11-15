@@ -10,6 +10,7 @@
  */
 package de.haw.smartshelf.bo;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -18,8 +19,10 @@ import java.util.List;
  * @version $ Date: 09.11.2007 12:33:38 $
  * @author <a href="mailto:j_urich@freenet.de">j_urich@freenet.de</a>
  */
-public class Article
+public class Article implements Serializable
 {
+	private static final long serialVersionUID = 2767174680787699639L;
+
 	private String _rfid;
 	private String _articleType;
 	private List<ArticleExtension> _articleExtensions;
@@ -87,5 +90,10 @@ public class Article
 		result += " " + getArticleExtensions();
 
 		return result;
+	}
+
+	public void setRfid(String rfid)
+	{
+		this._rfid = rfid;
 	}
 }
