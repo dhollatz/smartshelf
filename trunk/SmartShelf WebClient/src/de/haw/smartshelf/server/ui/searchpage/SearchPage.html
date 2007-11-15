@@ -7,17 +7,24 @@
 
 	<wicket:extend>
 	 
-	<table align="center">
+	<table align="center" style="height: 100%">
 		<tr>
-			<td valign="middle">
-				<div id="feedbackPanel">
-					<span wicket:id="feedback"/>
-			    </div>
-	
+			<td id="feedbackPanel">
+				<span wicket:id="feedback"/>
+			</td>
+		</tr>
+		<tr>
+			<td valign="middle" height="100%">
+					
 				<form wicket:id="inputForm" id="inputForm">
 					<fieldset>
 				        <legend>Input Form</legend>		
 						<table id="inputFormTable" class="content">
+							
+							<tr>
+								<td colspan="2" height="10"></td>
+							</tr>
+						
 							<tr>
 								<td><label for="rfidProperty">RFID</label></td>
 								<td><input wicket:id="rfidProperty" id="rfidProperty" type="text" size="10"/></td>
@@ -32,8 +39,12 @@
 							</tr>
 							
 							<tr>
+								<td colspan="2" height="20"></td>
+							</tr>
+							
+							<tr>
 							  <td colspan="2">
-								  <input wicket:id="searchButton" type="image" value="buttonFactory:save:Save"/>
+								  <input wicket:id="searchButton" type="image" value="buttonFactory:search:Search"/>
 								  <a wicket:id="resetButtonLink" src="">
 								      <img wicket:id="resetButtonImage" value="buttonFactory:reset:Reset"/> 
 								  </a>
