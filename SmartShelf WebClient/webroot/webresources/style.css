@@ -1,11 +1,27 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 body {
 	background-color: white;
 	background-image: url('wicket-logo.png');
 	background-repeat: no-repeat;
 	background-attachment: fixed;
 	background-position: 96% 96%;
-	color: #6F6F6F;
-	font-family: 'Lucida Sans', 'Helvetica', 'Sans-serif', 'sans';
+	color: black;
+	font-family: 'Tahoma', 'Lucida Sans', 'Arial', 'Helvetica', 'Sans-serif', 'sans';
 	font-size: 9pt;
 	line-height: 1.8em;
 	padding: 10px 10px 10px 10px;
@@ -14,6 +30,12 @@ body {
 
 h1,h2,h3,h4,h5,h6,h7,h8 {
 	color: #E9601A;
+	font-weight: normal;
+}
+
+h1,h2 {
+	letter-spacing: -1px;
+	font-family: 'Trebuchet MS';
 }
 
 #extitle {
@@ -63,6 +85,10 @@ h1,h2,h3,h4,h5,h6,h7,h8 {
 	padding: 2px 2px 2px 6px;
 }
 
+#titleblock a {
+	color: #000;
+}
+
 h2 {
 	font-size: 1.25em;
 }
@@ -72,7 +98,12 @@ h3 {
 }
 
 a {
-	color: #6F6F6F;
+	color: #E9601A;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+a:hover {
 	text-decoration: underline;
 }
 
@@ -107,18 +138,18 @@ a.none {
 	padding-right: 0px;
 }
 
-#inputForm label {
+.inputForm label {
 	display: block;
 	margin-top: 5px;
 }
 
 #numberRadioChoice label { display: inline !important; }
 
-#inputForm label.non {
+.inputForm label.non {
 	display: inline !important;
 }
 
-#inputFormTable td {
+.inputFormTable td {
 	vertical-align: top;
 	padding: 10px;
 }
@@ -156,7 +187,7 @@ table.dataview tr { padding-top: 2px; padding-bottom: 2px; }
 table.dataview tr.even { background-color: #ffebcd; }
 table.dataview tr.odd { background-color: #fff; }
 table.dataview tr td { padding-left: 8px; padding-right: 30px; }
-table.dataview tr th { color: black; padding-top: 3px; padding-bottom: 3px; padding-left: 8px; padding-right: 24px; background-color: #c1e4ff; border-bottom: 1px solid #0079d6; border-top: 1px solid #0079d6; text-align: left; white-space: nowrap; vertical-align: middle;}
+table.dataview tr th { color: black; padding-top: 3px; padding-bottom: 3px; padding-left: 8px; padding-right: 30px; background-color: #c1e4ff; border-bottom: 1px solid #0079d6; border-top: 1px solid #0079d6; text-align: left; white-space: nowrap; vertical-align: middle;}
 
 table.dataview tr th { background-position: right; background-repeat:no-repeat; }
 table.dataview tr th.wicket_orderDown {
@@ -201,6 +232,10 @@ div.tabpanel div.tab-row a {
   white-space:nowrap;
   color:#eee;
   }
+  
+div.tab-panel {
+	clear: left;
+}
   
 div.tabpanel div.tab-row a:hover {
   color:#fff;
@@ -413,4 +448,45 @@ div.tabpanel4 div.tab-row a:hover {
         width: 0%;
     }
 /* END PROGRESS BAR */
+
+table.grid {
+	margin-bottom: 10px;
+	border-bottom: 1px solid #0079d6;
+	font-size: 1em;
+	font-family: arial;
+	width: 100%;
+	}
+	
  
+table.grid tr { padding-top: 2px; padding-bottom: 2px; }
+table.grid tr.odd { background-color: #ffebcd; }
+table.grid tr.even { background-color: #fff; }
+table.grid tr td { padding-left: 8px; padding-right: 30px; }
+
+
+/* NAVIGATION */
+table.grid tr.navigation { text-align: left; font-size: 0.8em;}
+table.grid tr.navigation td { padding-right: 0px;}
+
+
+/* HEADERS */
+table.grid tr th { font-weight: normal; padding-top: 3px; padding-bottom: 3px; padding-left: 8px; padding-right: 24px; background-color: #c1e4ff; border-bottom: 1px solid #0079d6; border-top: 1px solid #0079d6; text-align: left; white-space: nowrap; vertical-align: middle;}
+table.grid tr th a { padding-right: 15px; background-position: right; background-repeat:no-repeat; }
+table.grid tr th.wicket_orderDown a { color:black; background-image: url(images/arrow_down.png); }
+table.grid tr th.wicket_orderUp a { color: black; background-image: url(images/arrow_up.png); }
+table.grid tr th.wicket_orderNone a {
+	background-image: url(images/arrow_off.png);
+}
+table.grid tr th a { font-weight: normal; }
+
+
+/* FILTERS */
+table.grid td.filter-td { font-size: 1em; background-color: #c1e4ff; border-bottom: 1px solid #0079d6; }
+table.grid td.filter-td input.go { width: 45%; }
+table.grid td.filter-td input.clear { width: 45%; }
+table.grid td.filter-td input { width: 100%; font-size: 0.6em; }
+table.grid td.filter-td select { width: 100%; font-size: 0.6em; }
+
+tr.section td {
+	padding-top: 0.75em;
+}

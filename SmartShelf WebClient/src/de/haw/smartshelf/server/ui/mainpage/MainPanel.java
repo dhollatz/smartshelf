@@ -1,4 +1,4 @@
-package de.haw.smartshelf.server.mainpage;
+package de.haw.smartshelf.server.ui.mainpage;
 
 import wicket.markup.html.panel.Panel;
 import wicket.model.IModel;

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+	<link rel="stylesheet" type="text/css" href="style.css"/>
+</head>
+<body>
+
+	<wicket:extend>
+	 
+	<table align="center">
+		<tr>
+			<td valign="middle">
+				<div id="feedbackPanel">
+					<span wicket:id="feedback"/>
+			    </div>
+	
+				<form wicket:id="inputForm" id="inputForm">
+					<fieldset>
+				        <legend>Input Form</legend>		
+						<table id="inputFormTable" class="content">
+							<tr>
+								<td><label for="rfidProperty">RFID</label></td>
+								<td><input wicket:id="rfidProperty" id="rfidProperty" type="text" size="10"/></td>
+							</tr>
+							<tr>
+								<td><label for="articleTypeProperty">Article Type</label></td>
+								<td><input wicket:id="articleTypeProperty" id="articleTypeProperty" type="text" size="20"/></td>
+							</tr>
+							<tr>
+								<td><label for="freeTextSearchProperty">Free Text Search</label></td>
+								<td><input wicket:id="freeTextSearchProperty" id="freeTextSearchProperty" type="text" size="40"/></td>
+							</tr>
+							
+							<tr>
+							  <td colspan="2">
+								  <input wicket:id="searchButton" type="image" value="buttonFactory:save:Save"/>
+								  <a wicket:id="resetButtonLink" src="">
+								      <img wicket:id="resetButtonImage" value="buttonFactory:reset:Reset"/> 
+								  </a>
+							  </td>
+							</tr>
+						</table>
+					
+					</fieldset>
+				</form>
+			</td>
+		</tr>
+	</table>
+	</wicket:extend>
+
+</body>
+</html>

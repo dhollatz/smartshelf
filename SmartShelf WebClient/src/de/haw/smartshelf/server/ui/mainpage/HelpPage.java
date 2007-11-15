@@ -8,7 +8,8 @@
  * Hamburg, Germany.
  * All rights reserved.
  */
-package de.haw.smartshelf.server.mainpage;
+package de.haw.smartshelf.server.ui.mainpage;
+
 
 /**
  * This class ... Copyright (c) 2007 SmartShelf
