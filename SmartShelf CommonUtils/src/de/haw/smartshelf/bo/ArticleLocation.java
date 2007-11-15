@@ -10,14 +10,18 @@
  */
 package de.haw.smartshelf.bo;
 
+import java.io.Serializable;
+
 /**
  * This class ... Copyright (c) 2007 SmartShelf
  * 
  * @version $ Date: 09.11.2007 12:35:52 $
  * @author <a href="mailto:j_urich@freenet.de">j_urich@freenet.de</a>
  */
-public class ArticleLocation
+public class ArticleLocation implements Serializable
 {
+	private static final long serialVersionUID = -3687340913536078411L;
+
 	private Shelf _shelf;
 	private Article _article;
 	private String _cell;
