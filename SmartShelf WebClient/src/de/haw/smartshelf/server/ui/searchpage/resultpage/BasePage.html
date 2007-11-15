@@ -1,13 +1,27 @@
 <wicket:extend>
-	<wicket:child/>
 	
-	<br/>
-	<br/>
+	<table>
+		<tr>
+			<td valign="top" align="center">
+				<h3>Found Articles</h3>
+				<wicket:child/>
+			</td>
+		</tr>
+		<tr>
+			<td height="20"></td>
+		</tr>
+		<tr>
+			<td align="center">
+				<span wicket:id="articleDetailsPanel"></span>
+			</td>
+		</tr>
+	</table>
+
 <!-- 
 	<span style="display: block; border: 1px solid black;">
 		Selected Contact: <span wicket:id="selectedLabel">[selected contact]</span>
 	</span>
  -->
 	
-	<span wicket:id="articleDetailsPanel"></span>	
+		
 </wicket:extend>
