@@ -1,4 +1,5 @@
-package de.haw.smartshelf.server.mainpage;
+package de.haw.smartshelf.server.ui.mainpage;
+
 
 
 public class WellcomePage extends MainPage
