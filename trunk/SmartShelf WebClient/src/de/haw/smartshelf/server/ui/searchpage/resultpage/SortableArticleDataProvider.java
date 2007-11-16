@@ -1,4 +1,3 @@
-
 package de.haw.smartshelf.server.ui.searchpage.resultpage;
 
 import java.util.Iterator;
@@ -8,27 +7,27 @@ import wicket.extensions.markup.html.repeater.util.SortParam;
 import wicket.extensions.markup.html.repeater.util.SortableDataProvider;
 import wicket.model.IModel;
 import de.haw.smartshelf.bo.Article;
-
+import de.haw.smartshelf.server.logic.IArticlesHolder;
 
 public class SortableArticleDataProvider extends SortableDataProvider
 {
 	private static final long serialVersionUID = 1231296502023976453L;
-	
-	private ResultPage _page;
+
+	private IArticlesHolder _articlesHolder;
 
 	/**
 	 * constructor
 	 */
-	public SortableArticleDataProvider(ResultPage page)
+	public SortableArticleDataProvider(IArticlesHolder articlesHolder)
 	{
-		_page = page;
+		_articlesHolder = articlesHolder;
 		// set default sort
 		setSort("articleType", true);
 	}
 
 	protected List<Article> getArticles()
 	{
-		return _page.getArticles();
+		return _articlesHolder.getArticles();
 	}
 
 	/**
@@ -46,7 +45,14 @@ public class SortableArticleDataProvider extends SortableDataProvider
 	 */
 	public int size()
 	{
-		return getArticles().size();
+		try
+		{
+			return getArticles().size();
+		}
+		catch (Exception e)
+		{
+			return 0;
+		}
 	}
 
 	/**
@@ -54,7 +60,7 @@ public class SortableArticleDataProvider extends SortableDataProvider
 	 */
 	public IModel model(Object object)
 	{
-		return new DetachableArticleModel((Article)object);
+		return new DetachableArticleModel((Article) object);
 	}
 
 }

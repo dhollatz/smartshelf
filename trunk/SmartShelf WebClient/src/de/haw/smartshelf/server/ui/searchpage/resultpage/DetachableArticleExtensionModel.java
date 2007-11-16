@@ -23,7 +23,9 @@ import de.haw.smartshelf.bo.ArticleExtension;
  */
 public class DetachableArticleExtensionModel extends AbstractReadOnlyDetachableModel
 {
-private ArticleExtension _articleExtension;
+	private static final long serialVersionUID = 1883050934001331195L;
+	
+	private ArticleExtension _articleExtension;
 	
 	public DetachableArticleExtensionModel(ArticleExtension articleExtension)
 	{
