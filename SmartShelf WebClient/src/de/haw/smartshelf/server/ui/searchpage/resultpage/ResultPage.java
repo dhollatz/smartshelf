@@ -17,8 +17,8 @@ import wicket.markup.html.panel.FeedbackPanel;
 import de.haw.smartshelf.bo.Article;
 import de.haw.smartshelf.bo.ArticleExtension;
 import de.haw.smartshelf.commonutils.Util;
-import de.haw.smartshelf.db.bo.BoFactory;
-import de.haw.smartshelf.server.SmartShelfSession;
+import de.haw.smartshelf.server.logic.ArticleSearchManager;
+import de.haw.smartshelf.server.logic.IArticlesHolder;
 import de.haw.smartshelf.server.ui.mainpage.MainPage;
 import de.haw.smartshelf.server.ui.searchpage.SearchInputModel;
 
@@ -28,58 +28,106 @@ import de.haw.smartshelf.server.ui.searchpage.SearchInputModel;
  * @version $ Date: 15.11.2007 11:17:36 $
  * @author <a href="mailto:j_urich@freenet.de">j_urich@freenet.de</a>
  */
-public class ResultPage extends MainPage
+public class ResultPage extends MainPage implements IArticlesHolder, IPageWithArticleSelection
 {
 	private static final long serialVersionUID = -6759662221146641593L;
 
 	SearchInputModel _searchInputModel = null;
 	
+	
+	private Article article;
+	private ArticleDetailsPanel _articleDetailsPanel;
+	private AjaxDataTablePanel _ajaxDataTablePanel;
+	protected List<Article> _articles = new ArrayList<Article>();
+
 	private ResultPage()
 	{
 		super();
-		setPageTitle("SmartShelf Search Result Page");
-		final FeedbackPanel feedback = new FeedbackPanel("feedback");
-		add(feedback);
+		
 	}
 	
 	public ResultPage(SearchInputModel searchInputModel)
 	{
 		this();
 		_searchInputModel = searchInputModel;
-		
+
 		searchInDb();
+		initPage();
 	}
 	
+	private void initPage()
+	{
+		setPageTitle("SmartShelf Search Result Page");
+		final FeedbackPanel feedback = new FeedbackPanel("feedback");
+		add(feedback);
+		
+		_articleDetailsPanel = new ArticleDetailsPanel("articleDetailsPanel");
+		add(_articleDetailsPanel);
+		
+		_ajaxDataTablePanel = new AjaxDataTablePanel("foundArticlesPanel", this);
+		add(_ajaxDataTablePanel);
+	}
+
+	
+
 	private void searchInDb()
 	{
 		Article inputArt = createInputArticle();
-		List<Article> foundArticles = BoFactory.getInstance().findArticle(inputArt);
-		((SmartShelfSession)getSession()).setArticles(foundArticles);
+		new ArticleSearchManager(this).searchArticles(inputArt);
 	}
-	
+
 	public Article createInputArticle()
 	{
 		Article inputArticle = new Article(_searchInputModel.getRfidProperty());
 		inputArticle.setArticleType(_searchInputModel.getArticleTypeProperty());
 		List<ArticleExtension> articleExtensions = new ArrayList<ArticleExtension>();
-		if(!Util.isEmpty(_searchInputModel.getFreeTextSearchProperty()))
+		if (!Util.isEmpty(_searchInputModel.getFreeTextSearchProperty()))
 		{
 			articleExtensions.add(new ArticleExtension("", _searchInputModel.getFreeTextSearchProperty()));
 		}
-		
+
 		inputArticle.setArticleExtensions(articleExtensions);
-	
+
 		return inputArticle;
 	}
-	
-	/**
-	 * Get downcast session object for easy access by subclasses
-	 * 
-	 * @return The session
-	 */
-	public java.util.List<Article> getArticles()
+
+	public List<Article> getArticles()
 	{
-		return ((SmartShelfSession)getSession()).getArticles();
+		return this._articles;
+	}
+
+	public void setArticles(List<Article> articles)
+	{
+		this._articles = articles;
+		refresh();
+	}
+
+	private void refresh()
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	protected void refreshArticleDetailsPanel()
+	{
+		_articleDetailsPanel.setArticle(article);
+		_articleDetailsPanel.reinit();
 	}
 	
+	public void refreshPage()
+	{
+		refreshArticleDetailsPanel();
+	}
+
+
+	public void setArticle(Article selectedArticle)
+	{
+		article = selectedArticle;
+	}
+
+	public String getSelectActionLinkId()
+	{
+		return "select";
+	}
+
 }

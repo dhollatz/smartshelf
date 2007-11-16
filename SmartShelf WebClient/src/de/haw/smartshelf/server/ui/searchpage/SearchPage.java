@@ -9,8 +9,6 @@ import wicket.markup.html.panel.FeedbackPanel;
 import wicket.model.CompoundPropertyModel;
 import wicket.model.Model;
 import de.haw.smartshelf.server.ui.mainpage.MainPage;
-import de.haw.smartshelf.server.ui.searchpage.resultpage.AjaxDataTablePage;
-import de.haw.smartshelf.server.ui.searchpage.resultpage.BasePage;
 import de.haw.smartshelf.server.ui.searchpage.resultpage.ResultPage;
 
 public class SearchPage extends MainPage
@@ -84,7 +82,7 @@ public class SearchPage extends MainPage
 		{
 			// Form validation successful. Display message showing edited model.
 //			info("Saved model " + getModelObject());
-			setResponsePage(new AjaxDataTablePage(inputModel));
+			setResponsePage(new ResultPage(inputModel));
 		}
 	}
 }
