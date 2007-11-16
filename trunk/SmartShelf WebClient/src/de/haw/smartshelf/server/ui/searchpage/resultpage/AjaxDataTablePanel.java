@@ -52,14 +52,24 @@ public class AjaxDataTablePanel extends Panel implements IArticlesHolder
 
 				public void populateItem(Item cellItem, String componentId, IModel model)
 				{
-					cellItem.add(new ActionPanel(componentId, model, _pwas));
+					cellItem.add(new ViewActionPanel(componentId, model, _pwas));
 				}
 			});
 
 			columns.add(new PropertyColumn(new Model("RFID"), "rfid", "rfid"));
 			columns.add(new PropertyColumn(new Model("Article Type"), "articleType", "articleType"));
 			
-			add(new AjaxFallbackDefaultDataTable("table", columns, new SortableArticleDataProvider(this), 8));
+			columns.add(new AbstractColumn(new Model("Actions"))
+			{
+				private static final long serialVersionUID = -4957503549965022013L;
+
+				public void populateItem(Item cellItem, String componentId, IModel model)
+				{
+					cellItem.add(new FindActionPanel(componentId, model, _pwas));
+				}
+			});
+			
+			add(new AjaxFallbackDefaultDataTable("table", columns, new SortableArticleDataProvider(this), 5));
 			_initialized = true;
 		}
 	}

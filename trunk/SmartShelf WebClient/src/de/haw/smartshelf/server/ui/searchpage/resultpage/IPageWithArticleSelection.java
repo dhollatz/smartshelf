@@ -26,4 +26,6 @@ public interface IPageWithArticleSelection
 	public void refreshPage();
 	public String getSelectActionLinkId();
 	public List<Article> getArticles();
+	public void determineArticleLocation(Article article);
+	public String getFindActionLinkId();
 }

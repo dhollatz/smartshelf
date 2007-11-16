@@ -13,6 +13,7 @@ package de.haw.smartshelf.server.ui.searchpage.resultpage;
 import java.util.ArrayList;
 import java.util.List;
 
+import wicket.markup.html.basic.Label;
 import wicket.markup.html.panel.FeedbackPanel;
 import de.haw.smartshelf.bo.Article;
 import de.haw.smartshelf.bo.ArticleExtension;
@@ -35,9 +36,10 @@ public class ResultPage extends MainPage implements IArticlesHolder, IPageWithAr
 	SearchInputModel _searchInputModel = null;
 	
 	
-	private Article article;
+	private Article _selectedArticle;
 	private ArticleDetailsPanel _articleDetailsPanel;
 	private AjaxDataTablePanel _ajaxDataTablePanel;
+	private ArticleLocationDetailsPanel _articleLocationDetailsPanel;
 	protected List<Article> _articles = new ArrayList<Article>();
 
 	private ResultPage()
@@ -61,11 +63,16 @@ public class ResultPage extends MainPage implements IArticlesHolder, IPageWithAr
 		final FeedbackPanel feedback = new FeedbackPanel("feedback");
 		add(feedback);
 		
-		_articleDetailsPanel = new ArticleDetailsPanel("articleDetailsPanel");
-		add(_articleDetailsPanel);
-		
 		_ajaxDataTablePanel = new AjaxDataTablePanel("foundArticlesPanel", this);
 		add(_ajaxDataTablePanel);
+		
+//		_articleDetailsPanel = new ArticleDetailsPanel("articleDetailsPanel");
+//		add(_articleDetailsPanel);
+		add(new Label("articleDetailsPanel", ""));
+		
+//		_articleLocationDetailsPanel = new ArticleLocationDetailsPanel("articleLocationDetailsPanel");
+//		add(_articleLocationDetailsPanel);
+		add(new Label("articleLocationDetailsPanel", ""));
 	}
 
 	
@@ -110,8 +117,19 @@ public class ResultPage extends MainPage implements IArticlesHolder, IPageWithAr
 
 	protected void refreshArticleDetailsPanel()
 	{
-		_articleDetailsPanel.setArticle(article);
-		_articleDetailsPanel.reinit();
+		if(_articleDetailsPanel != null)
+		{
+			_articleDetailsPanel.setArticle(_selectedArticle);
+			_articleDetailsPanel.reinit();
+		}
+		else 
+		{
+			remove("articleDetailsPanel");
+			_articleDetailsPanel = new ArticleDetailsPanel("articleDetailsPanel");
+			_articleDetailsPanel.setArticle(_selectedArticle);
+			add(_articleDetailsPanel);
+			_articleDetailsPanel.reinit();
+		}
 	}
 	
 	public void refreshPage()
@@ -122,12 +140,26 @@ public class ResultPage extends MainPage implements IArticlesHolder, IPageWithAr
 
 	public void setArticle(Article selectedArticle)
 	{
-		article = selectedArticle;
+		_selectedArticle = selectedArticle;
 	}
 
 	public String getSelectActionLinkId()
 	{
 		return "select";
 	}
+	public String getFindActionLinkId()
+	{
+		return "determineLocation";
+	}
+
+	public void determineArticleLocation(Article article)
+	{
+		// TODO determine location
+		remove("articleLocationDetailsPanel");
+		_articleLocationDetailsPanel = new ArticleLocationDetailsPanel("articleLocationDetailsPanel");
+		add(_articleLocationDetailsPanel);
+	}
+
+	
 
 }

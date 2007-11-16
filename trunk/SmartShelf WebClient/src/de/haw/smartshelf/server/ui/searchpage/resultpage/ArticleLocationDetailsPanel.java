@@ -1,0 +1,94 @@
+/*
+ * $HeadURL: ArticleLocationDetailPanel.java $
+ *
+ * $Author: Jaroslaw Urich $
+ * $Date: 16.11.2007 19:28:09 $
+ *
+ * Copyright 2007 by SmartShelf,
+ * Hamburg, Germany.
+ * All rights reserved.
+ */
+package de.haw.smartshelf.server.ui.searchpage.resultpage;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+
+import wicket.extensions.markup.html.repeater.refreshing.Item;
+import wicket.extensions.markup.html.repeater.refreshing.OddEvenItem;
+import wicket.extensions.markup.html.repeater.refreshing.RefreshingView;
+import wicket.extensions.markup.html.repeater.util.ModelIteratorAdapter;
+import wicket.markup.html.basic.Label;
+import wicket.markup.html.panel.Panel;
+import wicket.model.IModel;
+import wicket.model.PropertyModel;
+import de.haw.smartshelf.bo.Article;
+import de.haw.smartshelf.bo.ArticleExtension;
+import de.haw.smartshelf.bo.ArticleLocation;
+
+/**
+ * This class ... Copyright (c) 2007 SmartShelf
+ * 
+ * @version $ Date: 16.11.2007 19:28:09 $
+ * @author <a href="mailto:j_urich@freenet.de">j_urich@freenet.de</a>
+ */
+public class ArticleLocationDetailsPanel extends Panel
+{
+	private static final long serialVersionUID = 1263651252095611901L;
+
+	private ArticleLocation _articleLocation;
+	
+	public ArticleLocationDetailsPanel(String id)
+	{
+		super(id);
+		init();
+	}
+
+	public ArticleLocationDetailsPanel(String id, IModel model)
+	{
+		super(id, model);
+		init();
+	}
+	
+	
+	
+	private void init()
+	{
+		if(_articleLocation != null)
+		{
+			add(new Label("rfid", _articleLocation.getArticle().getRfid()));
+			add(new Label("shelfId", _articleLocation.getShelf().getId()));
+			add(new Label("cell", _articleLocation.getCell()));
+			add(new Label("position", _articleLocation.getPosition()));
+		}
+		else
+		{
+			add(new Label("rfid", "NONE"));
+			add(new Label("shelfId", "NONE"));
+			add(new Label("cell", "NONE"));
+			add(new Label("position", "NONE"));
+		}
+	}
+
+	public ArticleLocation getArticleLocation()
+	{
+		return this._articleLocation;
+	}
+
+	public void setArticleLocation(ArticleLocation articleLocation)
+	{
+		this._articleLocation = articleLocation;
+	}
+	
+	
+
+
+	public void reinit()
+	{
+		remove("rfid");
+		remove("articleType");
+		remove("extensionsTable");
+		
+		init();
+	}
+	
+}

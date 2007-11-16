@@ -88,10 +88,10 @@ public class SortableArticleDataProvider extends SortableDataProvider
 	 */
 	public Iterator iterator(int first, int count)
 	{
-		return sort(first, count).iterator();
+		return sort().subList(first, first + (count)).iterator();		
 	}
 
-	private List<Article> sort(int first, int count)
+	private List<Article> sort()
 	{
 		SortParam sp = getSort();
 		String prop = sp.getProperty();
@@ -118,6 +118,7 @@ public class SortableArticleDataProvider extends SortableDataProvider
         
         List<Article> articles = new ArrayList<Article>(getArticles());
         Collections.sort(articles, comparator);
+        
         return articles;		
 	}
 

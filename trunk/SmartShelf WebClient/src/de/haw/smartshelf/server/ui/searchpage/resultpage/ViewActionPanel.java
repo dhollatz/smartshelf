@@ -21,7 +21,7 @@ import de.haw.smartshelf.bo.Article;
  * @version $ Date: 16.11.2007 15:02:33 $
  * @author <a href="mailto:j_urich@freenet.de">j_urich@freenet.de</a>
  */
-public class ActionPanel extends Panel
+public class ViewActionPanel extends Panel
 {
 	private static final long serialVersionUID = 8522001292702540628L;
 	
@@ -33,7 +33,7 @@ public class ActionPanel extends Panel
 	 * @param model
 	 *            model for contact
 	 */
-	public ActionPanel(String id, IModel model, IPageWithArticleSelection pwas)
+	public ViewActionPanel(String id, IModel model, IPageWithArticleSelection pwas)
 	{
 		super(id, model);
 		_pwas = pwas;
