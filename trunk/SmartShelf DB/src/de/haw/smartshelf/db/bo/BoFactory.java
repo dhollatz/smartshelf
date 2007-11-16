@@ -138,8 +138,22 @@ public class BoFactory
 		
 		Shelf boShelf =  new Shelf();
 		boShelf.setId(persSchelf.getId());
-		boShelf.setLocation(persSchelf.getLocation());
-		boShelf.setName(persSchelf.getName());
+		try
+		{
+			boShelf.setLocation(persSchelf.getLocation());
+		}
+		catch (RuntimeException e)
+		{
+			boShelf.setLocation(null);
+		}
+		try
+		{
+			boShelf.setName(persSchelf.getName());
+		}
+		catch (RuntimeException e)
+		{
+			boShelf.setName(null);
+		}
 	
 		return boShelf;
 	}
