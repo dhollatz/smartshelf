@@ -49,6 +49,12 @@ public class ArticleLocationDetailsPanel extends Panel
 		init();
 	}
 	
+	public ArticleLocationDetailsPanel(String id, ArticleLocation articleLocation)
+	{
+		super(id);
+		_articleLocation = articleLocation;
+		init();
+	}	
 	
 	
 	private void init()
