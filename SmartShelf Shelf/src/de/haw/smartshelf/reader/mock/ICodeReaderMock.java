@@ -3,11 +3,15 @@ package de.haw.smartshelf.reader.mock;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.apache.log4j.Logger;
+
 import de.haw.smartshelf.reader.ShelfReader;
 import de.haw.smartshelf.reader.tags.ICodeTag;
 import de.haw.smartshelf.reader.tags.RFIDTag;
 
 public class ICodeReaderMock implements ShelfReader {
+
+	private static final Logger LOG = Logger.getLogger(ICodeReaderMock.class);
 
 	private Collection<String> range;
 
@@ -23,6 +27,7 @@ public class ICodeReaderMock implements ShelfReader {
 	}
 
 	public Collection<RFIDTag> gatherTags() {
+		LOG.debug("gathering tags...");
 		Collection<RFIDTag> tags = new ArrayList<RFIDTag>();
 		for (String id : range) {
 			RFIDTag tag = new ICodeTag(id);
