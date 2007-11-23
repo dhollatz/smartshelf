@@ -5,11 +5,11 @@ import java.util.Collection;
 
 import org.apache.log4j.Logger;
 
-import de.haw.smartshelf.reader.ShelfReader;
+import de.haw.smartshelf.reader.AbstractReader;
 import de.haw.smartshelf.reader.tags.ICodeTag;
 import de.haw.smartshelf.reader.tags.RFIDTag;
 
-public class ICodeReaderMock implements ShelfReader {
+public class ICodeReaderMock extends AbstractReader {
 
 	private static final Logger LOG = Logger.getLogger(ICodeReaderMock.class);
 

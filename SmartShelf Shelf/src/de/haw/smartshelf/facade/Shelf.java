@@ -46,6 +46,7 @@ public class Shelf {
 		} catch (IllegalArgumentException e) {
 			LOG.error(e.getMessage());
 		}
+
 	}
 
 	public Collection<RFIDTag> getAllItems() {
