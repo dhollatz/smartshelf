@@ -8,6 +8,19 @@ import org.simpleframework.xml.load.Persister;
 public class ConfigurationUtil {
 	public static void main(String[] args) {
 		writeEmptyConfig();
+		readConfig();
+	}
+
+	private static void readConfig() {
+		Serializer serializer = new Persister();
+		File source = new File("config/shelfProperties.xml");
+		ShelfConfig shelfConfig = null;
+		try {
+			shelfConfig = serializer.read(ShelfConfig.class, source);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println(shelfConfig);
 	}
 
 	private static void writeEmptyConfig() {
