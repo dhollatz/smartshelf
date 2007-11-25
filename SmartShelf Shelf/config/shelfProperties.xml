@@ -1,0 +1,14 @@
+<shelfConfig id="0">
+   <readerConfigs>
+      <readerConfig id="0">
+         <type>A</type>
+         <position>1</position>
+         <port>1</port>
+      </readerConfig>
+      <readerConfig id="1">
+         <type>B</type>
+         <position>2</position>
+         <port>2</port>
+      </readerConfig>
+   </readerConfigs>
+</shelfConfig>
