@@ -13,14 +13,15 @@ package de.haw.smartshelf.server.ui.searchpage.resultpage;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import wicket.extensions.markup.html.repeater.refreshing.Item;
-import wicket.extensions.markup.html.repeater.refreshing.OddEvenItem;
-import wicket.extensions.markup.html.repeater.refreshing.RefreshingView;
-import wicket.extensions.markup.html.repeater.util.ModelIteratorAdapter;
-import wicket.markup.html.basic.Label;
-import wicket.markup.html.panel.Panel;
-import wicket.model.IModel;
-import wicket.model.PropertyModel;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.markup.repeater.Item;
+import org.apache.wicket.markup.repeater.OddEvenItem;
+import org.apache.wicket.markup.repeater.RefreshingView;
+import org.apache.wicket.markup.repeater.util.ModelIteratorAdapter;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.PropertyModel;
+
 import de.haw.smartshelf.bo.Article;
 import de.haw.smartshelf.bo.ArticleExtension;
 

@@ -13,11 +13,11 @@ package de.haw.smartshelf.server.ui.searchpage.resultpage;
 import java.util.ArrayList;
 import java.util.List;
 
-import wicket.markup.html.basic.Label;
-import wicket.markup.html.panel.FeedbackPanel;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
+
 import de.haw.smartshelf.bo.Article;
 import de.haw.smartshelf.bo.ArticleExtension;
-import de.haw.smartshelf.bo.ArticleLocation;
 import de.haw.smartshelf.commonutils.Util;
 import de.haw.smartshelf.server.logic.ArticleSearchManager;
 import de.haw.smartshelf.server.logic.IArticlesHolder;
@@ -158,7 +158,8 @@ public class ResultPage extends MainPage implements IArticlesHolder, IPageWithAr
 		// TODO determine location
 		remove("articleLocationDetailsPanel");
 		_articleLocationDetailsPanel = new ArticleLocationDetailsPanel("articleLocationDetailsPanel", article.getArticleLocation());
-		add(_articleLocationDetailsPanel);
+		add(_articleLocationDetailsPanel);	
+		
 	}
 
 	

@@ -1,13 +1,12 @@
 
 package de.haw.smartshelf.server.ui.searchpage.resultpage;
 
-import wicket.Component;
-import wicket.model.AbstractReadOnlyDetachableModel;
-import wicket.model.IModel;
+import org.apache.wicket.model.AbstractReadOnlyModel;
+
 import de.haw.smartshelf.bo.Article;
 
 
-public class DetachableArticleModel extends AbstractReadOnlyDetachableModel
+public class DetachableArticleModel extends AbstractReadOnlyModel
 {
 	private static final long serialVersionUID = 3034362987066805158L;
 
@@ -19,28 +18,9 @@ public class DetachableArticleModel extends AbstractReadOnlyDetachableModel
 	}
 
 	@Override
-	public IModel getNestedModel()
-	{
-		return null;
-	}
-
-	@Override
-	protected void onAttach()
-	{
-		
-	}
-
-	@Override
-	protected void onDetach()
-	{
-				
-	}
-
-	@Override
-	protected Object onGetObject(Component arg0)
+	public Object getObject()
 	{
 		return _article;
 	}
-	
 	
 }

@@ -7,7 +7,7 @@
     <display-name>Smart:Shelf</display-name>
     <servlet>
         <servlet-name>SmartShelfApplication</servlet-name>
-        <servlet-class>wicket.protocol.http.WicketServlet</servlet-class>
+        <servlet-class>org.apache.wicket.protocol.http.WicketServlet</servlet-class>
         <init-param>
           <param-name>applicationClassName</param-name>
           <param-value>de.haw.smartshelf.server.SmartShelfApplication</param-value>
