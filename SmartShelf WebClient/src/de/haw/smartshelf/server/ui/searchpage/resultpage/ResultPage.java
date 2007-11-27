@@ -13,6 +13,8 @@ package de.haw.smartshelf.server.ui.searchpage.resultpage;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.wicket.Component;
+import org.apache.wicket.extensions.ajax.markup.html.AjaxLazyLoadPanel;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 
@@ -153,13 +155,31 @@ public class ResultPage extends MainPage implements IArticlesHolder, IPageWithAr
 		return "determineLocation";
 	}
 
-	public void determineArticleLocation(Article article)
+	public void determineArticleLocation(final Article article)
 	{
 		// TODO determine location
-		remove("articleLocationDetailsPanel");
-		_articleLocationDetailsPanel = new ArticleLocationDetailsPanel("articleLocationDetailsPanel", article.getArticleLocation());
-		add(_articleLocationDetailsPanel);	
-		
+		remove("articleLocationDetailsPanel");		
+		add(new AjaxLazyLoadPanel("articleLocationDetailsPanel")
+		{    
+			private static final long serialVersionUID = -1417563085072943447L;
+
+			@Override
+            public Component getLazyLoadComponent(String id)
+            {
+                // sleep for 5 seconds to show the behavior
+                try
+                {
+                	//TODO: determine article location
+                    Thread.sleep(5000);
+                }
+                catch (InterruptedException e)
+                {
+                    throw new RuntimeException(e);
+                }
+                return new ArticleLocationDetailsPanel(id, article.getArticleLocation());
+            }
+        
+        });
 	}
 
 	
