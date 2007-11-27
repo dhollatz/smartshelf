@@ -12,6 +12,9 @@ public class ReaderConfig {
 	@Element(name = "type")
 	private String type = "0";
 
+	@Element(name = "class")
+	private String classname = "null";
+
 	@Element(name = "position")
 	private int position = 0;
 
@@ -32,5 +35,14 @@ public class ReaderConfig {
 
 	public String getPort() {
 		return port;
+	}
+
+	public String toString() {
+		return "<Reader> id: " + id + " - type: " + type + " - class: "
+				+ classname + " - position: " + position + " - port: " + port;
+	}
+
+	public String getClassname() {
+		return classname;
 	}
 }
