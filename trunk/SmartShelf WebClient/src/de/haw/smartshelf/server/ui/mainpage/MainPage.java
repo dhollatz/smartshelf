@@ -1,8 +1,8 @@
 package de.haw.smartshelf.server.ui.mainpage;
 
-import wicket.markup.html.basic.Label;
-import wicket.markup.html.link.BookmarkablePageLink;
-import wicket.model.PropertyModel;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
+import org.apache.wicket.model.PropertyModel;
+
 import de.haw.smartshelf.server.SmartShelfPage;
 import de.haw.smartshelf.server.ui.searchpage.SearchPage;
 
@@ -13,7 +13,7 @@ public abstract class MainPage extends SmartShelfPage
 	 */
 	public MainPage()
 	{
-		add(new Label("title", new PropertyModel(this, "pageTitle")));
+		add(new org.apache.wicket.markup.html.basic.Label("title", new PropertyModel(this, "pageTitle")));
 		
 		add(new BookmarkablePageLink("pageWelcome", WellcomePage.class));
         add(new BookmarkablePageLink("pageSearch", SearchPage.class));

@@ -6,9 +6,10 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-import wicket.extensions.markup.html.repeater.util.SortParam;
-import wicket.extensions.markup.html.repeater.util.SortableDataProvider;
-import wicket.model.IModel;
+import org.apache.wicket.extensions.markup.html.repeater.util.SortParam;
+import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
+import org.apache.wicket.model.IModel;
+
 import de.haw.smartshelf.bo.Article;
 import de.haw.smartshelf.server.logic.IArticlesHolder;
 

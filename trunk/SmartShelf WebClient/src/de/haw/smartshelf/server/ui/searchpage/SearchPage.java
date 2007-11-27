@@ -1,13 +1,14 @@
 package de.haw.smartshelf.server.ui.searchpage;
 
-import wicket.markup.html.form.Form;
-import wicket.markup.html.form.ImageButton;
-import wicket.markup.html.form.RequiredTextField;
-import wicket.markup.html.image.Image;
-import wicket.markup.html.link.Link;
-import wicket.markup.html.panel.FeedbackPanel;
-import wicket.model.CompoundPropertyModel;
-import wicket.model.Model;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.ImageButton;
+import org.apache.wicket.markup.html.form.RequiredTextField;
+import org.apache.wicket.markup.html.image.Image;
+import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.Model;
+
 import de.haw.smartshelf.server.ui.mainpage.MainPage;
 import de.haw.smartshelf.server.ui.searchpage.resultpage.ResultPage;
 

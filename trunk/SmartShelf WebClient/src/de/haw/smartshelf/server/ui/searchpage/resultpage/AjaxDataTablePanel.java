@@ -3,13 +3,14 @@ package de.haw.smartshelf.server.ui.searchpage.resultpage;
 import java.util.ArrayList;
 import java.util.List;
 
-import wicket.extensions.ajax.markup.html.repeater.data.table.AjaxFallbackDefaultDataTable;
-import wicket.extensions.markup.html.repeater.data.table.AbstractColumn;
-import wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
-import wicket.extensions.markup.html.repeater.refreshing.Item;
-import wicket.markup.html.panel.Panel;
-import wicket.model.IModel;
-import wicket.model.Model;
+import org.apache.wicket.extensions.ajax.markup.html.repeater.data.table.AjaxFallbackDefaultDataTable;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColumn;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
+import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.markup.repeater.Item;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
+
 import de.haw.smartshelf.bo.Article;
 import de.haw.smartshelf.server.logic.IArticlesHolder;
 

@@ -13,11 +13,10 @@ package de.haw.smartshelf.server;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.haw.smartshelf.bo.Article;
+import org.apache.wicket.Request;
+import org.apache.wicket.protocol.http.WebSession;
 
-import wicket.Request;
-import wicket.protocol.http.WebApplication;
-import wicket.protocol.http.WebSession;
+import de.haw.smartshelf.bo.Article;
 
 /**
  * This class ... Copyright (c) 2007 SmartShelf
@@ -29,21 +28,12 @@ public final class SmartShelfSession extends WebSession
 {
     List<Article> _articles = new ArrayList<Article>();
 
+    public SmartShelfSession(Request request)
+	{
+		super(request);
+	}
 
-	/**
-     * Constructor
-     * 
-     * @param application
-     *            The application
-     */
-    protected SmartShelfSession(final WebApplication application)
-    {
-        super(application);
-        
-    }
-
-    
-    public List<Article> getArticles()
+	public List<Article> getArticles()
 	{
 		return this._articles;
 	}

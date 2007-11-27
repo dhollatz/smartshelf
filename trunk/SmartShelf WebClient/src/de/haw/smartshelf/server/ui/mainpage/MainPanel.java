@@ -1,7 +1,7 @@
 package de.haw.smartshelf.server.ui.mainpage;
 
-import wicket.markup.html.panel.Panel;
-import wicket.model.IModel;
+import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.IModel;
 
 public abstract class MainPanel extends Panel
 {

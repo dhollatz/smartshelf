@@ -10,9 +10,10 @@
  */
 package de.haw.smartshelf.server.ui.searchpage.resultpage;
 
-import wicket.markup.html.link.Link;
-import wicket.markup.html.panel.Panel;
-import wicket.model.IModel;
+import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.IModel;
+
 import de.haw.smartshelf.bo.Article;
 
 /**

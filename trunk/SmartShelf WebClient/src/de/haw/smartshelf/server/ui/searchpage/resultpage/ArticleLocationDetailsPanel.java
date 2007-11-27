@@ -10,19 +10,10 @@
  */
 package de.haw.smartshelf.server.ui.searchpage.resultpage;
 
-import java.util.ArrayList;
-import java.util.Iterator;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.IModel;
 
-import wicket.extensions.markup.html.repeater.refreshing.Item;
-import wicket.extensions.markup.html.repeater.refreshing.OddEvenItem;
-import wicket.extensions.markup.html.repeater.refreshing.RefreshingView;
-import wicket.extensions.markup.html.repeater.util.ModelIteratorAdapter;
-import wicket.markup.html.basic.Label;
-import wicket.markup.html.panel.Panel;
-import wicket.model.IModel;
-import wicket.model.PropertyModel;
-import de.haw.smartshelf.bo.Article;
-import de.haw.smartshelf.bo.ArticleExtension;
 import de.haw.smartshelf.bo.ArticleLocation;
 
 /**
