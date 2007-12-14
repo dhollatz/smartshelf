@@ -100,8 +100,18 @@ public class BoFactory
 			
 			if(boArtLoc != null)
 			{
-				Shelf boShelf = convertToBo(persLoc.getShelf());
-				boArtLoc.setShelf(boShelf);
+				/* TODO: */
+				try
+				{
+					de.haw.smartshelf.db.data.pers.Shelf persShelf = persLoc.getShelf();
+					Shelf boShelf = convertToBo(persShelf);
+					boArtLoc.setShelf(boShelf);
+				}
+				catch (Exception e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			boArticle.setArticleLocation(boArtLoc);			
 		}
