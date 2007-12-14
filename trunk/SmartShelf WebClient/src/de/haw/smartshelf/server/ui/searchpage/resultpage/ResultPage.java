@@ -20,7 +20,9 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 
 import de.haw.smartshelf.bo.Article;
 import de.haw.smartshelf.bo.ArticleExtension;
+import de.haw.smartshelf.bo.ArticleLocation;
 import de.haw.smartshelf.commonutils.Util;
+import de.haw.smartshelf.server.logic.ArticleLocationFinder;
 import de.haw.smartshelf.server.logic.ArticleSearchManager;
 import de.haw.smartshelf.server.logic.IArticlesHolder;
 import de.haw.smartshelf.server.ui.mainpage.MainPage;
@@ -166,18 +168,9 @@ public class ResultPage extends MainPage implements IArticlesHolder, IPageWithAr
 			@Override
             public Component getLazyLoadComponent(String id)
             {
-                // sleep for 5 seconds to show the behavior
-                try
-                {
-                	//TODO: determine article location
-                    Thread.sleep(5000);
-                }
-                catch (InterruptedException e)
-                {
-                    throw new RuntimeException(e);
-                }
-                return new ArticleLocationDetailsPanel(id, article.getArticleLocation());
-            }
+                ArticleLocation al = new ArticleLocationFinder().findArticleLocation(article);
+				return new ArticleLocationDetailsPanel(id, al);
+			}
         
         });
 	}
