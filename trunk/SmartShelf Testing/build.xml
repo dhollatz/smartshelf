@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<project default="main" basedir=".">
+
+	<target name="main" >
+		<javah classpath="bin" outputFile="reader.h" verbose="yes"> 
+			<class name="de.haw.smartshelf.reader.test.ICodeReaderTest" /> 
+		</javah>
+	</target>
+  
+</project>
