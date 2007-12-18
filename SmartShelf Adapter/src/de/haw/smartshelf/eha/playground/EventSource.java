@@ -1,3 +1,13 @@
+/*
+ * $HeadURL: EventHeapAdapter.java $
+ *
+ * $Author: Dennis Hollatz $
+ * $Date: 18.12.2007 16:04:40 $
+ *
+ * Copyright 2007 by SmartShelf,
+ * Hamburg, Germany.
+ * All rights reserved.
+ */
 package de.haw.smartshelf.eha.playground;
 
 import iwork.eheap2.Event;
