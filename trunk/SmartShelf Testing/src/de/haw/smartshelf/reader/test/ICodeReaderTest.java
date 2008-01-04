@@ -27,5 +27,6 @@ public class ICodeReaderTest {
 
 	public static void main(String args[]){
 		CRM_init("COM1", "115200"); // just guessed ;)
+		
 	}
 }
