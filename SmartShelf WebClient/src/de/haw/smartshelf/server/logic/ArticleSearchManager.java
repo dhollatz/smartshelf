@@ -10,6 +10,8 @@
  */
 package de.haw.smartshelf.server.logic;
 
+import iwork.eheap2.EventHeapException;
+
 import java.util.List;
 
 import de.haw.smartshelf.bo.Article;
@@ -32,6 +34,15 @@ public class ArticleSearchManager
 	
 	public void searchArticles(Article inputArticle)
 	{
-		new EventManagerSimulator(_articlesHolder, inputArticle).searchArticles(inputArticle);
+//		new EventManagerSimulator(_articlesHolder, inputArticle).searchArticles(inputArticle);
+		try
+		{
+			new ArticleSearchManagerWithIROS(_articlesHolder, inputArticle).findArticles(inputArticle);
+		}
+		catch (EventHeapException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
