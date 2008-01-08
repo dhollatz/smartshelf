@@ -53,7 +53,8 @@ public class ArticleSearchManagerWithIROS implements EventCallback
 		try
 		{
 			SearchItemEvent searchEvent = new SearchItemEvent();
-			//searchEvent.setArticle(inputArticle);
+//			searchEvent.setArticle(inputArticle);
+			searchEvent.setFieldValue("test.key", "TEST.VALUE");
 			eha.putEvent(searchEvent);
 		}
 		catch (EventHeapException e)
@@ -64,20 +65,29 @@ public class ArticleSearchManagerWithIROS implements EventCallback
 
 	public boolean returnEvent(Event[] events)
 	{
-		for (Event event : events)
-		{
-			if (event instanceof ResultListEvent) {
-				ResultListEvent rlEvent = (ResultListEvent) event;
-				// TODO etwas mit der Liste machen ;)
-				System.out.println("Liste empfangen!");
-				System.out.println(rlEvent.toStringComplete());
-			} else 	if (event instanceof SearchItemEvent) {
-				SearchItemEvent siEvent = (SearchItemEvent) event;
-				// TODO etwas mit der Liste machen ;)
-				System.out.println("SearchItem empfangen!");
-				System.out.println(siEvent.toStringComplete());
-			} 
-		}
+		try {
+			for (Event event : events) {
+				if (ResultListEvent.class.getCanonicalName().equals(event.getEventType())) {
+					ResultListEvent rlEvent = (ResultListEvent) event;
+					// TODO etwas mit der Liste machen ;)
+					System.out.println("Liste empfangen!");
+					System.out.println(rlEvent.toStringComplete());
+				} else 	if (SearchItemEvent.class.getCanonicalName().equals(event.getEventType())) {
+					//SearchItemEvent siEvent = (SearchItemEvent) event;
+					// TODO etwas mit der Liste machen ;)
+					System.out.println("SearchItem empfangen!");
+					System.out.println(event.toStringComplete());
+
+					String string = (String)event.getPostValue("test.key");
+					System.out.println("string: " + string);
+				} else {
+					System.out.println("unknown event: " + event.getEventType());
+				}
+			}
+		} catch (EventHeapException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
 		
 		return true; // weitere Events empfangen
 	}
