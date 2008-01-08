@@ -5,8 +5,8 @@ public class ICodeReaderTestJNA {
 	// VM Arguments:
 	// -Djna.library.path=./lib
 
-	public static final short TXLEN = 3;
-	public static final short RXLEN = 10;
+	public static final short TXLEN = 0x03;
+	public static final short RXLEN = 0x0A; // bzw. 10
 	public static final byte CRM_GET_VERSION = 1;
 	public static final byte CRM_GET_ISO_15693 = 8;
 
@@ -23,8 +23,9 @@ public class ICodeReaderTestJNA {
 
 		if (isInit()) {
 			System.out.println("Init OK...");
-			getInfo();
+			// getInfo();
 			// getPort();
+			cmd();
 		} else {
 			System.out.println("In your face...");
 		}
@@ -53,7 +54,6 @@ public class ICodeReaderTestJNA {
 		// if (b != 0)
 		// System.out.println("|" + b);
 		// }
-
 		// ByteByReference byteRef = new ByteByReference();
 		// System.out.println(byteRef.getValue());
 		// lib.CRM_get_port(byteRef);
@@ -61,17 +61,20 @@ public class ICodeReaderTestJNA {
 	}
 
 	public static void cmd() {
-		// byte[] tx = new byte[14];
-		// tx[0] = 0x06;
-		// tx[1] = 0x01;
-		// tx[2] = 0x00;
-		// byte[] rx = new byte[256 * 65];
-		// lib.CRM_cmd(SL2SER.CMD_CMD, TXLEN, RXLEN, tx, rx);
-		// for (byte b : rx) {
-		// if (b != 0)
-		// System.out.println("|" + b);
-		// }
-		// System.out.println('|');
+		 byte[] tx = new byte[3];
+		 tx[0] = 0x26;
+		 tx[1] = 0x01;
+		 tx[2] = 0x00;
+		 //byte[] rx = new byte[256 * 65];
+		 byte[] rx = new byte[11];
+		 lib.CRM_cmd(SL2SER.CMD_CMD, TXLEN, RXLEN, tx, rx);
+		 
+		 
+		 for (byte b : rx) {
+		 if (b != 0)
+		 System.out.println("|" + b);
+		 }
+		 System.out.println('|');
 
 		// tx[0] = 6;
 		// tx[1] = 1;
