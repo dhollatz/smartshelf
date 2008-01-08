@@ -14,15 +14,17 @@ import iwork.eheap2.Event;
 import iwork.eheap2.EventHeapException;
 import iwork.eheap2.FieldValueTypes;
 
-public class SearchIDEventTemplate extends Event {
+public class ResultListEvent extends Event {
 	
 	public static final String FIELD_TYPE     = "type";
 	public static final String FIELD_TITLE    = "title";
+	public static final String FIELD_LIST_XML = "listXML";
 	
-	public SearchIDEventTemplate() throws EventHeapException {
-		super("SearchItem");
+	public ResultListEvent() throws EventHeapException {
+		super("ItemList");
 		this.addField(FIELD_TYPE,     String.class, FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
 		this.addField(FIELD_TITLE,    String.class, FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
+		this.addField(FIELD_LIST_XML, String.class, FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
 	}
 	
 	public String getType() throws EventHeapException {
@@ -41,12 +43,12 @@ public class SearchIDEventTemplate extends Event {
 		this.setFieldValue(FIELD_TITLE, title);
 	}
 	
-	public String getProperty(String propertyName) throws EventHeapException {
-		return this.getPostValueString(propertyName);
+	public String getListXML() throws EventHeapException {
+		return this.getPostValueString(FIELD_LIST_XML);
 	}
 	
-	public void setProperty(String propertyName, String propertyValue) throws EventHeapException {
-		this.setFieldValue(propertyName, propertyValue);
+	public void setListXML(String listXML) throws EventHeapException {
+		this.setFieldValue(FIELD_LIST_XML, listXML);
 	}
 
 }

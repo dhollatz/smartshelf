@@ -17,7 +17,7 @@ import iwork.eheap2.FieldValueTypes;
 
 public class EventSource {
 	public static void main(String[] args) throws EventHeapException {
-		EventHeap eh = new EventHeap("localhost");
+		EventHeap eh = new EventHeap("192.168.14.240");
 		
 		Event template = EventStore.instance().getDummyTemplate();
 		Event e = new Event(template.getEventType());

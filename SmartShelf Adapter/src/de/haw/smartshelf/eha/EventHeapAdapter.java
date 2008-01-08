@@ -22,7 +22,7 @@ public class EventHeapAdapter {
 	
 	private EventHeap eh = null;
 
-	private EventHeapAdapter() {
+	public EventHeapAdapter() {
 		this.reconnect();
 	}
 	

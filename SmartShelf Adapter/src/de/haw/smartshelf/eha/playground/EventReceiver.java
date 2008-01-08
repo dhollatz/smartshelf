@@ -22,7 +22,7 @@ import iwork.eheap2.EventHeapException;
 public class EventReceiver implements EventCallback{
 
 	public EventReceiver() throws EventHeapException {
-		EventHeap eh = new EventHeap("localhost");
+		EventHeap eh = new EventHeap("192.168.14.240");
 		
 		Event template = EventStore.instance().getDummyTemplate();
 		Event[] templates = new Event[1];
