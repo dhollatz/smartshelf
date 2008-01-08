@@ -11,9 +11,8 @@
 package de.haw.smartshelf.properties;
 
 /**
- * This class ... Copyright (c) 2007 SmartShelf
- *  // TODO Mechanismus zum Auslesen aus Properties oder Kommandozeile oder //
- * so... :)
+ * This class ... Copyright (c) 2007 SmartShelf // TODO Mechanismus zum Auslesen
+ * aus Properties oder Kommandozeile oder // so... :)
  * 
  * @version $ Date: 18.12.2007 16:04:40 $
  * @author <a
@@ -23,7 +22,7 @@ public class GlobalProperties
 {
 	public static String getEventHeapURL()
 	{
-		return "localhost";
+		return "192.168.14.240";
 	}
 
 	public static String getClientName()
