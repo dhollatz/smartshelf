@@ -20,9 +20,12 @@ public class FoundIDEvent extends Event {
 	public static final String FIELD_ID   = "id";
 	
 	public FoundIDEvent() throws EventHeapException {
-		super("FoundID");
-		this.addField("Type", String.class, FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
+		super(FoundIDEvent.class.getCanonicalName());
+		
+//		this.addField("Type", String.class, FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
 		this.addField("TagID", String.class, FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
+		
+		this.setTimeToLive(50000);
 	}
 	
 	public String getType() throws EventHeapException {
