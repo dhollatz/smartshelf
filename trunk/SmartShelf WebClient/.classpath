@@ -41,5 +41,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/SmartShelf CommonUtils"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/SmartShelf DB"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/SmartSHELF Adapter"/>
+	<classpathentry kind="lib" path="/SmartSHELF Adapter/lib/iROS.jar" sourcepath="/iros_raw/java"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
