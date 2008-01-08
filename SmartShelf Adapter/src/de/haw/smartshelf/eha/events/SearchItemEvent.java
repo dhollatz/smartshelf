@@ -22,10 +22,12 @@ public class SearchItemEvent extends Event {
 	public static final String FIELD_ARTICLE = "article";
 	
 	public SearchItemEvent() throws EventHeapException {
-		super("SearchItem");
+		super(SearchItemEvent.class.getCanonicalName());
 //		this.addField(FIELD_TYPE,     String.class,  FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
-//		this.addField(FIELD_TITLE,    String.class,  FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
-//		this.addField(FIELD_ARTICLE,  Article.class, FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
+		this.addField(FIELD_TITLE,    String.class,  FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
+		this.addField(FIELD_ARTICLE,  Article.class, FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
+		
+		this.setTimeToLive(50000);
 	}
 	
 	public String getType() throws EventHeapException {

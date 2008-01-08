@@ -21,10 +21,12 @@ public class ResultListEvent extends Event {
 	public static final String FIELD_LIST_XML = "listXML";
 	
 	public ResultListEvent() throws EventHeapException {
-		super("ItemList");
-		this.addField(FIELD_TYPE,     String.class, FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
+		super(ResultListEvent.class.getCanonicalName());
+//		this.addField(FIELD_TYPE,     String.class, FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
 		this.addField(FIELD_TITLE,    String.class, FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
 		this.addField(FIELD_LIST_XML, String.class, FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
+		
+		this.setTimeToLive(50000);
 	}
 	
 	public String getType() throws EventHeapException {

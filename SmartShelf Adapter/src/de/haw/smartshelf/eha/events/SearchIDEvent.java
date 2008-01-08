@@ -23,11 +23,13 @@ public class SearchIDEvent extends Event {
 	public static final String FIELD_RACK_ID  = "rackID";
 	
 	public SearchIDEvent() throws EventHeapException {
-		super("FoundIDEvent");
-		this.addField(FIELD_TYPE,     String.class, FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
+		super(SearchIDEvent.class.getCanonicalName());
+//		this.addField(FIELD_TYPE,     String.class, FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
 		this.addField(FIELD_TITLE,    String.class, FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
 		this.addField(FIELD_SHELF_ID, String.class, FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
 		this.addField(FIELD_RACK_ID,  String.class, FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
+		
+		this.setTimeToLive(50000);
 	}
 	
 	public String getType() throws EventHeapException {
