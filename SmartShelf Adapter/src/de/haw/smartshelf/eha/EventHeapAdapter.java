@@ -63,18 +63,25 @@ public class EventHeapAdapter {
 	 * @throws EventHeapException
 	 */
 	private Event cloneAndPrepare(Event event) throws EventHeapException {
-		Event newEvent = new Event(event.getEventType());
-		for (String field : event.getFieldNames()) {
-			newEvent.addField(
-					field, 
-					event.getFieldClass(field), 
-					event.getPostValueType(field), 
-					event.getTemplateValueType(field));
-		}
+//		Event newEvent = new Event(event.getEventType());
+//		for (String field : event.getFieldNames()) {
+//			newEvent.addField(
+//					field, 
+//					event.getFieldClass(field), 
+//					event.getPostValueType(field), 
+//					event.getTemplateValueType(field));
+//		}
+//		newEvent.setEventType(event.getEventType());
+//		
+//		
+//		// Absender einfuegen
+//		newEvent.addField(RETURN_TO_CLIENT, GlobalProperties.getClientName());
+//		
+//		return newEvent;
 		
-		// Absender einfuegen
-		newEvent.addField(RETURN_TO_CLIENT, GlobalProperties.getClientName());
+		event.addField(RETURN_TO_CLIENT, GlobalProperties.getClientName());
+		return event;
 		
-		return newEvent;
+		
 	}
 }
