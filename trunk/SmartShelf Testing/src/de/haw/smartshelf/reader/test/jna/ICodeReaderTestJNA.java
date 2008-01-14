@@ -13,8 +13,8 @@ public class ICodeReaderTestJNA {
 	public static SL2SER lib = SL2SER.INSTANCE;
 
 	public static void main(String args[]) {
-
-		if (isInit()) {
+		lib.enableDebug();
+		 if (isInit()) {
 			System.out.println("Init OK...");
 			// getInfo();
 			// getPort();
@@ -30,7 +30,8 @@ public class ICodeReaderTestJNA {
 		System.out.println("Length of data: " + len);
 		String result = "";
 		for (int i = 0; i < len; i++) {
-			result += data[i] + ":";
+			result += (data[i] & 0xFF) + ":"; // unsigned byte to int by using
+												// "& 0xFF"
 		}
 		System.out.println(result);
 	}
