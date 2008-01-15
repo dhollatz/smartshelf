@@ -2,9 +2,9 @@
    <readerConfigs>
       <readerConfig id="0">
          <type>A</type>
-         <class>de.haw.smartshelf.reader.mock.ICodeReaderMock</class>
+         <class>de.haw.smartshelf.reader.slrm900.SLRM900</class>
          <position>1</position>
-         <port>1</port>
+         <port>COM1</port>
       </readerConfig>
       <readerConfig id="1">
          <type>B</type>

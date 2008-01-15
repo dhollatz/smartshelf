@@ -55,7 +55,12 @@ public class Shelf {
 	public Collection<RFIDTag> getAllItems() {
 		Collection<RFIDTag> items = new ArrayList<RFIDTag>();
 		for (ShelfReader aReader : reader) {
-			items = aReader.gatherTags();
+			items.addAll(aReader.gatherTags());
+		}
+		if (LOG.isTraceEnabled()) {
+			for (RFIDTag tag : items) {
+				LOG.trace(tag.getId());
+			}
 		}
 		return items;
 	}

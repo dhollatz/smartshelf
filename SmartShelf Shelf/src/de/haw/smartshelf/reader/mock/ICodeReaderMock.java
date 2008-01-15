@@ -19,7 +19,7 @@ public class ICodeReaderMock extends AbstractReader {
 		initialize();
 	}
 
-	protected void initialize() {
+	public void initialize() {
 		range = new ArrayList<String>();
 		range.add("12345");
 		range.add("00001");
@@ -43,6 +43,6 @@ public class ICodeReaderMock extends AbstractReader {
 			}
 		}
 		return false;
-	}
+	}	
 
 }

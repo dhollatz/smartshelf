@@ -31,7 +31,10 @@ public class ReaderFactory {
 			Class readerClass = Class.forName(aReaderConfig.getClassname());
 			LOG.debug("Creating reader for class: " + readerClass + " ...");
 			if (ShelfReader.class.isAssignableFrom(readerClass)) {
-				return (ShelfReader) readerClass.newInstance();
+				ShelfReader aReader = (ShelfReader) readerClass.newInstance();
+				aReader.setPort(aReaderConfig.getPort());
+				aReader.initialize();
+				return aReader;
 			}
 			throw new NoSuchReaderException("Reader not supported: "
 					+ readerClass.getCanonicalName());
