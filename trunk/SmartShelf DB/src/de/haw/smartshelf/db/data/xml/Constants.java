@@ -18,6 +18,7 @@ package de.haw.smartshelf.db.data.xml;
  */
 public class Constants
 {
+	public static final String ELEMENT_ARTICLES = "Articles";
 	public static final String ELEMENT_ARTICLE = "Article";
 	public static final String ELEMENT_ARTICLE_EXTENSION = "ArticleExtension";
 	public static final String ELEMENT_ARTICLE_LOCATION = "ArticleLocation";
