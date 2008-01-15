@@ -20,9 +20,16 @@ public class EventHeapAdapter {
 	
 	public static final String RETURN_TO_CLIENT = "RETURN_TO_CLIENT";
 	
+	private IEventHeapAdapterConfig _config;
 	private EventHeap eh = null;
 
-	public EventHeapAdapter() {
+	private EventHeapAdapter() {
+		
+	}
+	
+	public EventHeapAdapter(IEventHeapAdapterConfig config)
+	{
+		_config = config;
 		this.reconnect();
 	}
 	
@@ -50,7 +57,7 @@ public class EventHeapAdapter {
 	 * Reconnect to the event heap server.
 	 */
 	public void reconnect() {
-		this.eh = new EventHeap(GlobalProperties.getEventHeapURL());
+		this.eh = new EventHeap(_config.getEventHeapURL());
 	}
 	
 	/**
@@ -79,7 +86,7 @@ public class EventHeapAdapter {
 //		
 //		return newEvent;
 		
-		event.addField(RETURN_TO_CLIENT, GlobalProperties.getClientName());
+		event.addField(RETURN_TO_CLIENT, _config.getClientName());
 		return event;
 		
 		
