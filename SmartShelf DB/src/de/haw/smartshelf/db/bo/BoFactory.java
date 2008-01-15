@@ -70,7 +70,7 @@ public class BoFactory
 		return convertToBo(_dataFactory.findArticle(new de.haw.smartshelf.db.data.pers.Article(rfid)));
 	}
 	
-	private List<Article> convertToBo(List<de.haw.smartshelf.db.data.pers.Article> persArticles)
+	public List<Article> convertToBo(List<de.haw.smartshelf.db.data.pers.Article> persArticles)
 	{
 		List<Article> boArticles = new ArrayList<Article>();
 		for (Iterator iterator = persArticles.iterator(); iterator.hasNext();)
@@ -80,7 +80,7 @@ public class BoFactory
 		return boArticles;
 	}
 	
-	private Article convertToBo(de.haw.smartshelf.db.data.pers.Article persArticle)
+	public Article convertToBo(de.haw.smartshelf.db.data.pers.Article persArticle)
 	{
 		Article boArticle = new Article(persArticle.getRfid(), persArticle.getArticleType());
 		List<ArticleExtension> extensions = new ArrayList<ArticleExtension>();
@@ -119,12 +119,12 @@ public class BoFactory
 		return boArticle;
 	}
 	
-	private ArticleExtension convertToBo(de.haw.smartshelf.db.data.pers.ArticleExtension persExtn)
+	public ArticleExtension convertToBo(de.haw.smartshelf.db.data.pers.ArticleExtension persExtn)
 	{
 		return new ArticleExtension(persExtn.getId().getName(), persExtn.getId().getValue());
 	}
 	
-	private ArticleLocation convertToBo(de.haw.smartshelf.db.data.pers.ArticleLocation persArtLoctn)
+	public ArticleLocation convertToBo(de.haw.smartshelf.db.data.pers.ArticleLocation persArtLoctn)
 	{
 		if(persArtLoctn == null)
 		{
@@ -139,7 +139,7 @@ public class BoFactory
 		return boArtLoctn;
 	}
 	
-	private Shelf convertToBo(de.haw.smartshelf.db.data.pers.Shelf persSchelf)
+	public Shelf convertToBo(de.haw.smartshelf.db.data.pers.Shelf persSchelf)
 	{
 		if(persSchelf == null)
 		{
@@ -168,7 +168,7 @@ public class BoFactory
 		return boShelf;
 	}
 	
-	private de.haw.smartshelf.db.data.pers.Article convertToPers(Article boArticle)
+	public de.haw.smartshelf.db.data.pers.Article convertToPers(Article boArticle)
 	{
 		de.haw.smartshelf.db.data.pers.Article persArticle = new de.haw.smartshelf.db.data.pers.Article();
 		persArticle.setRfid(boArticle.getRfid());
@@ -219,7 +219,7 @@ public class BoFactory
 		return persExtension;
 	}
 	
-	private de.haw.smartshelf.db.data.pers.ArticleLocation convertToPers(ArticleLocation boArticleLocation)
+	public de.haw.smartshelf.db.data.pers.ArticleLocation convertToPers(ArticleLocation boArticleLocation)
 	{
 		if(boArticleLocation == null)
 		{

@@ -11,6 +11,7 @@
 package de.haw.smartshelf.db.data.xml;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import org.jdom.Element;
@@ -27,6 +28,18 @@ import de.haw.smartshelf.db.data.pers.ArticleLocation;
  */
 public class DataExporter
 {
+	public Element export(List<Article> articles)
+	{
+		Element articlesElm = new Element(Constants.ELEMENT_ARTICLES);
+		for (Article article : articles)
+		{
+			Element articleElm = export(article);
+			articlesElm.addContent(articleElm);
+		}
+		
+		return articlesElm;
+	}
+	
 	public Element export(Article article)
 	{
 		Element articleElm = new Element(Constants.ELEMENT_ARTICLE);
