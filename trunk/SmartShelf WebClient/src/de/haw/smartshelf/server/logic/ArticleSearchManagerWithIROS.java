@@ -19,9 +19,9 @@ import java.io.File;
 import de.haw.smartshelf.bo.Article;
 import de.haw.smartshelf.eha.EventHeapAdapter;
 import de.haw.smartshelf.eha.EventHeapAdapterConfig;
-import de.haw.smartshelf.eha.events.FoundIDEvent;
-import de.haw.smartshelf.eha.events.ResultListEvent;
-import de.haw.smartshelf.eha.events.SearchItemEvent;
+import de.haw.smartshelf.eha.events.EventFactory;
+import de.haw.smartshelf.eha.events.ResultListEventFacade;
+import de.haw.smartshelf.eha.events.SearchItemEventFacade;
 
 /**
  * This class ... Copyright (c) 2008 SmartShelf
@@ -46,8 +46,8 @@ public class ArticleSearchManagerWithIROS implements EventCallback
 		{
 			throw new EventHeapException("Could not initialize EventHeapAdapter. " + e.getMessage());
 		}
-		this.eha.registerForEvent(new FoundIDEvent(), this);
-		this.eha.registerForEvent(new SearchItemEvent(), this);
+		this.eha.registerForEvent(EventFactory.createFoundIDEvent(), this);
+		this.eha.registerForEvent(EventFactory.createSearchItemEvent(), this);
 	}
 	
 	public ArticleSearchManagerWithIROS(IArticlesHolder articlesHolder, Article inputArticle) throws EventHeapException
@@ -62,9 +62,10 @@ public class ArticleSearchManagerWithIROS implements EventCallback
 	{ 
 		try
 		{
-			SearchItemEvent searchEvent = new SearchItemEvent();
-//			searchEvent.setArticle(inputArticle);
-			searchEvent.setFieldValue("test.key", "TEST.VALUE");
+			Event searchEvent = EventFactory.createSearchItemEvent();
+			SearchItemEventFacade sieFacade = new SearchItemEventFacade(searchEvent);
+			sieFacade.setArticle(inputArticle);
+//			searchEvent.setFieldValue("test.key", "TEST.VALUE");
 			eha.putEvent(searchEvent);
 		}
 		catch (EventHeapException e)
@@ -77,19 +78,19 @@ public class ArticleSearchManagerWithIROS implements EventCallback
 	{
 		try {
 			for (Event event : events) {
-				if (ResultListEvent.class.getCanonicalName().equals(event.getEventType())) {
-					ResultListEvent rlEvent = (ResultListEvent) event;
+				if (ResultListEventFacade.TYPE_NAME.equals(event.getEventType())) {
+					ResultListEventFacade rlEvent = new ResultListEventFacade(event);
 					// TODO etwas mit der Liste machen ;)
 					System.out.println("Liste empfangen!");
-					System.out.println(rlEvent.toStringComplete());
-				} else 	if (SearchItemEvent.class.getCanonicalName().equals(event.getEventType())) {
+					//System.out.println(rlEvent.toStringComplete());
+				} else 	if (SearchItemEventFacade.TYPE_NAME.equals(event.getEventType())) {
 					//SearchItemEvent siEvent = (SearchItemEvent) event;
 					// TODO etwas mit der Liste machen ;)
 					System.out.println("SearchItem empfangen!");
 					System.out.println(event.toStringComplete());
-
-					String string = (String)event.getPostValue("test.key");
-					System.out.println("string: " + string);
+					System.out.println("ARTICLE: " + new SearchItemEventFacade(event).getArticle());
+//					String string = (String)event.getPostValue("test.key");
+//					System.out.println("string: " + string);
 				} else {
 					System.out.println("unknown event: " + event.getEventType());
 				}
