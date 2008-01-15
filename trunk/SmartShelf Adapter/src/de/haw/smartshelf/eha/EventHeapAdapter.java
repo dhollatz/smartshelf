@@ -14,7 +14,6 @@ import iwork.eheap2.Event;
 import iwork.eheap2.EventCallback;
 import iwork.eheap2.EventHeap;
 import iwork.eheap2.EventHeapException;
-import de.haw.smartshelf.properties.GlobalProperties;
 
 public class EventHeapAdapter {
 	
@@ -22,10 +21,6 @@ public class EventHeapAdapter {
 	
 	private IEventHeapAdapterConfig _config;
 	private EventHeap eh = null;
-
-	private EventHeapAdapter() {
-		
-	}
 	
 	public EventHeapAdapter(IEventHeapAdapterConfig config)
 	{
