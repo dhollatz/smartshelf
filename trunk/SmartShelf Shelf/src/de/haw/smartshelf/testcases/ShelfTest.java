@@ -15,7 +15,7 @@ public class ShelfTest {
 	}
 
 	@Test
-	public void getAllItems() {
+	public void getAllItems(){
 		assertEquals(shelf.getAllItems().size(), 3);
 	}
 
