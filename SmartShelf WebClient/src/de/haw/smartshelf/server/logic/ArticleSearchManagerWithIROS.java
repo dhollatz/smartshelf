@@ -13,12 +13,15 @@ package de.haw.smartshelf.server.logic;
 import iwork.eheap2.Event;
 import iwork.eheap2.EventCallback;
 import iwork.eheap2.EventHeapException;
+
+import java.io.File;
+
 import de.haw.smartshelf.bo.Article;
 import de.haw.smartshelf.eha.EventHeapAdapter;
-import de.haw.smartshelf.eha.events.ResultListEvent;
+import de.haw.smartshelf.eha.EventHeapAdapterConfig;
 import de.haw.smartshelf.eha.events.FoundIDEvent;
+import de.haw.smartshelf.eha.events.ResultListEvent;
 import de.haw.smartshelf.eha.events.SearchItemEvent;
-import de.haw.smartshelf.eha.events.SearchIDEvent;
 
 /**
  * This class ... Copyright (c) 2008 SmartShelf
@@ -35,7 +38,14 @@ public class ArticleSearchManagerWithIROS implements EventCallback
 	
 	private ArticleSearchManagerWithIROS() throws EventHeapException
 	{
-		this.eha = new EventHeapAdapter();
+		try
+		{
+			this.eha = new EventHeapAdapter(new EventHeapAdapterConfig(System.getProperty("user.dir") + File.separator + "config" + File.separator + "eventheapadapter.properties"));
+		}
+		catch (Exception e)
+		{
+			throw new EventHeapException("Could not initialize EventHeapAdapter. " + e.getMessage());
+		}
 		this.eha.registerForEvent(new FoundIDEvent(), this);
 		this.eha.registerForEvent(new SearchItemEvent(), this);
 	}
