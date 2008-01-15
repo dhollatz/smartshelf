@@ -49,4 +49,8 @@ public class SearchItemEventFacade {
 	public void setArticle(Article article) throws EventHeapException {
 		event.setFieldValue(FIELD_ARTICLE, article);
 	}
+	
+	public Object getArticle() throws EventHeapException {
+		return event.getPostValue(FIELD_ARTICLE);
+	}
 }
