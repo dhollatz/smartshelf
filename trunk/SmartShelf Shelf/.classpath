@@ -7,5 +7,8 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/SmartShelf Logging"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/SmartShelf CommonUtils"/>
 	<classpathentry kind="lib" path="lib/jna.jar"/>
+	<classpathentry kind="lib" path="lib/appFramework-1.0.jar"/>
+	<classpathentry kind="lib" path="lib/jnlp.jar"/>
+	<classpathentry kind="lib" path="lib/looks-2.1.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
