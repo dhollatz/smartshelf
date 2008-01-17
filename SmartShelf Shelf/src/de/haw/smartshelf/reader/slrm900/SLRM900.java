@@ -5,6 +5,8 @@ import java.util.Collection;
 
 import org.apache.log4j.Logger;
 
+import com.sun.jna.ptr.IntByReference;
+
 import de.haw.smartshelf.reader.AbstractReader;
 import de.haw.smartshelf.reader.tags.ICodeTag;
 import de.haw.smartshelf.reader.tags.RFIDTag;
@@ -15,6 +17,7 @@ import de.haw.smartshelf.reader.tags.RFIDTag;
 public class SLRM900 extends AbstractReader {
 
 	private static final String BAUD = "115200";
+	private static final int UID_LENGTH = 8;
 
 	private static final Logger LOG = Logger.getLogger(SLRM900.class);
 
@@ -47,63 +50,70 @@ public class SLRM900 extends AbstractReader {
 		lib.enableDebug();
 		if (isInit()) {
 			LOG.debug("JNA: " + SL2SERWrapper.LIBNAME + " initialized");
-			inventory();
+			tags.addAll(inventory());
 		} else {
 			LOG.error("SLRM900 initialization failed - check connection");
 		}
 		return tags;
 	}
 
-	public boolean isTagInRange(String id) {
-
-		return false;
-	}
-
 	private Collection<ICodeTag> inventory() {
 		// ICODE SLI-S Structure
 		// |STATUS|STAT1|DSFID|UID0|UID1|UID2|UID3|UID4|UID5|UID6|UID7|
-		byte[] data = new byte[11];
-		int len = lib.inventory(data);
+		// if a status is "1" then no tag was found
+		// -> the next byte contains the status for the next timeslot
+		// -> e.g. |1|1|0|... represents 2 timeslots where no tag was found
+		// followed by a timeslot with tag data
+
+		// unsigned byte to int by using "& 0xFF"
+		// byte[] data = new byte[11];
+		byte[] data = new byte[256 * 65];
+		IntByReference timeSlotLengthRef = new IntByReference();
+		int len = lib.inventory(data, timeSlotLengthRef);
+		int timeSlotLength = timeSlotLengthRef.getValue();
 		LOG.debug("Length of data: " + len);
-		String result = "";
-		String id = "";
+		LOG.debug("Length of one timeslot: " + timeSlotLength);
 		Collection<ICodeTag> tags = new ArrayList<ICodeTag>();
-		ICodeTag aTag = null;
-		for (int i = 0; i < len; i++) {
-			switch (i % len) {
-			case 0:
-				LOG.trace("Tag found...");
-				LOG.trace("STATUS: " + (data[i] & 0xFF));
-				aTag = new ICodeTag();
-				break;
-			case 1:
-				LOG.trace("STAT1: " + (data[i] & 0xFF));
-				aTag.setStat1(data[i] & 0xFF);
-				break;
-			case 2:
-				LOG.trace("DSFID: " + (data[i] & 0xFF));
-				aTag.setDsfid(data[i] & 0xFF);
-				break;
-			case 3:
-			case 4:
-			case 5:
-			case 6:
-			case 7:
-			case 8:
-			case 9:
-			case 10:
-				id += (data[i] & 0xFF); // unsigned byte to int by using "&
-				// 0xFF"
-				if (LOG.isTraceEnabled()) {
-					result += (data[i] & 0xFF) + ":";
-				}
-				if (i % len == 10) {
-					LOG.trace(result);
-					aTag.setId(id);
+		int offset = 0;
+		int tsNum = 1;
+		for (int i = 0; i < len; i = i + offset + 1) {
+			if (data[i] == 0x00) {
+				LOG.trace("Timeslot " + tsNum + ": Tag found...");
+				offset = timeSlotLength;
+				// timeslot data corrupt?
+				if ((i + timeSlotLength) < len) {
+					ICodeTag aTag = new ICodeTag();
+					String result = "";
+					String id = "";
+					LOG.trace("STATUS: " + (data[i] & 0xFF));
+					LOG.trace("STAT1: " + (data[i + 1] & 0xFF));
+					aTag.setStat1(data[i + 1] & 0xFF);
+					LOG.trace("DSFID: " + (data[i + 2] & 0xFF));
+					aTag.setDsfid(data[i + 2] & 0xFF);
+					// index i + 3 to i + 3 + UID_LENGTH are UID bytes
+					for (int uidIndex = i + 3; uidIndex < i + 3 + UID_LENGTH; uidIndex++) {
+						// TODO wie bereiten wir die ID auf?
+						id += (data[uidIndex] & 0xFF);
+						if (LOG.isTraceEnabled()) {
+							result += String.format("%02X",
+									data[uidIndex] & 0xFF)
+									+ ":";
+						}
+					}
+
+					LOG.trace("UDI: "
+							+ result.substring(0, result.length() - 1));
+					aTag.setId(result.substring(0, result.length() - 1));
 					tags.add(aTag);
+
+				} else {
+					LOG.error("Timeslot " + tsNum + ": Data corrupt");
 				}
-				break;
+			} else {
+				LOG.trace("Timeslot " + tsNum + ": No tag found...");
+				offset = 0;
 			}
+			tsNum++;
 		}
 		return tags;
 	}

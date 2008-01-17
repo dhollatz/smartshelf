@@ -2,6 +2,7 @@ package de.haw.smartshelf.reader.slrm900;
 
 import com.sun.jna.Library;
 import com.sun.jna.Native;
+import com.sun.jna.ptr.IntByReference;
 
 public interface SL2SERWrapper extends Library {
 
@@ -14,7 +15,7 @@ public interface SL2SERWrapper extends Library {
 
 	int init(String ComStr, String BaudStr);
 
-	int inventory(byte[] data);
+	int inventory(byte[] data, IntByReference timeSlotLength);
 
 	void enableDebug();
 

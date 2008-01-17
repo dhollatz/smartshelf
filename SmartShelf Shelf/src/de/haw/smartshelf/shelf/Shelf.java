@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
+import javax.swing.text.DefaultStyledDocument;
+import javax.swing.text.StyledDocument;
+
 import org.apache.log4j.Logger;
 
 import de.haw.smartshelf.config.ConfigurationException;
@@ -21,7 +24,13 @@ public class Shelf {
 	private static final String SHELF_CONFIG = "config/shelfProperties.xml";
 
 	protected Collection<ShelfReader> reader;
+	// TODO Caching? Wie?
 	protected HashMap<String, RFIDTag> cache;
+
+	protected Collection<RFIDTag> tags;
+
+	protected Thread shelfThread = new ShelfThread(this);
+	private StyledDocument doc = new DefaultStyledDocument();;
 
 	public Shelf() {
 		initialize();
@@ -63,6 +72,44 @@ public class Shelf {
 			}
 		}
 		return items;
+	}
+
+	public boolean containsTag(String id) {
+		LOG.debug("Searching for tag with id: " + id);
+		for (ShelfReader aReader : reader) {
+			if (aReader.isTagInRange(id)) {
+				LOG.debug("Tag " + id + " found");
+				return true;
+			}
+		}
+		LOG.debug("Tag " + id + " not found");
+		return false;
+	}
+
+	public void startInventoryLoop() {
+		if (!shelfThread.isAlive()) {
+			shelfThread.start();
+		} else {
+			shelfThread.resume();
+		}
+	}
+
+	public void stopInventoryLoop() {
+		if (shelfThread.isAlive()) {
+			shelfThread.suspend();
+		}
+	}
+
+	public Collection<RFIDTag> getTags() {
+		return tags;
+	}
+
+	public void setTags(Collection<RFIDTag> tags) {
+		this.tags = tags;
+	}
+
+	public StyledDocument getDoc() {
+		return doc;
 	}
 
 }
