@@ -36,6 +36,8 @@ public class ArticleSearchManagerWithIROS implements EventCallback
 	private IArticlesHolder _articlesHolder;
 	private Article _inputArticle;
 	
+	private String _eventId;
+	
 	
 	private ArticleSearchManagerWithIROS() throws EventHeapException
 	{
@@ -68,6 +70,8 @@ public class ArticleSearchManagerWithIROS implements EventCallback
 			SearchItemEventFacade sieFacade = new SearchItemEventFacade(searchEvent);
 			sieFacade.setArticle(inputArticle);
 //			searchEvent.setFieldValue("test.key", "TEST.VALUE");
+			
+			_eventId = sieFacade.getEventId();
 			eha.putEvent(searchEvent);
 		}
 		catch (EventHeapException e)
@@ -84,6 +88,20 @@ public class ArticleSearchManagerWithIROS implements EventCallback
 					System.out.println("Liste empfangen!");
 					ResultListEventFacade rlEvent = new ResultListEventFacade(event);
 									
+					try
+					{
+						String resultEvenId = rlEvent.getEventId();
+						if(!_eventId.equals(resultEvenId))
+						{
+							/* this event is not for me */
+							continue;
+						}
+					}
+					catch (Exception e1)
+					{
+						continue;
+					}
+					
 					List<Article> articles;
 					try
 					{

@@ -58,18 +58,30 @@ public class ResultPage extends MainPage implements IArticlesHolder, IPageWithAr
 		this();
 		_searchInputModel = searchInputModel;
 
-		searchInDb();
-		initPage();
+		initPage(this);
 	}
 	
-	private void initPage()
+	private void initPage(final IPageWithArticleSelection pwas)
 	{
 		setPageTitle("SmartShelf Search Result Page");
 		final FeedbackPanel feedback = new FeedbackPanel("feedback");
 		add(feedback);
 		
-		_ajaxDataTablePanel = new AjaxDataTablePanel("foundArticlesPanel", this);
-		add(_ajaxDataTablePanel);
+//		_ajaxDataTablePanel = new AjaxDataTablePanel("foundArticlesPanel", this);
+//		add(_ajaxDataTablePanel);
+		add(new AjaxLazyLoadPanel("foundArticlesPanel")
+		{    
+			private static final long serialVersionUID = -1417563085072943447L;
+
+			@Override
+            public Component getLazyLoadComponent(String id)
+            {
+				searchInDb();
+				_ajaxDataTablePanel = new AjaxDataTablePanel(id, pwas);
+				return _ajaxDataTablePanel;
+			}
+        
+        });
 		
 //		_articleDetailsPanel = new ArticleDetailsPanel("articleDetailsPanel");
 //		add(_articleDetailsPanel);

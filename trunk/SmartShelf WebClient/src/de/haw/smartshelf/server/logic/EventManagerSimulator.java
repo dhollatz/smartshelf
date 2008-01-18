@@ -39,7 +39,7 @@ public class EventManagerSimulator extends Thread
 		{
 			try
 			{
-				sleep(0);
+				sleep(3000);
 				searchArticles(_inputArticle);
 			}
 			catch (InterruptedException e)
@@ -54,6 +54,15 @@ public class EventManagerSimulator extends Thread
 	{
 		List<Article> foundArticles = BoFactory.getInstance().findArticle(inputArticle);
 		_articlesHolder.setArticles(foundArticles);
+		try
+		{
+			Thread.sleep(3000);
+		}
+		catch (InterruptedException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 }
