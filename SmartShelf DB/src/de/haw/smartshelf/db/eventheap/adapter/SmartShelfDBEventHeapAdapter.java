@@ -59,28 +59,30 @@ public class SmartShelfDBEventHeapAdapter implements EventCallback
 	public boolean returnEvent(Event[] events)
 	{
 		try {
-			for (Event event : events) {
-				if (ResultListEventFacade.TYPE_NAME.equals(event.getEventType())) {
-					ResultListEventFacade rlEvent = new ResultListEventFacade(event);
-					// TODO etwas mit der Liste machen ;)
-					System.out.println("Liste empfangen!");
-					//System.out.println(rlEvent.toStringComplete());
-				} else 	if (SearchItemEventFacade.TYPE_NAME.equals(event.getEventType())) {
-					
-					//SearchItemEvent siEvent = (SearchItemEvent) event;
+			for (Event event : events)
+			{
+				if (SearchItemEventFacade.TYPE_NAME.equals(event.getEventType()))
+				{
+					// SearchItemEvent siEvent = (SearchItemEvent) event;
 					// TODO etwas mit der Liste machen ;)
 					System.out.println("SearchItem empfangen!");
 					System.out.println(event.toStringComplete());
 					System.out.println("ARTICLE: " + new SearchItemEventFacade(event).getArticle());
-//					String string = (String)event.getPostValue("test.key");
-//					System.out.println("string: " + string);
-				
-				
+					// String string = (String)event.getPostValue("test.key");
+					// System.out.println("string: " + string);
+
 					Article inputArticle = (Article) new SearchItemEventFacade(event).getArticle();
+					if (inputArticle == null)
+					{
+						return true;
+					}
+
 					List<de.haw.smartshelf.db.data.pers.Article> foundPersArticles = findArticles(inputArticle);
-					
-					sendArticles(foundPersArticles, event);
-				} else {
+
+					sendArticles(foundPersArticles, event, false);
+				}
+				else
+				{
 					System.out.println("unknown event: " + event.getEventType());
 				}
 			}
@@ -92,15 +94,24 @@ public class SmartShelfDBEventHeapAdapter implements EventCallback
 		return true; // weitere Events empfangen
 	}
 	
-	private void sendArticles(List<de.haw.smartshelf.db.data.pers.Article> foundPersArticles, Event requestEvent)
+	private void sendArticles(List<de.haw.smartshelf.db.data.pers.Article> foundPersArticles, Event requestEvent, boolean asXml)
 	{ 
 		try
 		{
 			Event resultListEvent = EventFactory.createResultListEvent();
 			ResultListEventFacade rleFacade = new ResultListEventFacade(resultListEvent);
-			Element articlesElm = new DataExporter().export(foundPersArticles);
-			String xml = XmlUtil.xmlToString(articlesElm);
-			rleFacade.setListXML(xml);
+			
+			if(asXml)
+			{
+				Element articlesElm = new DataExporter().export(foundPersArticles);
+				String xml = XmlUtil.xmlToString(articlesElm);
+				rleFacade.setListXML(xml);
+			}
+			else
+			{
+				List<Article> boArticles = BoFactory.getInstance().convertToBo(foundPersArticles);
+				rleFacade.setArticles(boArticles);
+			}
 			
 			eha.putEvent(resultListEvent);
 			
