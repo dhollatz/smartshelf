@@ -21,9 +21,9 @@ public class ICodeReaderMock extends AbstractReader {
 
 	public void initialize() {
 		range = new ArrayList<String>();
-		range.add("12345");
-		range.add("00001");
-		range.add("AnotherID");
+		range.add("ICodeReaderMockTag1");
+		range.add("ICodeReaderMockTag2");
+		range.add("ICodeReaderMockTag3");
 	}
 
 	public Collection<RFIDTag> gatherTags() {

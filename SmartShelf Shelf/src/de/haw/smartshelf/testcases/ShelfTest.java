@@ -17,7 +17,7 @@ public class ShelfTest {
 
 	@Test
 	public void getAllItems() {
-		// assertTrue(shelf.getAllItems().size() >= 3);
+		assertTrue(shelf.getAllItems().size() >= 3);
 	}
 
 	@Test
