@@ -47,7 +47,6 @@ public class SLRM900 extends AbstractReader {
 	public Collection<RFIDTag> gatherTags() {
 		LOG.debug("gathering tags...");
 		Collection<RFIDTag> tags = new ArrayList<RFIDTag>();
-		lib.enableDebug();
 		if (isInit()) {
 			LOG.debug("JNA: " + SL2SERWrapper.LIBNAME + " initialized");
 			tags.addAll(inventory());
@@ -83,7 +82,6 @@ public class SLRM900 extends AbstractReader {
 				// timeslot data corrupt?
 				if ((i + timeSlotLength) < len) {
 					ICodeTag aTag = new ICodeTag();
-					String result = "";
 					String id = "";
 					LOG.trace("STATUS: " + (data[i] & 0xFF));
 					LOG.trace("STAT1: " + (data[i + 1] & 0xFF));
@@ -93,17 +91,13 @@ public class SLRM900 extends AbstractReader {
 					// index i + 3 to i + 3 + UID_LENGTH are UID bytes
 					for (int uidIndex = i + 3; uidIndex < i + 3 + UID_LENGTH; uidIndex++) {
 						// TODO wie bereiten wir die ID auf?
-						id += (data[uidIndex] & 0xFF);
-						if (LOG.isTraceEnabled()) {
-							result += String.format("%02X",
-									data[uidIndex] & 0xFF)
-									+ ":";
-						}
+						// id += (data[uidIndex] & 0xFF);
+						id += String.format("%02X", data[uidIndex] & 0xFF)
+								+ ":";
 					}
 
-					LOG.trace("UDI: "
-							+ result.substring(0, result.length() - 1));
-					aTag.setId(result.substring(0, result.length() - 1));
+					LOG.trace("UDI: " + id.substring(0, id.length() - 1));
+					aTag.setId(id.substring(0, id.length() - 1));
 					tags.add(aTag);
 
 				} else {
@@ -120,7 +114,11 @@ public class SLRM900 extends AbstractReader {
 
 	private boolean init() {
 		LOG.debug("Initializing reader...");
-		return (isInit = lib.init(port, BAUD) == 0);
+		isInit = lib.init(port, BAUD) == 0;
+		if (LOG.isTraceEnabled()) {
+			lib.enableDebug();
+		}
+		return isInit;
 	}
 
 }
