@@ -11,11 +11,7 @@
 package de.haw.smartshelf.server.logic;
 
 import iwork.eheap2.EventHeapException;
-
-import java.util.List;
-
 import de.haw.smartshelf.bo.Article;
-import de.haw.smartshelf.db.bo.BoFactory;
 
 /**
  * This class ... Copyright (c) 2007 SmartShelf
@@ -37,7 +33,20 @@ public class ArticleSearchManager
 //		new EventManagerSimulator(_articlesHolder, inputArticle).searchArticles(inputArticle);
 		try
 		{
+			_articlesHolder.setArticles(null);
 			new ArticleSearchManagerWithIROS(_articlesHolder, inputArticle).findArticles(inputArticle);
+			while(_articlesHolder.getArticles() == null)
+			{
+				/* wait for answer from DB */
+				try
+				{
+					Thread.sleep(500);
+				}
+				catch (InterruptedException e)
+				{
+					
+				}
+			}
 		}
 		catch (EventHeapException e)
 		{

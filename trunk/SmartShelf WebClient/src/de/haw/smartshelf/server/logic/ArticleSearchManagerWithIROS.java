@@ -15,6 +15,7 @@ import iwork.eheap2.EventCallback;
 import iwork.eheap2.EventHeapException;
 
 import java.io.File;
+import java.util.List;
 
 import de.haw.smartshelf.bo.Article;
 import de.haw.smartshelf.eha.EventHeapAdapter;
@@ -47,7 +48,8 @@ public class ArticleSearchManagerWithIROS implements EventCallback
 			throw new EventHeapException("Could not initialize EventHeapAdapter. " + e.getMessage());
 		}
 		this.eha.registerForEvent(EventFactory.createFoundIDEvent(), this);
-		this.eha.registerForEvent(EventFactory.createSearchItemEvent(), this);
+		this.eha.registerForEvent(EventFactory.createResultListEvent(), this);
+//		this.eha.registerForEvent(EventFactory.createSearchItemEvent(), this);
 	}
 	
 	public ArticleSearchManagerWithIROS(IArticlesHolder articlesHolder, Article inputArticle) throws EventHeapException
@@ -58,7 +60,7 @@ public class ArticleSearchManagerWithIROS implements EventCallback
 		_inputArticle = inputArticle;
 	}
 	
-	public void searchRequest(Article inputArticle)
+	public void sendSearchRequest(Article inputArticle)
 	{ 
 		try
 		{
@@ -79,18 +81,37 @@ public class ArticleSearchManagerWithIROS implements EventCallback
 		try {
 			for (Event event : events) {
 				if (ResultListEventFacade.TYPE_NAME.equals(event.getEventType())) {
-					ResultListEventFacade rlEvent = new ResultListEventFacade(event);
-					// TODO etwas mit der Liste machen ;)
 					System.out.println("Liste empfangen!");
+					ResultListEventFacade rlEvent = new ResultListEventFacade(event);
+									
+					List<Article> articles;
+					try
+					{
+						articles = rlEvent.getArticles();
+					}
+					catch (Exception e)
+					{
+						/* workaround: events have been received twice */
+						articles = null;
+					}
+					System.out.println("ARTICLES: " + articles);
+					if(articles == null)
+					{
+						continue;
+					}
+					else 
+					{
+						_articlesHolder.setArticles(articles);
+					}
 					//System.out.println(rlEvent.toStringComplete());
 				} else 	if (SearchItemEventFacade.TYPE_NAME.equals(event.getEventType())) {
-					//SearchItemEvent siEvent = (SearchItemEvent) event;
-					// TODO etwas mit der Liste machen ;)
-					System.out.println("SearchItem empfangen!");
-					System.out.println(event.toStringComplete());
-					System.out.println("ARTICLE: " + new SearchItemEventFacade(event).getArticle());
-//					String string = (String)event.getPostValue("test.key");
-//					System.out.println("string: " + string);
+//					//SearchItemEvent siEvent = (SearchItemEvent) event;
+//					// TODO etwas mit der Liste machen ;)
+//					System.out.println("SearchItem empfangen!");
+//					System.out.println(event.toStringComplete());
+//					System.out.println("ARTICLE: " + new SearchItemEventFacade(event).getArticle());
+////					String string = (String)event.getPostValue("test.key");
+////					System.out.println("string: " + string);
 				} else {
 					System.out.println("unknown event: " + event.getEventType());
 				}
@@ -105,7 +126,7 @@ public class ArticleSearchManagerWithIROS implements EventCallback
 
 	public void findArticles(Article inputArticle)
 	{
-		searchRequest(inputArticle);
+		sendSearchRequest(inputArticle);
 	}
 	
 }
