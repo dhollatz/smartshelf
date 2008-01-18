@@ -30,28 +30,28 @@ public class ArticleSearchManager
 	
 	public void searchArticles(Article inputArticle)
 	{
-		new EventManagerSimulator(_articlesHolder, inputArticle).searchArticles(inputArticle);
-//		try
-//		{
-//			_articlesHolder.setArticles(null);
-//			new ArticleSearchManagerWithIROS(_articlesHolder, inputArticle).findArticles(inputArticle);
-//			while(_articlesHolder.getArticles() == null)
-//			{
-//				/* wait for answer from DB */
-//				try
-//				{
-//					Thread.sleep(500);
-//				}
-//				catch (InterruptedException e)
-//				{
-//					
-//				}
-//			}
-//		}
-//		catch (EventHeapException e)
-//		{
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+//		new EventManagerSimulator(_articlesHolder, inputArticle).searchArticles(inputArticle);
+		try
+		{
+			_articlesHolder.setArticles(null);
+			new ArticleSearchManagerWithIROS(_articlesHolder, inputArticle).findArticles(inputArticle);
+			while(_articlesHolder.getArticles() == null)
+			{
+				/* wait for answer from DB */
+				try
+				{
+					Thread.sleep(500);
+				}
+				catch (InterruptedException e)
+				{
+					
+				}
+			}
+		}
+		catch (EventHeapException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
