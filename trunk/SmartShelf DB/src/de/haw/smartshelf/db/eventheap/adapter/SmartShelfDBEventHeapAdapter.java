@@ -38,9 +38,7 @@ import de.haw.smartshelf.eha.events.SearchItemEventFacade;
  */
 public class SmartShelfDBEventHeapAdapter implements EventCallback
 {
-	EventHeapAdapter eha;
-	private Article _inputArticle;
-	
+	EventHeapAdapter eha;	
 	
 	public SmartShelfDBEventHeapAdapter() throws EventHeapException
 	{
@@ -63,15 +61,12 @@ public class SmartShelfDBEventHeapAdapter implements EventCallback
 			{
 				if (SearchItemEventFacade.TYPE_NAME.equals(event.getEventType()))
 				{
-					// SearchItemEvent siEvent = (SearchItemEvent) event;
-					// TODO etwas mit der Liste machen ;)
-					System.out.println("SearchItem empfangen!");
-					System.out.println(event.toStringComplete());
-					System.out.println("ARTICLE: " + new SearchItemEventFacade(event).getArticle());
-					// String string = (String)event.getPostValue("test.key");
-					// System.out.println("string: " + string);
+//					System.out.println("SearchItem empfangen!");
+//					System.out.println(event.toStringComplete());
+//					System.out.println("ARTICLE: " + new SearchItemEventFacade(event).getArticle());
 
-					Article inputArticle = (Article) new SearchItemEventFacade(event).getArticle();
+					SearchItemEventFacade sief = new SearchItemEventFacade(event);
+					Article inputArticle = (Article) sief.getArticle();
 					if (inputArticle == null)
 					{
 						return true;
@@ -79,7 +74,7 @@ public class SmartShelfDBEventHeapAdapter implements EventCallback
 
 					List<de.haw.smartshelf.db.data.pers.Article> foundPersArticles = findArticles(inputArticle);
 
-					sendArticles(foundPersArticles, event, false);
+					sendArticles(foundPersArticles, sief, false);
 				}
 				else
 				{
@@ -94,12 +89,15 @@ public class SmartShelfDBEventHeapAdapter implements EventCallback
 		return true; // weitere Events empfangen
 	}
 	
-	private void sendArticles(List<de.haw.smartshelf.db.data.pers.Article> foundPersArticles, Event requestEvent, boolean asXml)
+	private void sendArticles(List<de.haw.smartshelf.db.data.pers.Article> foundPersArticles, SearchItemEventFacade sief, boolean asXml)
 	{ 
 		try
 		{
 			Event resultListEvent = EventFactory.createResultListEvent();
 			ResultListEventFacade rleFacade = new ResultListEventFacade(resultListEvent);
+			
+			/* set the same event id as from the received event */
+			rleFacade.setEventId(sief.getEventId());
 			
 			if(asXml)
 			{
@@ -126,27 +124,5 @@ public class SmartShelfDBEventHeapAdapter implements EventCallback
 	{
 		return DataFactory.getInstance().findArticle(BoFactory.getInstance().convertToPers(inputArticle));
 	}
-	
-	public void run()
-	{
-		while(true)
-		{
-			try
-			{
-				Thread.sleep(1000);
-			}
-			catch (InterruptedException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
-	
-	
-	public static void main(String[] args) throws EventHeapException
-	{
-		SmartShelfDBEventHeapAdapter dbAdapter = new SmartShelfDBEventHeapAdapter();
-//		dbAdapter.run();
-	}
+
 }

@@ -22,7 +22,7 @@ public class Executer
 {
 	public static void main(String[] args) throws EventHeapException
 	{
-		SmartShelfDBEventHeapAdapter dbAdapter = new SmartShelfDBEventHeapAdapter();
+		new SmartShelfDBEventHeapAdapter();
 		while(true)
 		{
 			try
