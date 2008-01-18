@@ -13,7 +13,7 @@ package de.haw.smartshelf.eha.events;
 import iwork.eheap2.Event;
 import iwork.eheap2.EventHeapException;
 
-public class SearchIDEventFacade {
+public class SearchIDEventFacade extends AbstractEventFacade{
 	
 	public static final String TYPE_NAME      = "SearchID";
 	
@@ -22,7 +22,6 @@ public class SearchIDEventFacade {
 	public static final String FIELD_SHELF_ID = "shelfID";
 	public static final String FIELD_RACK_ID  = "rackID";
 
-	private Event event;
 	
 	public SearchIDEventFacade(Event event) throws EventHeapException {
 		if (!event.getEventType().equals(TYPE_NAME)) {

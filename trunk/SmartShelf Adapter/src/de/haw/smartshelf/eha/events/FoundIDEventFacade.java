@@ -13,13 +13,11 @@ package de.haw.smartshelf.eha.events;
 import iwork.eheap2.Event;
 import iwork.eheap2.EventHeapException;
 
-public class FoundIDEventFacade {
+public class FoundIDEventFacade extends AbstractEventFacade{
 	
 	public static final String TYPE_NAME  = "FoundIDEvent";
 	
 	public static final String FIELD_ID   = "id";
-
-	private Event event;
 	
 	public FoundIDEventFacade(Event event) throws EventHeapException {
 		if (!event.getEventType().equals(TYPE_NAME)) {

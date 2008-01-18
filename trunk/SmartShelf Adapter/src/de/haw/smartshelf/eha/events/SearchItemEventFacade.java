@@ -14,14 +14,12 @@ import de.haw.smartshelf.bo.Article;
 import iwork.eheap2.Event;
 import iwork.eheap2.EventHeapException;
 
-public class SearchItemEventFacade {
+public class SearchItemEventFacade extends AbstractEventFacade {
 	
 	public static final String TYPE_NAME      = "SearchItemEvent";
 	
 	public static final String FIELD_TITLE    = "title";
-	public static final String FIELD_ARTICLE  = "article";
-
-	private Event event;
+	public static final String FIELD_INPUT_ARTICLE  = "article";
 	
 	public SearchItemEventFacade(Event event) throws EventHeapException {
 		if (!event.getEventType().equals(TYPE_NAME)) {
@@ -47,10 +45,10 @@ public class SearchItemEventFacade {
 	}
 
 	public void setArticle(Article article) throws EventHeapException {
-		event.setFieldValue(FIELD_ARTICLE, article);
+		event.setFieldValue(FIELD_INPUT_ARTICLE, article);
 	}
 	
 	public Object getArticle() throws EventHeapException {
-		return event.getPostValue(FIELD_ARTICLE);
+		return event.getPostValue(FIELD_INPUT_ARTICLE);
 	}
 }
