@@ -8,10 +8,18 @@
     <servlet>
         <servlet-name>SmartShelfApplication</servlet-name>
         <servlet-class>org.apache.wicket.protocol.http.WicketServlet</servlet-class>
+        
         <init-param>
           <param-name>applicationClassName</param-name>
           <param-value>de.haw.smartshelf.server.SmartShelfApplication</param-value>
         </init-param>
+
+<!--        
+        <init-param>
+            <param-name>configuration</param-name>
+            <param-value>deployment</param-value>
+		</init-param>
+ -->         
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
