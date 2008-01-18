@@ -18,10 +18,8 @@ public class ShelfThread extends Thread implements Runnable {
 	public void run() {
 		String out;
 		int len;
-
 		while (!isInterrupted()) {
 			out = "";
-
 			shelf.setTags(shelf.getAllItems());
 			for (RFIDTag tag : shelf.getTags()) {
 				out += tag.getId() + "\n";
@@ -36,11 +34,13 @@ public class ShelfThread extends Thread implements Runnable {
 			}
 
 			try {
-				Thread.sleep(20);
+				Thread.sleep(shelf.getUpdateInterval());
 			} catch (InterruptedException e) {
 				interrupt();
 			}
 		}
 	}
+	
+	
 
 }

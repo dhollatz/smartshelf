@@ -29,8 +29,9 @@ public class Shelf {
 
 	protected Collection<RFIDTag> tags;
 
-	protected Thread shelfThread = new ShelfThread(this);
-	private StyledDocument doc = new DefaultStyledDocument();;
+	protected Thread shelfThread;
+	private StyledDocument doc = new DefaultStyledDocument();
+	private int updateInterval;;
 
 	public Shelf() {
 		initialize();
@@ -87,16 +88,15 @@ public class Shelf {
 	}
 
 	public void startInventoryLoop() {
-		if (!shelfThread.isAlive()) {
+		if (shelfThread == null || !shelfThread.isAlive()) {
+			shelfThread = new ShelfThread(this);
 			shelfThread.start();
-		} else {
-			shelfThread.resume();
 		}
 	}
 
 	public void stopInventoryLoop() {
 		if (shelfThread.isAlive()) {
-			shelfThread.suspend();
+			shelfThread.interrupt();
 		}
 	}
 
@@ -110,6 +110,20 @@ public class Shelf {
 
 	public StyledDocument getDoc() {
 		return doc;
+	}
+
+	public void setUpdateInterval(int value) {
+		if(value == 0){
+			updateInterval = 10;
+		}else if (value >= 50){
+			updateInterval = value * 20;
+		}else{
+			updateInterval = value * 10;
+		}
+	}
+	
+	public int getUpdateInterval(){
+		return updateInterval;
 	}
 
 }
