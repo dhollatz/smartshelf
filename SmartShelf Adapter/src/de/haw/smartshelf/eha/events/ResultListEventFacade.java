@@ -18,14 +18,13 @@ import java.util.List;
 
 import de.haw.smartshelf.bo.Article;
 
-public class ResultListEventFacade {
+public class ResultListEventFacade extends AbstractEventFacade{
 	
 	public static final String TYPE_NAME      = "ResultListEvent";
 	public static final String FIELD_TITLE    = "title";
 	public static final String FIELD_LIST_XML = "listXML";
 	public static final String FIELD_ARTICLES_LIST = "articlesList";
 	
-	private Event event;
 	
 	public ResultListEventFacade(Event event) throws EventHeapException {
 		if (!event.getEventType().equals(TYPE_NAME)) {
