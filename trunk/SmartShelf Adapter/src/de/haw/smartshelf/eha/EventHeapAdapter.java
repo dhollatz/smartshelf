@@ -81,7 +81,7 @@ public class EventHeapAdapter {
 //		
 //		return newEvent;
 		
-		event.addField(RETURN_TO_CLIENT, _config.getClientName());
+//		event.addField(RETURN_TO_CLIENT, _config.getClientName());
 		return event;
 		
 		

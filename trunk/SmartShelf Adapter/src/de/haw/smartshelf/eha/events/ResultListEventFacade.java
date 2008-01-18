@@ -13,11 +13,17 @@ package de.haw.smartshelf.eha.events;
 import iwork.eheap2.Event;
 import iwork.eheap2.EventHeapException;
 
+import java.io.Serializable;
+import java.util.List;
+
+import de.haw.smartshelf.bo.Article;
+
 public class ResultListEventFacade {
 	
 	public static final String TYPE_NAME      = "ResultListEvent";
 	public static final String FIELD_TITLE    = "title";
 	public static final String FIELD_LIST_XML = "listXML";
+	public static final String FIELD_ARTICLES_LIST = "articlesList";
 	
 	private Event event;
 	
@@ -42,6 +48,16 @@ public class ResultListEventFacade {
 	
 	public void setListXML(String listXML) throws EventHeapException {
 		event.setFieldValue(FIELD_LIST_XML, listXML);
+	}
+	
+	public void setArticles(List<Article> articles) throws EventHeapException
+	{
+		event.setFieldValue(FIELD_ARTICLES_LIST, (Serializable) articles);
+	}
+	
+	public List<Article> getArticles() throws EventHeapException
+	{
+		return (List<Article>) event.getPostValue(FIELD_ARTICLES_LIST);
 	}
 
 }
