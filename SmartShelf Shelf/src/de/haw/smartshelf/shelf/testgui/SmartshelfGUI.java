@@ -23,6 +23,8 @@ import org.jdesktop.application.Action;
 import org.jdesktop.application.Application;
 import org.jdesktop.application.SingleFrameApplication;
 
+import com.sun.tools.javac.comp.Lower;
+
 import de.haw.smartshelf.shelf.Shelf;
 
 
@@ -160,7 +162,7 @@ public class SmartshelfGUI extends SingleFrameApplication {
                 	imageOutput = new JPanel();
                 	contentPanel.add(imageOutput, BorderLayout.EAST);
                 	FlowLayout imageOutputLayout = new FlowLayout();
-                	imageOutputLayout.setAlignOnBaseline(true);
+                	imageOutputLayout.setAlignment(FlowLayout.CENTER);  //.setAlignOnBaseline(true);
                 	imageOutput.setLayout(imageOutputLayout);
                 	imageOutput.setPreferredSize(new java.awt.Dimension(270, 250));
                 	imageOutput.setSize(-1, 300);

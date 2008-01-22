@@ -10,11 +10,10 @@
  */
 package de.haw.smartshelf.eha.events;
 
-import de.haw.smartshelf.bo.ArticleLocation;
 import iwork.eheap2.Event;
 import iwork.eheap2.EventHeapException;
 
-public class FoundIDEventFacade extends AbstractEventFacade{
+public class FoundIDEventFacade extends SimpleEventFacade{
 	
 	public static final String TYPE_NAME      = "SearchID";
 	
@@ -25,14 +24,14 @@ public class FoundIDEventFacade extends AbstractEventFacade{
 
 	
 	public FoundIDEventFacade(Event event) throws EventHeapException {
+		super(event);
 		if (!event.getEventType().equals(TYPE_NAME)) {
 			throw new RuntimeException("Illegal event type:" + event.getEventType());
 		}
-		this.event = event;
 	}
 	
 	public String getTitle() throws EventHeapException {
-		return event.getPostValueString(FIELD_TITLE);
+		return getEvent().getPostValueString(FIELD_TITLE);
 	}
 	
 	public void setTitle(Event event, String title) throws EventHeapException {
@@ -40,19 +39,19 @@ public class FoundIDEventFacade extends AbstractEventFacade{
 	}
 
 	public String getShelfID(Event event) throws EventHeapException {
-		return event.getPostValueString(FIELD_SHELF_ID);
+		return getEvent().getPostValueString(FIELD_SHELF_ID);
 	}
 	
 	public void setShelfID(String shelfID) throws EventHeapException {
-		event.setFieldValue(FIELD_SHELF_ID, shelfID);
+		getEvent().setFieldValue(FIELD_SHELF_ID, shelfID);
 	}
 
 	public String getRackID() throws EventHeapException {
-		return event.getPostValueString(FIELD_RACK_ID);
+		return getEvent().getPostValueString(FIELD_RACK_ID);
 	}
 	
 	public void setRackID(String rackID) throws EventHeapException {
-		event.setFieldValue(FIELD_RACK_ID, rackID);
+		getEvent().setFieldValue(FIELD_RACK_ID, rackID);
 	}
 
 }

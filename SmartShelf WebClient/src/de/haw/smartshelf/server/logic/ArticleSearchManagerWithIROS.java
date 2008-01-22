@@ -36,7 +36,7 @@ public class ArticleSearchManagerWithIROS implements EventCallback
 	private IArticlesHolder _articlesHolder;
 	private Article _inputArticle;
 	
-	private String _eventId;
+//	private String _eventId;
 	
 	
 	private ArticleSearchManagerWithIROS() throws EventHeapException
@@ -49,8 +49,8 @@ public class ArticleSearchManagerWithIROS implements EventCallback
 		{
 			throw new EventHeapException("Could not initialize EventHeapAdapter. " + e.getMessage());
 		}
-		this.eha.registerForEvent(EventFactory.createFoundIDEvent(), this);
-		this.eha.registerForEvent(EventFactory.createResultListEvent(), this);
+//		this.eha.registerForEvent(EventFactory.createFoundIDEvent(), this);
+//		this.eha.registerForEvent(EventFactory.createResultListEvent(), this);
 //		this.eha.registerForEvent(EventFactory.createSearchItemEvent(), this);
 	}
 	
@@ -71,8 +71,9 @@ public class ArticleSearchManagerWithIROS implements EventCallback
 			sieFacade.setArticle(inputArticle);
 //			searchEvent.setFieldValue("test.key", "TEST.VALUE");
 			
-			_eventId = sieFacade.getEventId();
-			eha.putEvent(searchEvent);
+//			_eventId = sieFacade.getEventId();
+			eha.putEventAndRegisterForRespponse(searchEvent, EventFactory.createResultListEvent(), this);
+//			eha.putEvent(searchEvent);
 		}
 		catch (EventHeapException e)
 		{
@@ -90,12 +91,12 @@ public class ArticleSearchManagerWithIROS implements EventCallback
 									
 					try
 					{
-						String resultEvenId = rlEvent.getEventId();
-						if(!_eventId.equals(resultEvenId))
-						{
-							/* this event is not for me */
-							continue;
-						}
+//						String resultEvenId = rlEvent.getEventId();
+//						if(!_eventId.equals(resultEvenId))
+//						{
+//							/* this event is not for me */
+//							continue;
+//						}
 					}
 					catch (Exception e1)
 					{
@@ -119,6 +120,8 @@ public class ArticleSearchManagerWithIROS implements EventCallback
 					}
 					else 
 					{
+						
+						//TODO: many responses from several DBs
 						_articlesHolder.setArticles(articles);
 					}
 					//System.out.println(rlEvent.toStringComplete());

@@ -51,7 +51,7 @@ public class SmartShelfDBEventHeapAdapter implements EventCallback
 			throw new EventHeapException("Could not initialize EventHeapAdapter. " + e.getMessage());
 		}
 		this.eha.registerForEvent(EventFactory.createSearchItemEvent(), this);
-		this.eha.registerForEvent(EventFactory.createFoundIDEvent(), this);
+//		this.eha.registerForEvent(EventFactory.createFoundIDEvent(), this);
 	}
 	
 	public boolean returnEvent(Event[] events)
@@ -96,9 +96,6 @@ public class SmartShelfDBEventHeapAdapter implements EventCallback
 			Event resultListEvent = EventFactory.createResultListEvent();
 			ResultListEventFacade rleFacade = new ResultListEventFacade(resultListEvent);
 			
-			/* set the same event id as from the received event */
-			rleFacade.setEventId(sief.getEventId());
-			
 			if(asXml)
 			{
 				Element articlesElm = new DataExporter().export(foundPersArticles);
@@ -111,8 +108,8 @@ public class SmartShelfDBEventHeapAdapter implements EventCallback
 				rleFacade.setArticles(boArticles);
 			}
 			
+			rleFacade.setEventId(sief.getEventId());
 			eha.putEvent(resultListEvent);
-			
 		}
 		catch (EventHeapException e)
 		{

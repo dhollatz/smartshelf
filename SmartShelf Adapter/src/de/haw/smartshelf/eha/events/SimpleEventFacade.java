@@ -3,11 +3,23 @@ package de.haw.smartshelf.eha.events;
 import iwork.eheap2.Event;
 import iwork.eheap2.EventHeapException;
 
-public class AbstractEventFacade
+public class SimpleEventFacade
 {
 	public static final String FIELD_EVENT_ID   = "eventId";
 	
-	protected Event event;
+	private Event event;
+	
+	public SimpleEventFacade(Event event) {
+		this.event = event;
+	}
+	
+	public Event getEvent() {
+		return event;
+	}
+	
+	public void setEvent(Event event) {
+		this.event = event;
+	}
 	
 	public String getEventId() throws EventHeapException {
 		return event.getPostValueString(FIELD_EVENT_ID);

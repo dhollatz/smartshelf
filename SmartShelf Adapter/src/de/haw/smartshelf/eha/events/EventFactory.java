@@ -82,6 +82,6 @@ public class EventFactory {
 	private static void setEventId(Event event) throws EventHeapException
 	{
 		String eventid = String.valueOf(System.currentTimeMillis()) + "_" +  String.valueOf(event.hashCode());
-		event.setFieldValue(AbstractEventFacade.FIELD_EVENT_ID, eventid);
+		event.setFieldValue(SimpleEventFacade.FIELD_EVENT_ID, eventid);
 	}
 }

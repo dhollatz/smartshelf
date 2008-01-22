@@ -14,7 +14,7 @@ import de.haw.smartshelf.bo.Article;
 import iwork.eheap2.Event;
 import iwork.eheap2.EventHeapException;
 
-public class SearchItemEventFacade extends AbstractEventFacade {
+public class SearchItemEventFacade extends SimpleEventFacade {
 	
 	public static final String TYPE_NAME      = "SearchItemEvent";
 	
@@ -22,33 +22,33 @@ public class SearchItemEventFacade extends AbstractEventFacade {
 	public static final String FIELD_INPUT_ARTICLE  = "article";
 	
 	public SearchItemEventFacade(Event event) throws EventHeapException {
+		super(event);
 		if (!event.getEventType().equals(TYPE_NAME)) {
 			throw new RuntimeException("Illegal event type:" + event.getEventType());
 		}
-		this.event = event;
 	}
 	
 	public String getTitle() throws EventHeapException {
-		return event.getPostValueString(FIELD_TITLE);
+		return getEvent().getPostValueString(FIELD_TITLE);
 	}
 	
 	public void setTitle(String title) throws EventHeapException {
-		event.setFieldValue(FIELD_TITLE, title);
+		getEvent().setFieldValue(FIELD_TITLE, title);
 	}
 	
 	public String getProperty(String propertyName) throws EventHeapException {
-		return event.getPostValueString(propertyName);
+		return getEvent().getPostValueString(propertyName);
 	}
 	
 	public void setProperty(String propertyName, String propertyValue) throws EventHeapException {
-		event.setFieldValue(propertyName, propertyValue);
+		getEvent().setFieldValue(propertyName, propertyValue);
 	}
 
 	public void setArticle(Article article) throws EventHeapException {
-		event.setFieldValue(FIELD_INPUT_ARTICLE, article);
+		getEvent().setFieldValue(FIELD_INPUT_ARTICLE, article);
 	}
 	
 	public Object getArticle() throws EventHeapException {
-		return event.getPostValue(FIELD_INPUT_ARTICLE);
+		return getEvent().getPostValue(FIELD_INPUT_ARTICLE);
 	}
 }
