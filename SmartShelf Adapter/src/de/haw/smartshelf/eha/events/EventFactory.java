@@ -25,10 +25,10 @@ import iwork.eheap2.FieldValueTypes;
 public class EventFactory {
 	
 	public static Event createFoundIDEvent() throws EventHeapException {
-		Event event = new Event(FoundIDEventFacade.TYPE_NAME);
+		Event event = new Event(SearchIDEventFacade.TYPE_NAME);
 
-		event.addField(FoundIDEventFacade.FIELD_EVENT_ID, String.class, FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
-		event.addField(FoundIDEventFacade.FIELD_ID, String.class, FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
+		event.addField(SearchIDEventFacade.FIELD_EVENT_ID, String.class, FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
+		event.addField(SearchIDEventFacade.FIELD_ID, String.class, FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
 		event.setTimeToLive(50000);
 		
 		setEventId(event);
@@ -51,12 +51,12 @@ public class EventFactory {
 	}
 	
 	public static Event createSearchIDEvent() throws EventHeapException {
-		Event event = new Event(SearchIDEventFacade.TYPE_NAME);
+		Event event = new Event(FoundIDEventFacade.TYPE_NAME);
 
-		event.addField(SearchIDEventFacade.FIELD_EVENT_ID, String.class, FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
-		event.addField(SearchIDEventFacade.FIELD_TITLE,    String.class, FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
-		event.addField(SearchIDEventFacade.FIELD_SHELF_ID, String.class, FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
-		event.addField(SearchIDEventFacade.FIELD_RACK_ID,  String.class, FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
+		event.addField(FoundIDEventFacade.FIELD_EVENT_ID, String.class, FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
+		event.addField(FoundIDEventFacade.FIELD_TITLE,    String.class, FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
+		event.addField(FoundIDEventFacade.FIELD_SHELF_ID, String.class, FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
+		event.addField(FoundIDEventFacade.FIELD_RACK_ID,  String.class, FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
 		
 		event.setTimeToLive(50000);
 		
