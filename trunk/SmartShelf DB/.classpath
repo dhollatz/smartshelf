@@ -18,6 +18,9 @@
 	<classpathentry kind="lib" path="lib/ehcache-1.2.3.jar"/>
 	<classpathentry kind="lib" path="lib/jta.jar"/>
 	<classpathentry kind="lib" path="lib/c3p0-0.9.1.jar"/>
+	<classpathentry kind="lib" path="lib/ant-antlr-1.6.5.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/SmartShelf CommonUtils"/>
+	<classpathentry kind="lib" path="/SmartSHELF Adapter/lib/iROS.jar" sourcepath="/iros-src"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/SmartSHELF Adapter"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
