@@ -15,13 +15,9 @@ import iwork.eheap2.EventHeapException;
 
 public class SearchIDEventFacade extends AbstractEventFacade{
 	
-	public static final String TYPE_NAME      = "SearchID";
+	public static final String TYPE_NAME  = "FoundIDEvent";
 	
-	public static final String FIELD_TITLE    = "title";
-	public static final String FIELD_TAG_ID   = "tagID";
-	public static final String FIELD_SHELF_ID = "shelfID";
-	public static final String FIELD_RACK_ID  = "rackID";
-
+	public static final String FIELD_ID   = "id";
 	
 	public SearchIDEventFacade(Event event) throws EventHeapException {
 		if (!event.getEventType().equals(TYPE_NAME)) {
@@ -30,29 +26,12 @@ public class SearchIDEventFacade extends AbstractEventFacade{
 		this.event = event;
 	}
 	
-	public String getTitle() throws EventHeapException {
-		return event.getPostValueString(FIELD_TITLE);
+	public String getID() throws EventHeapException {
+		return event.getPostValueString(FIELD_ID);
 	}
-	
-	public void setTitle(Event event, String title) throws EventHeapException {
-		event.setFieldValue(FIELD_TITLE, title);
-	}
-
-	public String getShelfID(Event event) throws EventHeapException {
-		return event.getPostValueString(FIELD_SHELF_ID);
-	}
-	
-	public void setShelfID(String shelfID) throws EventHeapException {
-		event.setFieldValue(FIELD_SHELF_ID, shelfID);
-	}
-
-	public String getRackID() throws EventHeapException {
-		return event.getPostValueString(FIELD_RACK_ID);
-	}
-	
-	public void setRackID(String rackID) throws EventHeapException {
-		event.setFieldValue(FIELD_RACK_ID, rackID);
+		
+	public void setID(String id) throws EventHeapException {
+		event.setFieldValue(FIELD_ID, id);
 	}
 
 }
-
