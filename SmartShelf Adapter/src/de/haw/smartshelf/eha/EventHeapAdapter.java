@@ -66,6 +66,9 @@ public class EventHeapAdapter {
 		SimpleEventFacade simpleEventFacade = new SimpleEventFacade(event);
 		simpleEventFacade.setEventId(msgID);
 		
+		/* sending event */
+		putEvent(simpleEventFacade.getEvent());
+		
 		return msgID;
 	}
 	
