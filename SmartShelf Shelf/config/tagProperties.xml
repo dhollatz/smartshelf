@@ -1,0 +1,20 @@
+<tagConfig
+	defaultImageURL="rsrc/genericTag.png">
+	<tags class="java.util.ArrayList">
+		<RFIDTag id="00:9D:52:00:00:03:04:E0"
+			class="de.haw.smartshelf.reader.tags.ICodeTag"
+			imageURL="rsrc/tag1.png" />
+		<RFIDTag id="F1:9C:52:00:00:03:04:E0"
+			class="de.haw.smartshelf.reader.tags.ICodeTag" imageURL="rsrc/tag2.png" />
+		<RFIDTag id="E2:9C:52:00:00:03:04:E0"
+			class="de.haw.smartshelf.reader.tags.ICodeTag" imageURL="rsrc/tag3.png" />
+		<RFIDTag id="34:9D:58:00:00:02:04:E0"
+			class="de.haw.smartshelf.reader.tags.ICodeTag" imageURL="rsrc/tag4.png" />
+		<RFIDTag id="C6:9C:52:00:00:03:04:E0"
+			class="de.haw.smartshelf.reader.tags.ICodeTag" imageURL="rsrc/tag5.png" />
+		<RFIDTag id="B7:9C:52:00:00:03:04:E0"
+			class="de.haw.smartshelf.reader.tags.ICodeTag" imageURL="rsrc/tag6.png" />
+		<RFIDTag id="5E:9D:58:00:00:02:04:E0"
+			class="de.haw.smartshelf.reader.tags.ICodeTag" imageURL="rsrc/tag7.png" />
+	</tags>
+</tagConfig>

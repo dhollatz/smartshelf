@@ -2,6 +2,7 @@
    <readerConfigs class="java.util.ArrayList">
       <readerConfig id="0">
          <type>0</type>
+         <class>null</class>
          <position>0</position>
          <port>0</port>
       </readerConfig>

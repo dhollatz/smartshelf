@@ -1,10 +1,19 @@
 package de.haw.smartshelf.reader.tags;
 
+import org.simpleframework.xml.Attribute;
+import org.simpleframework.xml.Root;
+
+@Root
 public abstract class RFIDTag {
 
-	protected String id;
-	protected String type;
+	@Attribute
+	protected String id = "";
+
+	protected String type = "";
 	protected static String TYPE = "Common RFID Tag";
+
+	@Attribute
+	protected String imageURL = "";
 
 	public RFIDTag() {
 		initialize();
@@ -29,6 +38,22 @@ public abstract class RFIDTag {
 
 	protected void initialize() {
 		this.type = TYPE;
+	}
+
+	public String getImageURL() {
+		return imageURL;
+	}
+
+	public void setImageURL(String imageURL) {
+		this.imageURL = imageURL;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof RFIDTag) {
+			return id.equals(((RFIDTag) obj).getId());
+		}
+		return false;
 	}
 
 }

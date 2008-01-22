@@ -3,6 +3,8 @@ package de.haw.smartshelf.shelf;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.text.DefaultStyledDocument;
 import javax.swing.text.StyledDocument;
@@ -12,15 +14,16 @@ import org.apache.log4j.Logger;
 import de.haw.smartshelf.config.ConfigurationException;
 import de.haw.smartshelf.config.ReaderConfig;
 import de.haw.smartshelf.config.ShelfConfig;
+import de.haw.smartshelf.facade.ShelfEventHeapAdapter;
 import de.haw.smartshelf.reader.NoSuchReaderException;
 import de.haw.smartshelf.reader.ReaderFactory;
 import de.haw.smartshelf.reader.ShelfReader;
 import de.haw.smartshelf.reader.tags.RFIDTag;
+import de.haw.smartshelf.shelf.action.ShelfAction;
 
-public class Shelf {
+public class Shelf extends Observable implements Observer {
 
 	private static final Logger LOG = Logger.getLogger(Shelf.class);
-	// private static final String SHELF_PROPS = "shelf.properties";
 	private static final String SHELF_CONFIG = "config/shelfProperties.xml";
 
 	protected Collection<ShelfReader> reader;
@@ -29,9 +32,11 @@ public class Shelf {
 
 	protected Collection<RFIDTag> tags;
 
+	protected ShelfEventHeapAdapter eha;
 	protected Thread shelfThread;
 	private StyledDocument doc = new DefaultStyledDocument();
-	private int updateInterval;;
+	private int updateInterval;
+	protected RFIDTag newTag;
 
 	public Shelf() {
 		initialize();
@@ -41,12 +46,18 @@ public class Shelf {
 		ShelfConfig shelfConfig = null;
 		try {
 			shelfConfig = ShelfConfig.getConfig(SHELF_CONFIG);
+			LOG.debug("Shelf configuration successfully obtained");
+			LOG.trace(shelfConfig.toString());
+			// eha = new ShelfEventHeapAdapter();
+			// eha.addObserver(this);
 		} catch (ConfigurationException e) {
 			LOG.fatal("Configuration failed " + e.getMessage());
 			throw new RuntimeException("Fatal - Configuration failed", e);
 		}
-		LOG.debug("Configuration successfully obtained");
-		LOG.trace(shelfConfig.toString());
+		// catch (EventHeapException e) {
+		// LOG.fatal("Configuration failed " + e.getMessage());
+		// throw new RuntimeException("Fatal - Configuration failed", e);
+		// }
 
 		reader = new ArrayList<ShelfReader>();
 
@@ -76,15 +87,19 @@ public class Shelf {
 	}
 
 	public boolean containsTag(String id) {
+		return searchTag(id) != null;
+	}
+
+	public RFIDTag searchTag(String id) {
 		LOG.debug("Searching for tag with id: " + id);
 		for (ShelfReader aReader : reader) {
 			if (aReader.isTagInRange(id)) {
 				LOG.debug("Tag " + id + " found");
-				return true;
+				return aReader.searchTag(id);
 			}
 		}
 		LOG.debug("Tag " + id + " not found");
-		return false;
+		return null;
 	}
 
 	public void startInventoryLoop() {
@@ -105,7 +120,20 @@ public class Shelf {
 	}
 
 	public void setTags(Collection<RFIDTag> tags) {
+		boolean update;
+		update = this.tags == null || !this.tags.containsAll(tags);
+		if (update){
+			for (RFIDTag tag : tags) {
+				if(this.tags == null || !this.tags.contains(tag)){
+					newTag = tag;
+				}
+			}
+		}
 		this.tags = tags;
+		if (update) {
+			setChanged();
+			notifyObservers();
+		}
 	}
 
 	public StyledDocument getDoc() {
@@ -113,17 +141,33 @@ public class Shelf {
 	}
 
 	public void setUpdateInterval(int value) {
-		if(value == 0){
+		if (value == 0) {
 			updateInterval = 10;
-		}else if (value >= 50){
-			updateInterval = value * 20;
-		}else{
-			updateInterval = value * 10;
+		} else {
+			updateInterval = value < 10 ? value * value + 10 : value * value;
 		}
 	}
-	
-	public int getUpdateInterval(){
+
+	public int getUpdateInterval() {
 		return updateInterval;
 	}
 
+	public void update(Observable o, Object arg) {
+		if (arg instanceof ShelfAction) {
+			if (arg instanceof SearchAction) {
+				SearchAction search = (SearchAction) arg;
+				if (containsTag(search.getRfid())) {
+					((ShelfEventHeapAdapter) o).sendTagFoundEvent(
+							searchTag(search.getRfid()), search.getEventID());
+				}
+
+			}
+		} else {
+			LOG.warn("Observer received unknown object");
+		}
+	}
+
+	public RFIDTag getNewTag() {
+		return newTag;
+	}
 }

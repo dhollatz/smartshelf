@@ -19,14 +19,18 @@ public abstract class AbstractReader implements ShelfReader {
 	}
 
 	public boolean isTagInRange(String id) {
+		return searchTag(id) != null;
+	}
+
+	public RFIDTag searchTag(String id) {
 		Collection<RFIDTag> tags = gatherTags();
 		if (tags.size() > 0) {
 			for (RFIDTag tag : tags) {
 				if (tag.getId().equals(id)) {
-					return true;
+					return tag;
 				}
 			}
 		}
-		return false;
+		return null;
 	}
 }

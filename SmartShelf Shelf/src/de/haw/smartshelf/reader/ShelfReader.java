@@ -9,6 +9,8 @@ public interface ShelfReader {
 	public abstract Collection<RFIDTag> gatherTags();
 
 	public abstract boolean isTagInRange(String id);
+	
+	public abstract RFIDTag searchTag(String id);
 
 	public abstract void setPort(String port);
 	
