@@ -10,10 +10,10 @@
  */
 package de.haw.smartshelf.eha.events;
 
-import de.haw.smartshelf.bo.Article;
 import iwork.eheap2.Event;
 import iwork.eheap2.EventHeapException;
 import iwork.eheap2.FieldValueTypes;
+import de.haw.smartshelf.bo.Article;
 
 /**
  * Die Event Factory erzeugt <tt>Event</tt>s eines Typs. 
@@ -30,9 +30,7 @@ public class EventFactory {
 		event.addField(SearchIDEventFacade.FIELD_EVENT_ID, String.class, FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
 		event.addField(SearchIDEventFacade.FIELD_ID, String.class, FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
 		event.setTimeToLive(50000);
-		
-		setEventId(event);
-		
+				
 		return event;
 	}
 	
@@ -44,9 +42,7 @@ public class EventFactory {
 		event.addField(ResultListEventFacade.FIELD_LIST_XML, String.class, FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
 		
 		event.setTimeToLive(50000);
-		
-		setEventId(event);
-		
+				
 		return event;
 	}
 	
@@ -59,9 +55,7 @@ public class EventFactory {
 		event.addField(FoundIDEventFacade.FIELD_RACK_ID,  String.class, FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
 		
 		event.setTimeToLive(50000);
-		
-		setEventId(event);
-		
+				
 		return event;
 	}
 	
@@ -73,9 +67,7 @@ public class EventFactory {
 		event.addField(SearchItemEventFacade.FIELD_INPUT_ARTICLE,  Article.class, FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
 		
 		event.setTimeToLive(50000);
-		
-		setEventId(event);
-		
+				
 		return event;
 	}
 	
