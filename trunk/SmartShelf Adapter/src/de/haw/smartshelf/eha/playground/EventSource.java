@@ -13,7 +13,6 @@ package de.haw.smartshelf.eha.playground;
 import iwork.eheap2.Event;
 import iwork.eheap2.EventHeap;
 import iwork.eheap2.EventHeapException;
-import iwork.eheap2.FieldValueTypes;
 
 public class EventSource {
 	public static void main(String[] args) throws EventHeapException {
