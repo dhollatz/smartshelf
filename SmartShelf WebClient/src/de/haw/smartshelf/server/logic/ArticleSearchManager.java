@@ -10,6 +10,8 @@
  */
 package de.haw.smartshelf.server.logic;
 
+import java.util.ArrayList;
+
 import iwork.eheap2.EventHeapException;
 import de.haw.smartshelf.bo.Article;
 
@@ -21,6 +23,7 @@ import de.haw.smartshelf.bo.Article;
  */
 public class ArticleSearchManager
 {
+	public static long TIME_TO_WAIT = 30000;
 	private IArticlesHolder _articlesHolder;
 	
 	public ArticleSearchManager(IArticlesHolder articlesHolder)
@@ -35,17 +38,26 @@ public class ArticleSearchManager
 		{
 			_articlesHolder.setArticles(null);
 			new ArticleSearchManagerWithIROS(_articlesHolder, inputArticle).findArticles(inputArticle);
+			
+			long startTime = System.currentTimeMillis();
+			long currentTime = System.currentTimeMillis();
 			while(_articlesHolder.getArticles() == null)
 			{
 				/* wait for answer from DB */
 				try
 				{
-					Thread.sleep(500);
+					Thread.sleep(100);
 				}
 				catch (InterruptedException e)
 				{
 					
 				}
+				currentTime = System.currentTimeMillis();
+		        if((currentTime - startTime) > TIME_TO_WAIT)
+		        {
+		        	/* timeout */
+		        	_articlesHolder.setArticles(new ArrayList<Article>());
+		        }
 			}
 		}
 		catch (EventHeapException e)

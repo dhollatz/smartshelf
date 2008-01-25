@@ -10,9 +10,9 @@
  */
 package de.haw.smartshelf.server.logic;
 
+import iwork.eheap2.EventHeapException;
 import de.haw.smartshelf.bo.Article;
 import de.haw.smartshelf.bo.ArticleLocation;
-import de.haw.smartshelf.server.ui.searchpage.resultpage.ArticleLocationDetailsPanel;
 
 /**
  * This class ... Copyright (c) 2007 SmartShelf
@@ -20,8 +20,11 @@ import de.haw.smartshelf.server.ui.searchpage.resultpage.ArticleLocationDetailsP
  * @version $ Date: 14.12.2007 20:21:00 $
  * @author <a href="mailto:j_urich@freenet.de">j_urich@freenet.de</a>
  */
-public class ArticleLocationFinder
+public class ArticleLocationFinder implements IArticleLocationHolder
 {
+	public static long TIME_TO_WAIT = 20000;
+	
+	private ArticleLocation _articleLocation = null;
 	public ArticleLocationFinder()
 	{
 		
@@ -29,16 +32,47 @@ public class ArticleLocationFinder
 	
 	public ArticleLocation findArticleLocation(Article inputArticle)
 	{
-		// sleep for 5 seconds to show the behavior
-        try
-        {
-        	//TODO: determine article location
-            Thread.sleep(5000);
-        }
-        catch (InterruptedException e)
-        {
-            throw new RuntimeException(e);
-        }
-        return inputArticle.getArticleLocation();
+		ArticleLocation emptyArticleLocation = new ArticleLocation();
+		emptyArticleLocation.setArticle(inputArticle);
+		try
+		{
+			new ArticleLocationSearchManagerWithIROS(this, inputArticle).findArticleLocation(inputArticle);
+		}
+		catch (EventHeapException e1)
+		{
+			e1.printStackTrace();
+			return emptyArticleLocation;
+		}
+		
+		long startTime = System.currentTimeMillis();
+		long currentTime = System.currentTimeMillis();
+		while(_articleLocation == null)
+		{
+			try
+	        {
+	            Thread.sleep(100);
+	        }
+	        catch (InterruptedException e)
+	        {
+	            throw new RuntimeException(e);
+	        }
+	        currentTime = System.currentTimeMillis();
+	        if((currentTime - startTime) > TIME_TO_WAIT)
+	        {
+	        	return emptyArticleLocation;
+	        }
+		}
+        
+        return _articleLocation;
+	}
+
+	public ArticleLocation getArticleLocation()
+	{
+		return _articleLocation;
+	}
+
+	public void setArticleLocation(ArticleLocation articleLocation)
+	{
+		_articleLocation = articleLocation;	
 	}
 }
