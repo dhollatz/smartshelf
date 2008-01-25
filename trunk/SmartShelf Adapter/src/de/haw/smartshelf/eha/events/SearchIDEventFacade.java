@@ -15,7 +15,7 @@ import iwork.eheap2.EventHeapException;
 
 public class SearchIDEventFacade extends SimpleEventFacade{
 	
-	public static final String TYPE_NAME  = "FoundIDEvent";
+	public static final String TYPE_NAME  = "SearchIDEvent";
 	
 	public static final String FIELD_ID   = "id";
 	
