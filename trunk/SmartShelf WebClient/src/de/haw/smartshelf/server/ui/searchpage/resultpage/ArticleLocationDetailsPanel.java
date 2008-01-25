@@ -50,18 +50,39 @@ public class ArticleLocationDetailsPanel extends Panel
 	
 	private void init()
 	{
-		if(_articleLocation != null)
+		try
 		{
 			add(new Label("rfid", _articleLocation.getArticle().getRfid()));
-			add(new Label("shelfId", _articleLocation.getShelf().getId()));
-			add(new Label("cell", _articleLocation.getCell()));
-			add(new Label("position", _articleLocation.getPosition()));
 		}
-		else
+		catch (Exception e)
 		{
 			add(new Label("rfid", "NONE"));
+		}
+		
+		try
+		{
+			add(new Label("shelfId", _articleLocation.getShelf().getId()));
+		}
+		catch (Exception e)
+		{
 			add(new Label("shelfId", "NONE"));
+		}
+		
+		try
+		{
+			add(new Label("cell", _articleLocation.getCell()));
+		}
+		catch (Exception e)
+		{
 			add(new Label("cell", "NONE"));
+		}
+		
+		try
+		{
+			add(new Label("position", _articleLocation.getPosition()));
+		}
+		catch (Exception e)
+		{
 			add(new Label("position", "NONE"));
 		}
 	}
