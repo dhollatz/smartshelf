@@ -22,7 +22,7 @@ import de.haw.smartshelf.bo.ArticleLocation;
  */
 public class ArticleLocationFinder implements IArticleLocationHolder
 {
-	public static long TIME_TO_WAIT = 20000;
+	public static long TIME_TO_WAIT = 5000;
 	
 	private ArticleLocation _articleLocation = null;
 	public ArticleLocationFinder()
