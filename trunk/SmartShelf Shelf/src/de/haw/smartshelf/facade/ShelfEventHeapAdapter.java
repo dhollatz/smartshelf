@@ -51,13 +51,14 @@ public class ShelfEventHeapAdapter extends Observable implements EventCallback {
 		try {
 			for (Event event : events) {
 				if (SearchIDEventFacade.TYPE_NAME.equals(event.getEventType())) {
+					LOG.debug("Received " + event.getEventType() + ": " + event);
 					SearchIDEventFacade searchIDEvent = new SearchIDEventFacade(
 							event);
 					String id = searchIDEvent.getID();
 					if (id.length() > 0) {
 						setChanged();
 						notifyObservers(new SearchAction(id, searchIDEvent
-								.getID()));
+								.getEventId()));
 					}
 				} else {
 					LOG.trace("Event unknown: " + event.getEventType());
@@ -78,7 +79,12 @@ public class ShelfEventHeapAdapter extends Observable implements EventCallback {
 			/* set the same event id as from the received event */
 			foundIDEvent.setEventId(eventID);
 			foundIDEvent.setShelfID("1");
-			foundIDEvent.setShelfID(tagFound.getId());
+			foundIDEvent.setCellID("1");
+			foundIDEvent.setID(tagFound.getId());
+			foundIDEvent.setPosition("middle");
+			foundIDEvent.setTitle(tagFound.getType());
+			
+			LOG.debug("Sending " + fIDEvent.getEventType()+ ": " + fIDEvent);
 
 			eha.putEvent(fIDEvent);
 

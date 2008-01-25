@@ -14,7 +14,7 @@ public abstract class RFIDTag {
 
 	@Attribute
 	protected String imageURL = "";
-
+	
 	public RFIDTag() {
 		initialize();
 	}
@@ -54,6 +54,10 @@ public abstract class RFIDTag {
 			return id.equals(((RFIDTag) obj).getId());
 		}
 		return false;
+	}
+
+	public String getType() {
+		return type;
 	}
 
 }

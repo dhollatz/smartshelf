@@ -25,7 +25,7 @@ public class SLRM900 extends AbstractReader {
 
 	static {
 		String path = System.getProperty("jna.library.path");
-		System.out.println(path);
+		LOG.info("JNA library path: " + path);
 	}
 
 	public static void main(String args[]) {
@@ -56,7 +56,7 @@ public class SLRM900 extends AbstractReader {
 		return tags;
 	}
 
-	private Collection<ICodeTag> inventory() {
+	private synchronized Collection<ICodeTag> inventory() {
 		// ICODE SLI-S Structure
 		// |STATUS|STAT1|DSFID|UID0|UID1|UID2|UID3|UID4|UID5|UID6|UID7|
 		// if a status is "1" then no tag was found
