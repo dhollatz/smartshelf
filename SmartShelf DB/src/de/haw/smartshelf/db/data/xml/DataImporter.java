@@ -67,7 +67,7 @@ public class DataImporter
 			} 
 		}
 		
-		_dataFactory.addArticle(rfid, type, (String[][]) extensions.toArray(new String[2][extensions.size()]));
+		_dataFactory.addArticle(rfid, type, (String[][]) extensions.toArray(new String[extensions.size()][2]));
 	}
 	
 	public Article createArticle(Element articleElm)

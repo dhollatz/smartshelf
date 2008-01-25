@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Articles>
-	<Article rfid="0123" type="CD">
+	
+	<!-- 
+	<Article rfid="00001" type="CD">
 		<ArticleExtension name="Title">The Best Of The Doors</ArticleExtension>
 		<ArticleExtension name="Interpret">The Doors</ArticleExtension>
 		<ArticleExtension name="Track1">Riders on the Storm</ArticleExtension>
@@ -8,9 +10,45 @@
 		<ArticleExtension name="Track3">Love Me Two Times</ArticleExtension>
 		<ArticleExtension name="Track4">Roadhouse Blues - Live Version</ArticleExtension>
 		<ArticleExtension name="Track5">Strange Days</ArticleExtension>
-		
-		<ArticleLocation shelf="" cell="" position=""/>
+			
+		 <ArticleLocation shelf="" cell="NONE" position="NONE"/>
+	</Article>
+ -->
+
+	<Article rfid="00:9D:52:00:00:03:04:E0" type="Human">
+		<ArticleExtension name="Name">Dennis</ArticleExtension>
+		<ArticleExtension name="Sex">Male</ArticleExtension>
+		<ArticleExtension name="Character">optimist</ArticleExtension>
 	</Article>
 
+	<Article rfid="F1:9C:52:00:00:03:04:E0" type="PC">
+		<ArticleExtension name="Name">Mac mini</ArticleExtension>
+		<ArticleExtension name="Colour">White</ArticleExtension>
+	</Article>
+
+	<Article rfid="E2:9C:52:00:00:03:04:E0" type="RFIDTag">
+		<ArticleExtension name="Name">Unknown</ArticleExtension>
+	</Article>
+
+	<Article rfid="34:9D:58:00:00:02:04:E0" type="Drink">
+		<ArticleExtension name="Name">Milch</ArticleExtension>
+		<ArticleExtension name="Colour">beige</ArticleExtension>
+	</Article>
+
+	<Article rfid="C6:9C:52:00:00:03:04:E0" type="accessory">
+		<ArticleExtension name="Name">Netzteil</ArticleExtension>
+	</Article>
+
+	<Article rfid="B7:9C:52:00:00:03:04:E0" type="accessory">
+		<ArticleExtension name="Name">Mighty mouse</ArticleExtension>
+	</Article>
+
+	<Article rfid="0B:8F:58:00:00:02:04:E0" type="accessory">
+		<ArticleExtension name="Name">Video grabber</ArticleExtension>
+	</Article>
+
+	<Article rfid="FE:8E:58:00:00:02:04:E0" type="accessory">
+		<ArticleExtension name="Name">Wechselrahmen</ArticleExtension>
+	</Article>
 
 </Articles>
