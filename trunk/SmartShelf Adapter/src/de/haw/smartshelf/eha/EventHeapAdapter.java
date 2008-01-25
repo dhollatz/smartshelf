@@ -86,6 +86,19 @@ public class EventHeapAdapter {
 	}
 	
 	/**
+	 * Removes an Event-Registration so the client will no longer be 
+	 * notified of events matching the given Template.
+	 * 
+	 * @param templateEvent The template of the to be removed <tt>Event</tt>.
+	 * @return TODO What is actually returned?
+	 * 
+	 * @throws EventHeapException If something goes terribly wrong... 
+	 */
+	public Event removeEventRegistration(Event templateEvent) throws EventHeapException {
+		return this.eh.removeEvent(templateEvent);
+	}
+	
+	/**
 	 * Reconnect to the event heap server.
 	 */
 	public void reconnect() {
