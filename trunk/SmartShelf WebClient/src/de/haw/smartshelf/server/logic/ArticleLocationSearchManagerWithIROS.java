@@ -1,8 +1,8 @@
 /*
- * $HeadURL: ArticleSearchManagerWithIROS.java $
+ * $HeadURL: ArticleLocationSearchManagerWithIROS.java $
  *
  * $Author: Jaroslaw Urich $
- * $Date: Jan 8, 2008 3:55:20 AM $
+ * $Date: Jan 25, 2008 11:30:55 AM $
  *
  * Copyright 2008 by SmartShelf,
  * Hamburg, Germany.
@@ -15,31 +15,32 @@ import iwork.eheap2.EventCallback;
 import iwork.eheap2.EventHeapException;
 
 import java.io.File;
-import java.util.List;
 
 import de.haw.smartshelf.bo.Article;
+import de.haw.smartshelf.bo.ArticleLocation;
+import de.haw.smartshelf.bo.Shelf;
 import de.haw.smartshelf.eha.EventHeapAdapter;
 import de.haw.smartshelf.eha.EventHeapAdapterConfig;
 import de.haw.smartshelf.eha.events.EventFactory;
-import de.haw.smartshelf.eha.events.ResultListEventFacade;
-import de.haw.smartshelf.eha.events.SearchItemEventFacade;
+import de.haw.smartshelf.eha.events.FoundIDEventFacade;
+import de.haw.smartshelf.eha.events.SearchIDEventFacade;
 
 /**
  * This class ... Copyright (c) 2008 SmartShelf
  * 
- * @version $ Date: Jan 8, 2008 3:55:20 AM $
+ * @version $ Date: Jan 25, 2008 11:30:55 AM $
  * @author <a href="mailto:j_urich@freenet.de">j_urich@freenet.de</a>
  */
-public class ArticleSearchManagerWithIROS implements EventCallback
+public class ArticleLocationSearchManagerWithIROS implements EventCallback
 {
 	EventHeapAdapter eha;
-	private IArticlesHolder _articlesHolder;
+	private IArticleLocationHolder _articleLocHolder;
 	private Article _inputArticle;
 	
 //	private String _eventId;
 	
 	
-	private ArticleSearchManagerWithIROS() throws EventHeapException
+	private ArticleLocationSearchManagerWithIROS() throws EventHeapException
 	{
 		try
 		{
@@ -49,16 +50,13 @@ public class ArticleSearchManagerWithIROS implements EventCallback
 		{
 			throw new EventHeapException("Could not initialize EventHeapAdapter. " + e.getMessage());
 		}
-//		this.eha.registerForEvent(EventFactory.createFoundIDEvent(), this);
-//		this.eha.registerForEvent(EventFactory.createResultListEvent(), this);
-//		this.eha.registerForEvent(EventFactory.createSearchItemEvent(), this);
 	}
 	
-	public ArticleSearchManagerWithIROS(IArticlesHolder articlesHolder, Article inputArticle) throws EventHeapException
+	public ArticleLocationSearchManagerWithIROS(IArticleLocationHolder articleLocHolder, Article inputArticle) throws EventHeapException
 	{
 		this();
 		
-		_articlesHolder = articlesHolder;
+		_articleLocHolder = articleLocHolder;
 		_inputArticle = inputArticle;
 	}
 	
@@ -66,11 +64,11 @@ public class ArticleSearchManagerWithIROS implements EventCallback
 	{ 
 		try
 		{
-			Event searchEvent = EventFactory.createSearchItemEvent();
-			SearchItemEventFacade sieFacade = new SearchItemEventFacade(searchEvent);
-			sieFacade.setArticle(inputArticle);
+			Event searchEvent = EventFactory.createSearchIDEvent();
+			SearchIDEventFacade sideFacade = new SearchIDEventFacade(searchEvent);
+			sideFacade.setID(inputArticle.getRfid());
 
-			eha.putEventAndRegisterForRespponse(searchEvent, EventFactory.createResultListEvent(), this);
+			eha.putEventAndRegisterForRespponse(searchEvent, EventFactory.createFoundIDEvent(), this);
 		}
 		catch (EventHeapException e)
 		{
@@ -82,22 +80,23 @@ public class ArticleSearchManagerWithIROS implements EventCallback
 	{
 		try {
 			for (Event event : events) {
-				if (ResultListEventFacade.TYPE_NAME.equals(event.getEventType())) {
-					System.out.println("Liste empfangen!");
-					ResultListEventFacade rlEvent = new ResultListEventFacade(event);
+				if (FoundIDEventFacade.TYPE_NAME.equals(event.getEventType())) {
+					System.out.println("RFID empfangen!");
+					FoundIDEventFacade fidEvent = new FoundIDEventFacade(event);
+								
 					
-					List<Article> articles;
+					String shelfId = null;
 					try
 					{
-						articles = rlEvent.getArticles();
+						shelfId = fidEvent.getShelfID();
 					}
 					catch (Exception e)
 					{
 						/* workaround: events have been received twice */
-						articles = null;
+						shelfId = null;
 					}
-					System.out.println("ARTICLES: " + articles);
-					if(articles == null)
+					System.out.println("SHELF: " + shelfId);
+					if(shelfId == null)
 					{
 						continue;
 					}
@@ -105,8 +104,17 @@ public class ArticleSearchManagerWithIROS implements EventCallback
 					{
 						
 						//TODO: many responses from several DBs
-						_articlesHolder.setArticles(articles);
-					}				
+						ArticleLocation articleLocation = _inputArticle.getArticleLocation();
+						Shelf shelf = new Shelf();
+						shelf.setId(shelfId);
+						articleLocation.setShelf(shelf);
+						articleLocation.setCell(fidEvent.getCellID());
+						articleLocation.setPosition(fidEvent.getPosition());
+						
+						articleLocation.setArticle(_inputArticle);
+						
+						_articleLocHolder.setArticleLocation(articleLocation);
+					}
 				} else {
 					System.out.println("unknown event: " + event.getEventType());
 				}
@@ -119,7 +127,7 @@ public class ArticleSearchManagerWithIROS implements EventCallback
 		return true; // weitere Events empfangen
 	}
 
-	public void findArticles(Article inputArticle)
+	public void findArticleLocation(Article inputArticle)
 	{
 		sendSearchRequest(inputArticle);
 	}
