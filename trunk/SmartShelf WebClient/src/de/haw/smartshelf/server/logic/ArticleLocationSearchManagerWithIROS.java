@@ -96,7 +96,8 @@ public class ArticleLocationSearchManagerWithIROS implements EventCallback
 						shelfId = null;
 					}
 					System.out.println("SHELF: " + shelfId);
-					if(shelfId == null)
+					// TODO Jaroslaw, mach das bitte sauber! Gruss, Dennis
+					if(shelfId == null || shelfId.equals("FORMAL"))
 					{
 						continue;
 					}

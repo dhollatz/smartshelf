@@ -23,7 +23,7 @@ import de.haw.smartshelf.bo.Article;
  */
 public class ArticleSearchManager
 {
-	public static long TIME_TO_WAIT = 30000;
+	public static long TIME_TO_WAIT = 5000;
 	private IArticlesHolder _articlesHolder;
 	
 	public ArticleSearchManager(IArticlesHolder articlesHolder)
