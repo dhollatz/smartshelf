@@ -40,7 +40,9 @@ public class EventHeapAdapterConfig implements IEventHeapAdapterConfig {
 	}
 
 	public String getEventHeapURL() {
-		eventHeapUrl = _properties.getProperty("eventheap.url");
+		if (eventHeapUrl==null) {
+			eventHeapUrl = _properties.getProperty("eventheap.url");	
+		}
 		return eventHeapUrl;
 	}
 
@@ -53,7 +55,9 @@ public class EventHeapAdapterConfig implements IEventHeapAdapterConfig {
 	}
 
 	public String getClientName() {
-		clientname = _properties.getProperty("eventheap.clientname");
+		if (clientname==null) {
+			clientname = _properties.getProperty("eventheap.clientname");
+		}
 		return clientname;
 	}
 
