@@ -25,10 +25,15 @@ import de.haw.smartshelf.bo.Article;
 public class EventFactory {
 	
 	public static Event createFoundIDEvent() throws EventHeapException {
-		Event event = new Event(SearchIDEventFacade.TYPE_NAME);
+		Event event = new Event(FoundIDEventFacade.TYPE_NAME);
 
-		event.addField(SearchIDEventFacade.FIELD_EVENT_ID, String.class, FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
-		event.addField(SearchIDEventFacade.FIELD_ID, String.class, FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
+		event.addField(FoundIDEventFacade.FIELD_EVENT_ID, String.class, FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
+		event.addField(FoundIDEventFacade.FIELD_ID, String.class, FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
+		event.addField(FoundIDEventFacade.FIELD_TITLE,    String.class, FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
+		event.addField(FoundIDEventFacade.FIELD_SHELF_ID, String.class, FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
+		event.addField(FoundIDEventFacade.FIELD_CELL_ID,  String.class, FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
+		event.addField(FoundIDEventFacade.FIELD_POSITION,  String.class, FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
+		
 		event.setTimeToLive(50000);
 				
 		return event;
@@ -47,13 +52,10 @@ public class EventFactory {
 	}
 	
 	public static Event createSearchIDEvent() throws EventHeapException {
-		Event event = new Event(FoundIDEventFacade.TYPE_NAME);
+		Event event = new Event(SearchIDEventFacade.TYPE_NAME);
 
-		event.addField(FoundIDEventFacade.FIELD_EVENT_ID, String.class, FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
-		event.addField(FoundIDEventFacade.FIELD_TITLE,    String.class, FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
-		event.addField(FoundIDEventFacade.FIELD_SHELF_ID, String.class, FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
-		event.addField(FoundIDEventFacade.FIELD_RACK_ID,  String.class, FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
-		
+		event.addField(SearchIDEventFacade.FIELD_EVENT_ID, String.class, FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
+		event.addField(SearchIDEventFacade.FIELD_ID, String.class, FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
 		event.setTimeToLive(50000);
 				
 		return event;
@@ -71,7 +73,7 @@ public class EventFactory {
 		return event;
 	}
 	
-	private static void setEventId(Event event) throws EventHeapException
+	protected static void setEventId(Event event) throws EventHeapException
 	{
 		String eventid = String.valueOf(System.currentTimeMillis()) + "_" +  String.valueOf(event.hashCode());
 		event.setFieldValue(SimpleEventFacade.FIELD_EVENT_ID, eventid);
