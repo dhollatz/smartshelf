@@ -1,11 +1,11 @@
 package de.haw.smartshelf.config;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.simpleframework.xml.Attribute;
-import org.simpleframework.xml.ElementList;
+import org.simpleframework.xml.ElementMap;
 import org.simpleframework.xml.Root;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.load.Persister;
@@ -18,13 +18,16 @@ public class TagConfig {
 
 	@Attribute
 	private String defaultImageURL = "";
-	
-	@ElementList
-	private List<RFIDTag> tags;
+
+	@ElementMap(entry = "tag", key = "id", attribute = true, inline = true)
+	private Map<String, RFIDTag> tags;
 
 	public void createDummy() {
-		tags = new ArrayList<RFIDTag>();
-		tags.add(new ICodeTag());
+		// tags = new ArrayList<RFIDTag>();
+		// tags.add(new ICodeTag());
+		tags = new HashMap<String, RFIDTag>();
+		tags.put("Tag1", new ICodeTag("Tag1_TagID"));
+		tags.put("Tag2", new ICodeTag("Tag2_TagID"));
 	}
 
 	public String getDefaultImageURL() {
@@ -48,7 +51,7 @@ public class TagConfig {
 		return tagConfig;
 	}
 
-	public List<RFIDTag> getTags() {
+	public Map<String, RFIDTag> getTags() {
 		return tags;
 	}
 }

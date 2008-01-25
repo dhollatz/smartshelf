@@ -1,12 +1,11 @@
 package de.haw.smartshelf.shelf.testgui;
 
 import java.awt.BorderLayout;
-import java.awt.CardLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Collection;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -16,6 +15,7 @@ import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JSlider;
@@ -62,6 +62,9 @@ public class SmartshelfGUI extends SingleFrameApplication implements Observer {
 	private JPanel imageOutput;
 	private JTextPane testOutput;
 	private JScrollPane jScrollPane1;
+	private JTextField tagCount;
+	private JLabel tagCountLabel;
+	private JPanel statusPanel;
 	private JPanel appPanel;
 	private JTextField updateTimeSliderValue;
 	private JPanel jPanel2;
@@ -223,15 +226,34 @@ public class SmartshelfGUI extends SingleFrameApplication implements Observer {
 					{
 						imageOutput = new JPanel();
 						contentPanel.add(imageOutput);
-						GridLayout imageOutputLayout = new GridLayout(5, 5);
-						imageOutputLayout.setColumns(5);
-						imageOutputLayout.setHgap(5);
-						imageOutputLayout.setVgap(5);
-						imageOutputLayout.setRows(5);
-						imageOutput.setLayout(imageOutputLayout);
+						GridLayout imageOutputLayout1 = new GridLayout(5, 5);
+						imageOutputLayout1.setColumns(5);
+						imageOutputLayout1.setHgap(5);
+						imageOutputLayout1.setVgap(5);
+						imageOutputLayout1.setRows(5);
+						imageOutput.setLayout(imageOutputLayout1);
 						imageOutput.setPreferredSize(new java.awt.Dimension(
 								358, 186));
 						imageOutput.setSize(61, 240);
+					}
+				}
+				{
+					statusPanel = new JPanel();
+					FlowLayout statusPanelLayout = new FlowLayout();
+					appPanel.add(statusPanel, BorderLayout.SOUTH);
+					statusPanel.setLayout(statusPanelLayout);
+					{
+						tagCountLabel = new JLabel();
+						statusPanel.add(tagCountLabel);
+						tagCountLabel.setName("tagCountLabel");
+					}
+					{
+						tagCount = new JTextField();
+						statusPanel.add(tagCount);
+						tagCount.setPreferredSize(new java.awt.Dimension(120,
+								20));
+						tagCount.setName("tagCount");
+						tagCount.setEditable(false);
 					}
 				}
 			}
@@ -263,17 +285,21 @@ public class SmartshelfGUI extends SingleFrameApplication implements Observer {
 		if (o.equals(shelf)) {
 			imageOutput.removeAll();
 			Icon image;
-			// for (RFIDTag rfidTag : shelf.getTags()) {
-			// image = ShelfUtil.getInstance().getImage(rfidTag);
-			// if (image != null) {
-			// imageOutput.add(new JLabel(image));
-			// // imageOutput.add(new JLabel(rfidTag.getId()));
-			// // imageOutput.add();
-			// }
-			// }
-			image = ShelfUtil.getInstance().getImage(shelf.getNewTag());
-			imageOutput.add(new JLabel(image));
+			Collection<RFIDTag> tags = shelf.getTags();
+			for (RFIDTag rfidTag : tags) {
+				image = ShelfUtil.getInstance().getImage(rfidTag);
+				if (image != null) {
+					JLabel imageLabel = new JLabel(image);
+					imageOutput.add(imageLabel);
+				} else {
+					imageOutput.add(new JLabel("No Image, muddi! Tag: "
+							+ rfidTag.getId()));
+				}
+			}
+			tagCount.setText(Integer.toString(tags.size()));
 			imageOutput.validate();
+			imageOutput.repaint();
+			// imageOutput.getToolkit().sync();
 		}
 
 	}

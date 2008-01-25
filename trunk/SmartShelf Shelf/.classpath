@@ -12,5 +12,7 @@
 	<classpathentry kind="lib" path="lib/jnlp.jar"/>
 	<classpathentry kind="lib" path="lib/looks-2.1.4.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/SmartShelf Adapter"/>
+	<classpathentry kind="lib" path="/SmartShelf Adapter/lib/iROS.jar" sourcepath="/iros-src"/>
+	<classpathentry kind="lib" path="/SmartShelf CommonUtils/lib/simple-xml-1.5.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

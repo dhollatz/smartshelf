@@ -6,11 +6,11 @@
          <position>1</position>
          <port>COM1</port>
       </readerConfig>
-      <readerConfig id="1">
+      <!--readerConfig id="1">
          <type>B</type>
          <class>de.haw.smartshelf.reader.mock.ICodeReaderMock</class>
          <position>2</position>
          <port>2</port>
-      </readerConfig>
+      </readerConfig-->
    </readerConfigs>
 </shelfConfig>

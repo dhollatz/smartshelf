@@ -78,7 +78,7 @@ public class ShelfEventHeapAdapter extends Observable implements EventCallback {
 
 			/* set the same event id as from the received event */
 			foundIDEvent.setEventId(eventID);
-			foundIDEvent.setRackID("1");
+			foundIDEvent.setShelfID("1");
 			foundIDEvent.setShelfID(tagFound.getId());
 
 			eha.putEvent(fIDEvent);

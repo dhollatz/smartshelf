@@ -1,5 +1,8 @@
-<tagConfig>
-   <tags class="java.util.ArrayList">
-      <RFIDTag id="" class="de.haw.smartshelf.reader.tags.ICodeTag" imageURL=""/>
-   </tags>
+<tagConfig defaultImageURL="">
+   <tag id="Tag2">
+      <RFIDTag id="Tag2_TagID" class="de.haw.smartshelf.reader.tags.ICodeTag" imageURL=""/>
+   </tag>
+   <tag id="Tag1">
+      <RFIDTag id="Tag1_TagID" class="de.haw.smartshelf.reader.tags.ICodeTag" imageURL=""/>
+   </tag>
 </tagConfig>

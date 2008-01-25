@@ -9,8 +9,8 @@ import de.haw.smartshelf.eha.EventHeapAdapterConfig;
 
 public class ConfigurationUtil {
 	public static void main(String[] args) {
-		writeEmptyConfig();
-		// readConfig();
+		// writeEmptyConfig();
+		readConfig();
 	}
 
 	@SuppressWarnings("unused")
@@ -34,7 +34,7 @@ public class ConfigurationUtil {
 		}
 		System.out.println(ehaConfig);
 
-		source = new File("config/ehaProperties.xml");
+		source = new File("config/tagProperties.xml");
 		TagConfig tagConfig = null;
 		try {
 			tagConfig = serializer.read(TagConfig.class, source);
