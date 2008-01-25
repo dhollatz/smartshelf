@@ -72,6 +72,12 @@ public class Article implements Serializable
 
 	public ArticleLocation getArticleLocation()
 	{
+		// TODO Aehh.. Das ist jetzt einfach mal so hingehackt... ist das so okay?
+		if (this._articleLocation == null)
+		{
+			this._articleLocation = new ArticleLocation();
+		}
+
 		return this._articleLocation;
 	}
 
