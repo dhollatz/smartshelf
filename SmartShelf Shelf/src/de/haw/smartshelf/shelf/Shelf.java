@@ -1,5 +1,7 @@
 package de.haw.smartshelf.shelf;
 
+import iwork.eheap2.EventHeapException;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -47,16 +49,15 @@ public class Shelf extends Observable implements Observer {
 			shelfConfig = ShelfConfig.getConfig(SHELF_CONFIG);
 			LOG.debug("Shelf configuration successfully obtained");
 			LOG.trace(shelfConfig.toString());
-			// eha = new ShelfEventHeapAdapter();
-			// eha.addObserver(this);
+			eha = new ShelfEventHeapAdapter();
+			eha.addObserver(this);
 		} catch (ConfigurationException e) {
 			LOG.fatal("Configuration failed " + e.getMessage());
 			throw new RuntimeException("Fatal - Configuration failed", e);
+		} catch (EventHeapException e) {
+			LOG.fatal("Configuration failed " + e.getMessage());
+			throw new RuntimeException("Fatal - Configuration failed", e);
 		}
-		// catch (EventHeapException e) {
-		// LOG.fatal("Configuration failed " + e.getMessage());
-		// throw new RuntimeException("Fatal - Configuration failed", e);
-		// }
 
 		reader = new ArrayList<ShelfReader>();
 
@@ -120,7 +121,7 @@ public class Shelf extends Observable implements Observer {
 
 	public void setTags(Collection<RFIDTag> tags) {
 		boolean update;
-		//update = this.tags == null || !this.tags.containsAll(tags);
+		// update = this.tags == null || !this.tags.containsAll(tags);
 		update = this.tags == null || !this.tags.equals(tags);
 		this.tags = tags;
 		if (update) {
