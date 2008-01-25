@@ -1,20 +1,42 @@
-<tagConfig
-	defaultImageURL="rsrc/genericTag.png">
-	<tags class="java.util.ArrayList">
+<tagConfig defaultImageURL="rsrc/genericTag.png">
+	<tag id="00:9D:52:00:00:03:04:E0">
 		<RFIDTag id="00:9D:52:00:00:03:04:E0"
 			class="de.haw.smartshelf.reader.tags.ICodeTag"
-			imageURL="rsrc/tag1.png" />
+			imageURL="rsrc/dennis.png" />
+	</tag>
+	<tag id="F1:9C:52:00:00:03:04:E0">
 		<RFIDTag id="F1:9C:52:00:00:03:04:E0"
-			class="de.haw.smartshelf.reader.tags.ICodeTag" imageURL="rsrc/tag2.png" />
+			class="de.haw.smartshelf.reader.tags.ICodeTag"
+			imageURL="rsrc/Mac mini.png" />
+	</tag>
+	<tag id="E2:9C:52:00:00:03:04:E0">
 		<RFIDTag id="E2:9C:52:00:00:03:04:E0"
-			class="de.haw.smartshelf.reader.tags.ICodeTag" imageURL="rsrc/tag3.png" />
+			class="de.haw.smartshelf.reader.tags.ICodeTag"
+			imageURL="rsrc/ICODE SLI-L.png" />
+	</tag>
+	<tag id="34:9D:58:00:00:02:04:E0">
 		<RFIDTag id="34:9D:58:00:00:02:04:E0"
-			class="de.haw.smartshelf.reader.tags.ICodeTag" imageURL="rsrc/tag4.png" />
+			class="de.haw.smartshelf.reader.tags.ICodeTag"
+			imageURL="rsrc/Milch.png" />
+	</tag>
+	<tag id="C6:9C:52:00:00:03:04:E0">
 		<RFIDTag id="C6:9C:52:00:00:03:04:E0"
-			class="de.haw.smartshelf.reader.tags.ICodeTag" imageURL="rsrc/tag5.png" />
+			class="de.haw.smartshelf.reader.tags.ICodeTag"
+			imageURL="rsrc/Netzteil.png" />
+	</tag>
+	<tag id="B7:9C:52:00:00:03:04:E0">
 		<RFIDTag id="B7:9C:52:00:00:03:04:E0"
-			class="de.haw.smartshelf.reader.tags.ICodeTag" imageURL="rsrc/tag6.png" />
-		<RFIDTag id="5E:9D:58:00:00:02:04:E0"
-			class="de.haw.smartshelf.reader.tags.ICodeTag" imageURL="rsrc/tag7.png" />
-	</tags>
+			class="de.haw.smartshelf.reader.tags.ICodeTag"
+			imageURL="rsrc/Mighty mouse.png" />
+	</tag>
+	<tag id="0B:8F:58:00:00:02:04:E0">
+		<RFIDTag id="0B:8F:58:00:00:02:04:E0"
+			class="de.haw.smartshelf.reader.tags.ICodeTag"
+			imageURL="rsrc/Video grabber.png" />
+	</tag>
+	<tag id="FE:8E:58:00:00:02:04:E0">
+		<RFIDTag id="FE:8E:58:00:00:02:04:E0"
+			class="de.haw.smartshelf.reader.tags.ICodeTag"
+			imageURL="rsrc/Wechselrahmen.png" />
+	</tag>
 </tagConfig>

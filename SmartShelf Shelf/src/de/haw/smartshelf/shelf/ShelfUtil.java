@@ -1,8 +1,6 @@
 package de.haw.smartshelf.shelf;
 
 import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -46,31 +44,17 @@ public class ShelfUtil {
 
 	public Icon getImage(RFIDTag tag) {
 
-		URL defaultResource = null;
-		try {
-			defaultResource = new File(configuredTags.getDefaultImageURL())
-					.toURI().toURL();
-		} catch (MalformedURLException e) {
-			LOG.error(e.getMessage(), e);
-		}
-		for (RFIDTag configuredTag : configuredTags.getTags()) {
-			if (configuredTag.getId().equals(tag.getId())) {
-				URL resource = null;
-				try {
-					resource = new File(configuredTag.getImageURL()).toURI()
-							.toURL();
-				} catch (MalformedURLException e) {
-					LOG.error(e.getMessage(), e);
-				}
-				if (resource == null) {
-					return defaultResource != null ? new ImageIcon(
-							defaultResource) : null;
-				}
-				return new ImageIcon(resource);
+		File defaultResource = new File(configuredTags.getDefaultImageURL());
+		RFIDTag configuredTag = configuredTags.getTags().get(tag.getId());
+		if (configuredTag != null) {
+			File resource = new File(configuredTag.getImageURL());
+			if (resource.exists()) {
+				return new ImageIcon(resource.getAbsolutePath());
 			}
 		}
 
-		return defaultResource != null ? new ImageIcon(defaultResource) : null;
+		return defaultResource.exists() ? new ImageIcon(defaultResource
+				.getAbsolutePath()) : null;
 	}
 
 }

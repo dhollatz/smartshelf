@@ -36,7 +36,6 @@ public class Shelf extends Observable implements Observer {
 	protected Thread shelfThread;
 	private StyledDocument doc = new DefaultStyledDocument();
 	private int updateInterval;
-	protected RFIDTag newTag;
 
 	public Shelf() {
 		initialize();
@@ -121,14 +120,8 @@ public class Shelf extends Observable implements Observer {
 
 	public void setTags(Collection<RFIDTag> tags) {
 		boolean update;
-		update = this.tags == null || !this.tags.containsAll(tags);
-		if (update){
-			for (RFIDTag tag : tags) {
-				if(this.tags == null || !this.tags.contains(tag)){
-					newTag = tag;
-				}
-			}
-		}
+		//update = this.tags == null || !this.tags.containsAll(tags);
+		update = this.tags == null || !this.tags.equals(tags);
 		this.tags = tags;
 		if (update) {
 			setChanged();
@@ -165,9 +158,5 @@ public class Shelf extends Observable implements Observer {
 		} else {
 			LOG.warn("Observer received unknown object");
 		}
-	}
-
-	public RFIDTag getNewTag() {
-		return newTag;
 	}
 }
