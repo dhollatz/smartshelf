@@ -44,7 +44,6 @@ public class ShelfEventHeapAdapter extends Observable implements EventCallback {
 			throw new EventHeapException(
 					"Could not initialize EventHeapAdapter. " + e.getMessage());
 		}
-		eha.registerForEvent(EventFactory.createFoundIDEvent(), this);
 		eha.registerForEvent(EventFactory.createSearchIDEvent(), this);
 	}
 
