@@ -10,6 +10,8 @@
  */
 package de.haw.smartshelf.eha.events;
 
+import java.util.Collection;
+
 import iwork.eheap2.Event;
 import iwork.eheap2.EventHeapException;
 import iwork.eheap2.FieldValueTypes;
@@ -67,6 +69,17 @@ public class EventFactory {
 		event.addField(SearchItemEventFacade.FIELD_EVENT_ID,    String.class,  FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
 		event.addField(SearchItemEventFacade.FIELD_TITLE,    String.class,  FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
 		event.addField(SearchItemEventFacade.FIELD_INPUT_ARTICLE,  Article.class, FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
+		
+		event.setTimeToLive(50000);
+				
+		return event;
+	}
+	
+	public static Event createShelfInventoryEvent() throws EventHeapException {
+		Event event = new Event(ShelfInventoryEventFacade.TYPE_NAME);
+
+		event.addField(ShelfInventoryEventFacade.FIELD_SHELF_ID,  String.class, FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
+		event.addField(ShelfInventoryEventFacade.FIELD_RFID_TAGS, Collection.class,  FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
 		
 		event.setTimeToLive(50000);
 				
