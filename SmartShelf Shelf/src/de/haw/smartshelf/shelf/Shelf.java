@@ -128,8 +128,13 @@ public class Shelf extends Observable implements Observer {
 		if (update) {
 			setChanged();
 			notifyObservers();
+			
 			// TODO Stefan: Magst du das hier noch mal sauber machen? Ich bin dazu heute nicht in der Lage... :(
-			this.eha.sendShelfInventoryEvent(this.tags, "smartshelf01");
+			String[] tagIds = new String[this.tags.size()];
+			for (int i = 0; i < tagIds.length; i++) {
+				tagIds[i] = this.tags.get(i).getId();
+			}
+			this.eha.sendShelfInventoryEvent(tagIds, "smartshelf01");
 		}
 	}
 

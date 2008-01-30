@@ -95,7 +95,7 @@ public class ShelfEventHeapAdapter extends Observable implements EventCallback {
 		}
 	}
 	
-	public void sendShelfInventoryEvent(List<RFIDTag> tags, String shelfID) {
+	public void sendShelfInventoryEvent(String[] tags, String shelfID) {
 		try {
 			Event sIEvent = EventFactory.createShelfInventoryEvent();
 			ShelfInventoryEventFacade inventoryEvent = new ShelfInventoryEventFacade(sIEvent);

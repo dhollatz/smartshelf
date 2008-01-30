@@ -23,6 +23,7 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
+import javax.swing.text.DefaultStyledDocument;
 
 import org.apache.log4j.Logger;
 import org.jdesktop.application.SingleFrameApplication;
@@ -162,6 +163,7 @@ public class SmartshelfRemoteGUI extends SingleFrameApplication implements Event
 								131, 186));
 						jScrollPane1.setSize(42, 240);
 						{
+							testOutput = new JTextPane(new DefaultStyledDocument());
 							jScrollPane1.setViewportView(testOutput);
 							testOutput.setPreferredSize(new java.awt.Dimension(
 									100, 247));
@@ -210,6 +212,8 @@ public class SmartshelfRemoteGUI extends SingleFrameApplication implements Event
 	}
 
 	private void inventoryToggleActionPerformed(ActionEvent evt) throws EventHeapException {
+		System.out
+				.println("SmartshelfRemoteGUI.inventoryToggleActionPerformed()");
 		if (inventoryToggle.isSelected()) {
 			try {
 				EventHeapAdapterConfig ehaConfig = EventHeapAdapterConfig.getConfig(EHA_CONFIG);
@@ -231,22 +235,24 @@ public class SmartshelfRemoteGUI extends SingleFrameApplication implements Event
 
 	}
 
-	public void update(Collection<RFIDTag> tags) {
-		
+	public void update(String[] tags) {
+		System.out.println("SmartshelfRemoteGUI.update()");
 		imageOutput.removeAll();
 		
+		if (tags == null) return;
+		
 		Icon image;
-		for (RFIDTag rfidTag : tags) {
+		for (String rfidTag : tags) {
 			image = ShelfUtil.getInstance().getImage(rfidTag);
 			if (image != null) {
 				JLabel imageLabel = new JLabel(image);
 				imageOutput.add(imageLabel);
 			} else {
 				imageOutput.add(new JLabel("No Image, muddi! Tag: "
-						+ rfidTag.getId()));
+						+ rfidTag));
 			}
 		}
-		tagCount.setText(Integer.toString(tags.size()));
+		tagCount.setText(Integer.toString(tags.length));
 		imageOutput.validate();
 		imageOutput.repaint();
 		// imageOutput.getToolkit().sync();
@@ -259,7 +265,7 @@ public class SmartshelfRemoteGUI extends SingleFrameApplication implements Event
 			for (Event event : events) {
 				if (event.getEventType().equals(ShelfInventoryEventFacade.TYPE_NAME)) {
 					ShelfInventoryEventFacade inventoryEventFacade = new ShelfInventoryEventFacade(event);
-					List<RFIDTag> tags = inventoryEventFacade.getRFIDTags();
+					String[] tags = inventoryEventFacade.getRFIDTags();
 					this.update(tags);
 				}
 			}

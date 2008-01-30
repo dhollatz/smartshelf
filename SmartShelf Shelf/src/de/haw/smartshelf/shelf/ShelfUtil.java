@@ -43,9 +43,13 @@ public class ShelfUtil {
 	}
 
 	public Icon getImage(RFIDTag tag) {
+		return getImage(tag.getId());
+	}
+	
+	public Icon getImage(String tagId) {
 
 		File defaultResource = new File(configuredTags.getDefaultImageURL());
-		RFIDTag configuredTag = configuredTags.getTags().get(tag.getId());
+		RFIDTag configuredTag = configuredTags.getTags().get(tagId);
 		if (configuredTag != null) {
 			File resource = new File(configuredTag.getImageURL());
 			if (resource.exists()) {
