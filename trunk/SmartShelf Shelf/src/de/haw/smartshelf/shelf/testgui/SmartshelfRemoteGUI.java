@@ -237,12 +237,6 @@ public class SmartshelfRemoteGUI extends SingleFrameApplication implements Event
 
 	public void update(String[] tags) {
 		System.out.println("SmartshelfRemoteGUI.update()");
-		
-		// TODO Umgang mit Ghost-Events...
-		if (tags == null) {
-			LOG.info("TAGS == NULL");
-			return;
-		}
 
 		imageOutput.removeAll();
 		
@@ -272,7 +266,13 @@ public class SmartshelfRemoteGUI extends SingleFrameApplication implements Event
 					LOG.info(event.toStringComplete());
 					ShelfInventoryEventFacade inventoryEventFacade = new ShelfInventoryEventFacade(event);
 					String[] tags = inventoryEventFacade.getRFIDTags();
-					this.update(tags);
+					if (tags != null) {
+						this.update(tags);
+					} else {
+						// TODO Umgang mit Ghost-Events...
+						LOG.debug("TAGS == NULL");
+					}
+					
 				}
 			}
 		} catch (EventHeapException e) {
