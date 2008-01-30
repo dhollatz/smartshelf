@@ -39,8 +39,8 @@ public class ShelfInventoryEventFacade extends SimpleEventFacade {
 	 * @param tags
 	 * @throws EventHeapException
 	 */
-	public void setRFIDTags(List tags) throws EventHeapException {
-		getEvent().setFieldValue(FIELD_RFID_TAGS, (Serializable) tags);
+	public void setRFIDTags(String[] tags) throws EventHeapException {
+		getEvent().setFieldValue(FIELD_RFID_TAGS, tags);
 	}
 	
 	
@@ -52,8 +52,8 @@ public class ShelfInventoryEventFacade extends SimpleEventFacade {
 	 * @throws EventHeapException
 	 */
 	@SuppressWarnings("unchecked")
-	public List getRFIDTags() throws EventHeapException {
-		return (List) getEvent().getPostValue(FIELD_RFID_TAGS);
+	public String[] getRFIDTags() throws EventHeapException {
+		return (String[]) getEvent().getPostValue(FIELD_RFID_TAGS);
 	}
 
 }
