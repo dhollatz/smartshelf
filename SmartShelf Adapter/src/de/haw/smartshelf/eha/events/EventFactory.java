@@ -79,7 +79,7 @@ public class EventFactory {
 		Event event = new Event(ShelfInventoryEventFacade.TYPE_NAME);
 
 		event.addField(ShelfInventoryEventFacade.FIELD_SHELF_ID,  String.class, FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
-		event.addField(ShelfInventoryEventFacade.FIELD_RFID_TAGS, Collection.class,  FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
+		event.addField(ShelfInventoryEventFacade.FIELD_RFID_TAGS, String[].class,  FieldValueTypes.FORMAL, FieldValueTypes.FORMAL);
 		
 		event.setTimeToLive(50000);
 				
