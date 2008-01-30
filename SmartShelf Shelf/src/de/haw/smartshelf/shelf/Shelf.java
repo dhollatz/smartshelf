@@ -5,6 +5,7 @@ import iwork.eheap2.EventHeapException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -32,7 +33,7 @@ public class Shelf extends Observable implements Observer {
 	// TODO Caching? Wie?
 	protected HashMap<String, RFIDTag> cache;
 
-	protected Collection<RFIDTag> tags;
+	protected List<RFIDTag> tags;
 
 	protected ShelfEventHeapAdapter eha;
 	protected Thread shelfThread;
@@ -73,8 +74,8 @@ public class Shelf extends Observable implements Observer {
 		}
 	}
 
-	public Collection<RFIDTag> getAllItems() {
-		Collection<RFIDTag> items = new ArrayList<RFIDTag>();
+	public List<RFIDTag> getAllItems() {
+		List<RFIDTag> items = new ArrayList<RFIDTag>();
 		for (ShelfReader aReader : reader) {
 			items.addAll(aReader.gatherTags());
 		}
@@ -115,11 +116,11 @@ public class Shelf extends Observable implements Observer {
 		}
 	}
 
-	public Collection<RFIDTag> getTags() {
+	public List<RFIDTag> getTags() {
 		return tags;
 	}
 
-	public void setTags(Collection<RFIDTag> tags) {
+	public void setTags(List<RFIDTag> tags) {
 		boolean update;
 		// update = this.tags == null || !this.tags.containsAll(tags);
 		update = this.tags == null || !this.tags.equals(tags);
@@ -127,6 +128,8 @@ public class Shelf extends Observable implements Observer {
 		if (update) {
 			setChanged();
 			notifyObservers();
+			// TODO Stefan: Magst du das hier noch mal sauber machen? Ich bin dazu heute nicht in der Lage... :(
+			this.eha.sendShelfInventoryEvent(this.tags, "smartshelf01");
 		}
 	}
 

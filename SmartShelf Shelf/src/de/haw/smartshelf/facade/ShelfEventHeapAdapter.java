@@ -14,6 +14,7 @@ import iwork.eheap2.Event;
 import iwork.eheap2.EventCallback;
 import iwork.eheap2.EventHeapException;
 
+import java.util.List;
 import java.util.Observable;
 
 import org.apache.log4j.Logger;
@@ -23,6 +24,7 @@ import de.haw.smartshelf.eha.EventHeapAdapterConfig;
 import de.haw.smartshelf.eha.events.EventFactory;
 import de.haw.smartshelf.eha.events.FoundIDEventFacade;
 import de.haw.smartshelf.eha.events.SearchIDEventFacade;
+import de.haw.smartshelf.eha.events.ShelfInventoryEventFacade;
 import de.haw.smartshelf.reader.tags.RFIDTag;
 import de.haw.smartshelf.shelf.SearchAction;
 import de.haw.smartshelf.shelf.Shelf;
@@ -87,6 +89,24 @@ public class ShelfEventHeapAdapter extends Observable implements EventCallback {
 			LOG.debug("Sending " + fIDEvent.getEventType()+ ": " + fIDEvent);
 
 			eha.putEvent(fIDEvent);
+
+		} catch (EventHeapException e) {
+			LOG.error("Error while sending event");
+		}
+	}
+	
+	public void sendShelfInventoryEvent(List<RFIDTag> tags, String shelfID) {
+		try {
+			Event sIEvent = EventFactory.createShelfInventoryEvent();
+			ShelfInventoryEventFacade inventoryEvent = new ShelfInventoryEventFacade(sIEvent);
+
+			inventoryEvent.setShelfID(shelfID);
+			inventoryEvent.setRFIDTags(tags);
+			
+			// TODO AAAAHHHH!!! Stefan!!! HILFEEEEEE!!! 
+			//LOG.debug("Sending " + sIEvent.getEventType+ ": " + sIEvent);
+
+			eha.putEvent(sIEvent);
 
 		} catch (EventHeapException e) {
 			LOG.error("Error while sending event");
