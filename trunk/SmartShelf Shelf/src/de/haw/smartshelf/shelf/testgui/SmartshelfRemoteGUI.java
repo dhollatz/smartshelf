@@ -23,6 +23,7 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
+import javax.swing.border.BevelBorder;
 import javax.swing.text.DefaultStyledDocument;
 
 import org.apache.log4j.Logger;
@@ -62,15 +63,14 @@ public class SmartshelfRemoteGUI extends SingleFrameApplication implements Event
 	private JToolBar toolBar;
 	private JPanel toolBarPanel;
 	private JPanel jPanel1;
-	private JLabel shelfIDLabel;
-	private JPanel imageOutput;
-	private JTextPane testOutput;
-	private JScrollPane jScrollPane1;
-	private JTextField tagCount;
-	private JLabel tagCountLabel;
+	private JLabel shelfIDLabel01;
+	private JPanel imageOutput02;
+	private JLabel shelfIDLabel02;
+	private JTextField tagCount02;
+	private JTextField tagCount01;
+	private JPanel imageOutput01;
 	private JPanel statusPanel;
 	private JPanel appPanel;
-	private JTextField shelfIDText;
 	private JPanel contentPanel;
 	private Event registeredEvent;
 
@@ -129,24 +129,22 @@ public class SmartshelfRemoteGUI extends SingleFrameApplication implements Event
 				{
 					jPanel1 = new JPanel();
 					appPanel.add(jPanel1, BorderLayout.NORTH);
-					FlowLayout jPanel1Layout = new FlowLayout();
-					jPanel1Layout.setAlignment(FlowLayout.LEFT);
+					BorderLayout jPanel1Layout = new BorderLayout();
 					jPanel1.setLayout(jPanel1Layout);
 					jPanel1.setPreferredSize(new java.awt.Dimension(500, 49));
 					jPanel1.setEnabled(false);
 					jPanel1.setBorder(BorderFactory.createEmptyBorder(0, 10, 0,
 							10));
 					{
-						shelfIDLabel = new JLabel();
-						jPanel1.add(shelfIDLabel);
-						shelfIDLabel.setText("Shelf-ID:");
+						shelfIDLabel01 = new JLabel();
+						jPanel1.add(shelfIDLabel01, BorderLayout.WEST);
+						shelfIDLabel01.setText("smartshelf01");
 					}
 					{
-						shelfIDText = new JTextField();
-						jPanel1.add(shelfIDText);
-						shelfIDText.setName("shelfIDText");
-						shelfIDText.setEditable(true);
-						shelfIDText.setText("smartshelf01");
+						shelfIDLabel02 = new JLabel();
+						jPanel1.add(shelfIDLabel02, BorderLayout.EAST);
+						shelfIDLabel02.setName("shelfIDLabel02");
+						;
 					}
 				}
 				{
@@ -157,30 +155,31 @@ public class SmartshelfRemoteGUI extends SingleFrameApplication implements Event
 					contentPanel.setLayout(contentPanelLayout);
 					contentPanel.setSize(104, 240);
 					{
-						jScrollPane1 = new JScrollPane();
-						contentPanel.add(jScrollPane1);
-						jScrollPane1.setPreferredSize(new java.awt.Dimension(
-								131, 186));
-						jScrollPane1.setSize(42, 240);
-						{
-							testOutput = new JTextPane(new DefaultStyledDocument());
-							jScrollPane1.setViewportView(testOutput);
-							testOutput.setPreferredSize(new java.awt.Dimension(
-									100, 247));
-						}
+						imageOutput01 = new JPanel();
+						contentPanel.add(imageOutput01);
+						GridLayout jPanel2Layout = new GridLayout(5, 5);
+						jPanel2Layout.setHgap(5);
+						jPanel2Layout.setVgap(5);
+						jPanel2Layout.setColumns(5);
+						jPanel2Layout.setRows(5);
+						imageOutput01.setPreferredSize(new java.awt.Dimension(358,186));
+						imageOutput01.setLayout(jPanel2Layout);
+						imageOutput01.setSize(61, 240);
+						imageOutput01.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
 					}
 					{
-						imageOutput = new JPanel();
-						contentPanel.add(imageOutput);
+						imageOutput02 = new JPanel();
+						contentPanel.add(imageOutput02);
 						GridLayout imageOutputLayout1 = new GridLayout(5, 5);
 						imageOutputLayout1.setColumns(5);
 						imageOutputLayout1.setHgap(5);
 						imageOutputLayout1.setVgap(5);
 						imageOutputLayout1.setRows(5);
-						imageOutput.setLayout(imageOutputLayout1);
-						imageOutput.setPreferredSize(new java.awt.Dimension(
+						imageOutput02.setLayout(imageOutputLayout1);
+						imageOutput02.setPreferredSize(new java.awt.Dimension(
 								358, 186));
-						imageOutput.setSize(61, 240);
+						imageOutput02.setSize(61, 240);
+						imageOutput02.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
 					}
 				}
 				{
@@ -189,17 +188,19 @@ public class SmartshelfRemoteGUI extends SingleFrameApplication implements Event
 					appPanel.add(statusPanel, BorderLayout.SOUTH);
 					statusPanel.setLayout(statusPanelLayout);
 					{
-						tagCountLabel = new JLabel();
-						statusPanel.add(tagCountLabel);
-						tagCountLabel.setName("tagCountLabel");
+						tagCount01 = new JTextField();
+						statusPanel.add(tagCount01);
+						tagCount01.setPreferredSize(new java.awt.Dimension(120,
+								20));
+						tagCount01.setName("tagCount01");
+						tagCount01.setEditable(false);
 					}
 					{
-						tagCount = new JTextField();
-						statusPanel.add(tagCount);
-						tagCount.setPreferredSize(new java.awt.Dimension(120,
-								20));
-						tagCount.setName("tagCount");
-						tagCount.setEditable(false);
+						tagCount02 = new JTextField();
+						statusPanel.add(tagCount02);
+						tagCount02.setEditable(false);
+						tagCount02.setPreferredSize(new java.awt.Dimension(120, 20));
+						tagCount02.setName("tagCount02");
 					}
 				}
 			}
@@ -235,42 +236,81 @@ public class SmartshelfRemoteGUI extends SingleFrameApplication implements Event
 
 	}
 
-	public void update(String[] tags) {
+	public void update01(String[] tags) {
 		System.out.println("SmartshelfRemoteGUI.update()");
 
-		imageOutput.removeAll();
+		imageOutput01.removeAll();
 		
 		Icon image;
 		for (String rfidTag : tags) {
 			image = ShelfUtil.getInstance().getImage(rfidTag);
 			if (image != null) {
 				JLabel imageLabel = new JLabel(image);
-				imageOutput.add(imageLabel);
+				imageOutput01.add(imageLabel);
 			} else {
-				imageOutput.add(new JLabel("No Image, muddi! Tag: "
+				imageOutput01.add(new JLabel("No Image, muddi! Tag: "
 						+ rfidTag));
 			}
 		}
-		tagCount.setText(Integer.toString(tags.length));
-		imageOutput.validate();
-		imageOutput.repaint();
-		// imageOutput.getToolkit().sync();
+		tagCount01.setText(Integer.toString(tags.length));
+		imageOutput01.validate();
+		imageOutput01.repaint();
+		// imageOutput01.getToolkit().sync();
+
+	}
+	
+	public void update02(String[] tags) {
+		System.out.println("SmartshelfRemoteGUI.update()");
+
+		imageOutput02.removeAll();
+		
+		Icon image;
+		for (String rfidTag : tags) {
+			image = ShelfUtil.getInstance().getImage(rfidTag);
+			if (image != null) {
+				JLabel imageLabel = new JLabel(image);
+				imageOutput02.add(imageLabel);
+			} else {
+				imageOutput02.add(new JLabel("No Image, muddi! Tag: "
+						+ rfidTag));
+			}
+		}
+		tagCount02.setText(Integer.toString(tags.length));
+		imageOutput02.validate();
+		imageOutput02.repaint();
+		// imageOutput02.getToolkit().sync();
 
 	}
 
 	public boolean returnEvent(Event[] events) {
 		
+		// TODO DRECKIG!! Und es tut mir auch Leeeeiiiiiid... ;(
 		try {
 			for (Event event : events) {
 				if (event.getEventType().equals(ShelfInventoryEventFacade.TYPE_NAME)) {
-					LOG.info(event.toStringComplete());
-					ShelfInventoryEventFacade inventoryEventFacade = new ShelfInventoryEventFacade(event);
-					String[] tags = inventoryEventFacade.getRFIDTags();
-					if (tags != null) {
-						this.update(tags);
-					} else {
-						// TODO Umgang mit Ghost-Events...
-						LOG.debug("TAGS == NULL");
+					ShelfInventoryEventFacade inventoryEvent = new ShelfInventoryEventFacade(event);
+					if ("smartshelf01".equals(inventoryEvent.getShelfID())) {
+						LOG.info(event.toStringComplete());
+						ShelfInventoryEventFacade inventoryEventFacade = new ShelfInventoryEventFacade(event);
+						String[] tags = inventoryEventFacade.getRFIDTags();
+						if (tags != null) {
+							this.update01(tags);
+						} else {
+							// TODO Umgang mit Ghost-Events...
+							LOG.debug("TAGS 01 == NULL");
+						}
+					} else if ("smartshelf02".equals(inventoryEvent.getShelfID())) {
+						LOG.info(event.toStringComplete());
+						ShelfInventoryEventFacade inventoryEventFacade = new ShelfInventoryEventFacade(event);
+						String[] tags = inventoryEventFacade.getRFIDTags();
+						if (tags != null) {
+							this.update02(tags);
+						} else {
+							// TODO Umgang mit Ghost-Events...
+							LOG.debug("TAGS 02 == NULL");
+						}
+					} else if (inventoryEvent.getShelfID() != null){
+						LOG.error("Unknown Shelf: " + inventoryEvent.getShelfID());
 					}
 					
 				}
