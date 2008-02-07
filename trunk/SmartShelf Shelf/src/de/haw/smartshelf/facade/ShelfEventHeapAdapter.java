@@ -14,7 +14,6 @@ import iwork.eheap2.Event;
 import iwork.eheap2.EventCallback;
 import iwork.eheap2.EventHeapException;
 
-import java.util.List;
 import java.util.Observable;
 
 import org.apache.log4j.Logger;
@@ -53,7 +52,9 @@ public class ShelfEventHeapAdapter extends Observable implements EventCallback {
 		try {
 			for (Event event : events) {
 				if (SearchIDEventFacade.TYPE_NAME.equals(event.getEventType())) {
-					LOG.debug("Received " + event.getEventType() + ": " + event);
+					LOG
+							.debug("Received " + event.getEventType() + ": "
+									+ event);
 					SearchIDEventFacade searchIDEvent = new SearchIDEventFacade(
 							event);
 					String id = searchIDEvent.getID();
@@ -80,13 +81,13 @@ public class ShelfEventHeapAdapter extends Observable implements EventCallback {
 
 			/* set the same event id as from the received event */
 			foundIDEvent.setEventId(eventID);
-			foundIDEvent.setShelfID("1");
+			foundIDEvent.setShelfID(tagFound.getShelfID());
 			foundIDEvent.setCellID("1");
 			foundIDEvent.setID(tagFound.getId());
 			foundIDEvent.setPosition("middle");
 			foundIDEvent.setTitle(tagFound.getType());
-			
-			LOG.debug("Sending " + fIDEvent.getEventType()+ ": " + fIDEvent);
+
+			LOG.debug("Sending " + fIDEvent.getEventType() + ": " + fIDEvent);
 
 			eha.putEvent(fIDEvent);
 
@@ -94,17 +95,18 @@ public class ShelfEventHeapAdapter extends Observable implements EventCallback {
 			LOG.error("Error while sending event");
 		}
 	}
-	
+
 	public void sendShelfInventoryEvent(String[] tags, String shelfID) {
 		try {
 			Event sIEvent = EventFactory.createShelfInventoryEvent();
-			ShelfInventoryEventFacade inventoryEvent = new ShelfInventoryEventFacade(sIEvent);
+			ShelfInventoryEventFacade inventoryEvent = new ShelfInventoryEventFacade(
+					sIEvent);
 
 			inventoryEvent.setShelfID(shelfID);
 			inventoryEvent.setRFIDTags(tags);
-			
-			// TODO AAAAHHHH!!! Stefan!!! HILFEEEEEE!!! 
-			//LOG.debug("Sending " + sIEvent.getEventType+ ": " + sIEvent);
+
+			// TODO AAAAHHHH!!! Stefan!!! HILFEEEEEE!!!
+			// LOG.debug("Sending " + sIEvent.getEventType+ ": " + sIEvent);
 
 			eha.putEvent(sIEvent);
 

@@ -9,6 +9,7 @@ public abstract class RFIDTag {
 	@Attribute
 	protected String id = "";
 
+	protected String shelfID = "";
 	protected String type = "";
 	protected static String TYPE = "Common RFID Tag";
 
@@ -58,6 +59,14 @@ public abstract class RFIDTag {
 
 	public String getType() {
 		return type;
+	}
+
+	public String getShelfID() {
+		return shelfID;
+	}
+
+	public void setShelfID(String shelfID) {
+		this.shelfID = shelfID;
 	}
 
 }

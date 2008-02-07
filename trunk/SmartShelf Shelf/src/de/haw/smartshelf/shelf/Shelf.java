@@ -39,13 +39,15 @@ public class Shelf extends Observable implements Observer {
 	protected Thread shelfThread;
 	private StyledDocument doc = new DefaultStyledDocument();
 	private int updateInterval;
+	
+	protected ShelfConfig shelfConfig;
 
 	public Shelf() {
 		initialize();
 	}
 
 	protected void initialize() {
-		ShelfConfig shelfConfig = null;
+		shelfConfig = null;
 		try {
 			shelfConfig = ShelfConfig.getConfig(SHELF_CONFIG);
 			LOG.debug("Shelf configuration successfully obtained");
@@ -95,8 +97,10 @@ public class Shelf extends Observable implements Observer {
 		LOG.debug("Searching for tag with id: " + id);
 		for (ShelfReader aReader : reader) {
 			if (aReader.isTagInRange(id)) {
-				LOG.debug("Tag " + id + " found");
-				return aReader.searchTag(id);
+				RFIDTag tag = aReader.searchTag(id);
+				tag.setShelfID(shelfConfig.getId());
+				LOG.debug("Tag " + tag.getId() + " found in shelf: " + tag.getShelfID());
+				return tag;
 			}
 		}
 		LOG.debug("Tag " + id + " not found");
@@ -134,7 +138,7 @@ public class Shelf extends Observable implements Observer {
 			for (int i = 0; i < tagIds.length; i++) {
 				tagIds[i] = this.tags.get(i).getId();
 			}
-			this.eha.sendShelfInventoryEvent(tagIds, "smartshelf01");
+			this.eha.sendShelfInventoryEvent(tagIds, shelfConfig.getId());
 		}
 	}
 
