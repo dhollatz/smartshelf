@@ -13,12 +13,12 @@ import org.simpleframework.xml.load.Persister;
 @Root
 public class ShelfConfig {
 	@Attribute
-	private int id;
+	private String id;
 
 	@ElementList
 	private List<ReaderConfig> readerConfigs;
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
