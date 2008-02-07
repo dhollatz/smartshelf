@@ -17,7 +17,7 @@
 	<tag id="34:9D:58:00:00:02:04:E0">
 		<RFIDTag id="34:9D:58:00:00:02:04:E0"
 			class="de.haw.smartshelf.reader.tags.ICodeTag"
-			imageURL="rsrc/Milch.png" />
+			imageURL="rsrc/primerplus.png" />
 	</tag>
 	<tag id="C6:9C:52:00:00:03:04:E0">
 		<RFIDTag id="C6:9C:52:00:00:03:04:E0"
